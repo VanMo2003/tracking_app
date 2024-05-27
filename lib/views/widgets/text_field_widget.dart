@@ -5,7 +5,7 @@ import 'package:traking_app/utils/dimensions.dart';
 class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final Key? fieldKey;
-  final bool? isPasswordField;
+  final bool isPasswordField;
   final bool? isSearchField;
   final String? hintText;
   final String? labelText;
@@ -15,12 +15,13 @@ class TextFieldWidget extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputType? inputType;
+  final bool autoFocus;
 
   const TextFieldWidget({
     super.key,
     this.controller,
     this.fieldKey,
-    this.isPasswordField,
+    this.isPasswordField = false,
     this.isSearchField,
     this.hintText,
     this.labelText,
@@ -30,6 +31,7 @@ class TextFieldWidget extends StatefulWidget {
     this.validator,
     this.onFieldSubmitted,
     this.inputType,
+    this.autoFocus = false,
   });
 
   @override
@@ -51,12 +53,14 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,
-        obscureText: widget.isPasswordField == true ? _obscureText : false,
+        obscureText: widget.isPasswordField,
         onSaved: widget.onSaved,
         onChanged: widget.onChanged,
         validator: widget.validator,
+        autofocus: widget.autoFocus,
         onFieldSubmitted: widget.onFieldSubmitted,
         decoration: InputDecoration(
+          hintText: widget.hintText,
           labelText: widget.labelText,
           labelStyle:
               TextStyle(color: ColorResources.getGreyColor(), fontSize: 18),

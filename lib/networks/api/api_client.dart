@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/networks/response/error_response.dart';
+import 'package:traking_app/models/response/error_response.dart';
 import 'package:traking_app/utils/app_constant.dart';
 import 'package:http/http.dart' as Http;
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -16,7 +16,7 @@ class ApiClient extends GetxService {
   final SharedPreferences sharedPreferences;
   static final String noInternetMessage =
       KeyLanguage.connectionToApiServerFailed.tr;
-  final int timeoutInSeconds = 9;
+  final int timeoutInSeconds = 90;
 
   String token = "";
   Map<String, String> _mainHeaders = {};
@@ -66,7 +66,7 @@ class ApiClient extends GetxService {
       return handleResponse(response, uri);
     } catch (e) {
       debugPrint('Error : ${e.toString()}');
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return Response(statusCode: 1, statusText: e.toString());
     }
   }
 
@@ -110,10 +110,51 @@ class ApiClient extends GetxService {
     }
   }
 
+  Future<Response> putData(String uri, dynamic body,
+      {Map<String, String>? header}) async {
+    try {
+      if (Foundation.kDebugMode) {
+        print('====> API Call: $uri\nHeader: ${header ?? _mainHeaders}');
+        print('====> API Body: $body');
+      }
+
+      Http.Response _response = await Http.put(
+        Uri.parse("$urlBase$uri"),
+        body: jsonEncode(body),
+        headers: header ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> deleteData(String uri,
+      {int? id, Map<String, String>? header}) async {
+    try {
+      if (Foundation.kDebugMode) {
+        print(
+            '====> API Call: $uri/${id ?? ""}\nHeader: ${header ?? _mainHeaders}');
+      }
+
+      Http.Response _response = await Http.delete(
+        Uri.parse(id != null ? "$urlBase$uri/$id" : "$urlBase$uri"),
+        headers: header ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   Response handleResponse(Http.Response response, String uri) {
     dynamic _body;
     try {
-      _body = jsonDecode(response.body);
+      if (response.body != "") {
+        _body = jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
+      }
     } catch (e) {
       debugPrint('Error : ${e.toString()}');
     }

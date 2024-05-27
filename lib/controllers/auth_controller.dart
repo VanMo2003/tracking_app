@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/loading_controller.dart';
-import 'package:traking_app/models/user_model.dart';
+import 'package:traking_app/controllers/tracking_controller.dart';
+import 'package:traking_app/models/body/search_body.dart';
+import 'package:traking_app/models/body/user_body.dart';
+import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/networks/repository/auth_repo.dart';
-import 'package:traking_app/networks/response/token_response.dart';
+import 'package:traking_app/models/response/token_response.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 
 import '../helper/snackbar_helper.dart';
@@ -13,9 +16,11 @@ class AuthController extends GetxController implements GetxService {
 
   AuthController({required this.authRepo});
 
-  User? _user = null;
+  List<UserRes>? list;
 
-  User? get user => _user;
+  UserRes? _user;
+
+  UserRes? get user => _user;
 
   Future<int> login(String username, String password) async {
     Get.find<LoadingController>().loading();
@@ -24,28 +29,18 @@ class AuthController extends GetxController implements GetxService {
 
     if (response.statusCode == 200) {
       TokenResponse tokenResponse = TokenResponse.fromJson(response.body);
+
       authRepo.saveUserToken(tokenResponse.accessToken!);
-    } else {}
+    } else {
+      authRepo.removeUserToken();
+    }
 
     Get.find<LoadingController>().noLoading();
     update();
     return response.statusCode!;
   }
 
-  Future<int> getCurrentUser() async {
-    Response response = await authRepo.getCurrentUser();
-    if (response.statusCode == 200) {
-      _user = User.fromJson(response.body);
-    } else if (response.statusCode == 401) {
-      clearData();
-    } else {
-      showCustomSnackBar(response.statusText ?? "error");
-    }
-    update();
-    return response.statusCode!;
-  }
-
-  Future<int> registor(User user) async {
+  Future<int> registor(UserBody user) async {
     Response response = await authRepo.registor(user);
 
     if (response.statusCode == 200) {
@@ -57,7 +52,48 @@ class AuthController extends GetxController implements GetxService {
     return response.statusCode!;
   }
 
+  Future<int> getCurrentUser() async {
+    Response response = await authRepo.getCurrentUser();
+    if (response.statusCode == 200) {
+      _user = UserRes.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      clearData();
+    } else {
+      showCustomSnackBar("Đã xảy ra lỗi không xác định");
+    }
+    update();
+    return response.statusCode!;
+  }
+
+  Future<int> changeInfoUser(UserRes userNew) async {
+    Response response = await authRepo.changeInfoUser(userNew);
+    if (response.statusCode == 200) {
+      _user = UserRes.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      clearData();
+    } else {
+      showCustomSnackBar("Đã xảy ra lỗi không xác định");
+    }
+    update();
+    return response.statusCode!;
+  }
+
+  Future<int> logout() async {
+    Response response = await authRepo.logout();
+    if (response.statusCode == 200) {
+      authRepo.removeUserToken();
+    } else if (response.statusCode == 401) {
+      clearData();
+    } else {}
+    update();
+    return response.statusCode!;
+  }
+
   void clearData() {
     _user = null;
+  }
+
+  void clearListUser() {
+    list = null;
   }
 }
