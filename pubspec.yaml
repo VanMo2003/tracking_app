@@ -52,8 +52,9 @@ dev_dependencies:
   flutter_spinkit: ^5.2.1
   dropdown_button2: ^2.3.9
   http: ^0.13.5
-
-
+  salomon_bottom_bar: ^3.3.2
+  flutter_native_splash: ^2.4.0
+  intl: ^0.19.0
 
 
 # For information on the generic Dart part of this file, see the
@@ -71,6 +72,18 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+
+  fonts:
+    - family: NotoSerif
+      fonts:
+        - asset: assets/font/LatoRegular.ttf
+          weight: 400
+        - asset: assets/font/LatoMedium.ttf
+          weight: 500
+        - asset: assets/font/LatoBold.ttf
+          weight: 700
+        - asset: assets/font/Lato_Semibold.ttf
+          weight: 900
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

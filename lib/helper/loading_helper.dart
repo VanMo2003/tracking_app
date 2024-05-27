@@ -5,8 +5,6 @@ Future<void> animatedLoading() async {
   Get.find<LoadingController>().loading();
   await Future.delayed(
     const Duration(milliseconds: 1000),
-    () {
-      Get.find<LoadingController>().noLoading();
-    },
+    () {},
   );
 }

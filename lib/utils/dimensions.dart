@@ -90,4 +90,6 @@ class Dimensions {
   static const double NAVBAR_FONT_SIZE = 10.0;
 
   static const double NOTIFICATION_IMAGE_SIZE = 64.0;
+
+  static const int SIZE_OF_PAGE = 15;
 }

@@ -1,11 +1,11 @@
-class BirthPlace {
+class BirthPlaceBody {
   String? id;
   String? name;
   List<Districts>? districts;
 
-  BirthPlace({this.id, this.name, this.districts});
+  BirthPlaceBody({this.id, this.name, this.districts});
 
-  BirthPlace.fromJson(Map<String, dynamic> json) {
+  BirthPlaceBody.fromJson(Map<String, dynamic> json) {
     id = json['Id'];
     name = json['Name'];
     if (json['Districts'] != null) {

@@ -1,4 +1,4 @@
-class User {
+class UserBody {
   bool? active;
   String? birthPlace;
   bool? changePass;
@@ -13,22 +13,23 @@ class User {
   String? username;
   int? year;
 
-  User(
-      {this.active = true,
-      this.birthPlace,
-      this.changePass = true,
-      this.confirmPassword,
-      this.displayName,
-      this.email,
-      this.firstName,
-      this.gender,
-      this.lastName,
-      this.password,
-      this.university,
-      this.username,
-      this.year});
+  UserBody({
+    this.active = true,
+    this.birthPlace,
+    this.changePass = true,
+    this.confirmPassword,
+    this.displayName,
+    this.email,
+    this.firstName,
+    this.gender,
+    this.lastName,
+    this.password,
+    this.university,
+    this.username,
+    this.year,
+  });
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserBody.fromJson(Map<String, dynamic> json) {
     active = json['active'];
     birthPlace = json['birthPlace'];
     changePass = json['changePass'];
