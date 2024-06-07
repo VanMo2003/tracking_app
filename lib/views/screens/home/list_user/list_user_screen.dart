@@ -28,11 +28,11 @@ class _ListUserScreenState extends State<ListUserScreen> {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         debugPrint('haha');
-        Get.find<SearchByPageController>().updateSearchKey(++pageIndex);
         Future.delayed(
-          Duration(milliseconds: 1000),
+          const Duration(milliseconds: 1000),
           () {
-            Get.find<SearchByPageController>().getAllUser();
+            Get.find<SearchByPageController>()
+                .getAllUser(pageIndex: ++pageIndex);
           },
         );
       }
@@ -44,7 +44,7 @@ class _ListUserScreenState extends State<ListUserScreen> {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<SearchByPageController>(
       builder: (controller) {
-        List<UserRes>? list = controller.listResult;
+        List<UserRes> list = controller.listResult;
         if (list == []) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -52,9 +52,9 @@ class _ListUserScreenState extends State<ListUserScreen> {
         }
         return ListView.builder(
           controller: scrollController,
-          itemCount: list.length + 1,
+          itemCount: controller.isPageLast ? list.length : list.length + 1,
           itemBuilder: (context, index) {
-            if (index == list.length) {
+            if (index == list.length && !controller.isPageLast) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: Colors.blue,
@@ -62,14 +62,17 @@ class _ListUserScreenState extends State<ListUserScreen> {
               );
             }
             return Container(
-              color: Colors.amber,
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: size.height * 0.1,
-              width: double.infinity,
-              child: Center(
-                child: Text(list[index].displayName ?? "displayname"),
-              ),
-            );
+                color: Colors.amber,
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                height: size.height * 0.1,
+                width: double.infinity,
+                child: ListTile(
+                  leading: list[index].image != null
+                      ? Image.asset(list[index].image!)
+                      : const Icon(Icons.image),
+                  title: Text(list[index].displayName ?? "displayname"),
+                  subtitle: Text(list[index].email ?? "email"),
+                ));
           },
         );
       },

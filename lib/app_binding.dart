@@ -41,23 +41,12 @@ Future<void> binding() async {
 
   // repository
   Get.lazyPut(
-    () => AuthRepo(
-      apiClient: Get.find(),
-      sharedPreferences: Get.find(),
-    ),
-  );
+      () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   Get.lazyPut(
-    () => TrackingRepo(
-      apiClient: Get.find(),
-      sharedPreferences: Get.find(),
-    ),
-  );
-  Get.lazyPut(
-    () => SearchRepo(
-      apiClient: Get.find(),
-    ),
-  );
+      () => TrackingRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+
+  Get.lazyPut(() => SearchRepo(apiClient: Get.find()));
 
   // controller
   Get.lazyPut(() => SplashController());

@@ -63,4 +63,8 @@ class AuthRepo {
   Future<bool> removeUserToken() async {
     return await sharedPreferences.remove(AppConstant.TOKEN);
   }
+
+  Future<String?> getUserToken() async {
+    return sharedPreferences.getString(AppConstant.TOKEN);
+  }
 }
