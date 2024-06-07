@@ -20,19 +20,26 @@ class SearchByPageController extends GetxController implements GetxService {
 
   SearchBody? searchKey;
 
-  List<UserRes> listResult = [];
+  List<UserRes> _listResult = [];
 
-  List<UserRes>? get list {
-    return listResult;
+  List<UserRes> get listResult {
+    return _listResult;
   }
 
-  Future<int> getAllUser() async {
+  bool _isPageLast = false;
+
+  bool get isPageLast {
+    return _isPageLast;
+  }
+
+  Future<int> getAllUser({int? pageIndex}) async {
+    updateSearchKey(pageIndex ?? 1);
     Response response = await searchRepo.getAll(searchKey!);
     if (response.statusCode == 200) {
       for (var element in response.body["content"]) {
         var user = UserRes.fromJson(element);
         debugPrint('$user');
-        listResult.add(user);
+        _listResult.add(user);
       }
     } else if (response.statusCode == 401) {
       clearData();
@@ -50,10 +57,9 @@ class SearchByPageController extends GetxController implements GetxService {
       size: Dimensions.SIZE_OF_PAGE,
       status: 0,
     );
-    update();
   }
 
   void clearData() {
-    listResult = [];
+    _listResult = [];
   }
 }

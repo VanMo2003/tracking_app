@@ -30,6 +30,6 @@ class RouteHelper {
     GetPage(name: signUp, page: () => const SignUpScreen()),
     GetPage(name: home, page: () => const HomeScreen()),
     GetPage(name: infoUser, page: () => InfoUserScreen()),
-    GetPage(name: changePassword, page: () => ChangePassword()),
+    GetPage(name: changePassword, page: () => const ChangePassword()),
   ];
 }

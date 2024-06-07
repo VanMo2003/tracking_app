@@ -1,11 +1,8 @@
 import 'dart:collection';
 import 'dart:ui';
 import 'package:get/get.dart';
-import 'package:traking_app/networks/repository/auth_repo.dart';
-import 'package:traking_app/utils/app_constant.dart';
 import 'package:traking_app/utils/language/st_en_us.dart';
 import 'package:traking_app/utils/language/st_vi_vn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/langue_controller.dart';
 

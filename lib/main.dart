@@ -4,7 +4,6 @@ import 'package:traking_app/app_binding.dart';
 import 'package:traking_app/controllers/langue_controller.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/services/language_service.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:traking_app/controllers/theme_controller.dart';
 
 import 'theme/dark_theme.dart';

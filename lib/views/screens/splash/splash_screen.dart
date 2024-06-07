@@ -52,10 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() async {
-    String? checkTokenLogin = Get.find<AuthController>()
-        .authRepo
-        .sharedPreferences
-        .getString(AppConstant.TOKEN);
+    String? checkTokenLogin =
+        await Get.find<AuthController>().authRepo.getUserToken();
     if (checkTokenLogin != null) {
       Get.find<AuthController>().getCurrentUser().then(
             (value) => {
