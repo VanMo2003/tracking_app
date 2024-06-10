@@ -91,5 +91,8 @@ class Dimensions {
 
   static const double NOTIFICATION_IMAGE_SIZE = 64.0;
 
-  static const int SIZE_OF_PAGE = 15;
+  static const int SIZE_OF_PAGE_USERS = 15;
+  static const int SIZE_OF_PAGE_POSTS = 10;
+  static const int MIN_LENGTH_PASSWORD = 3;
+  static const int MAX_LENGTH_PASSWORD = 20;
 }

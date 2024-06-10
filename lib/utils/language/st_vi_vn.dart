@@ -1,3 +1,4 @@
+import '../dimensions.dart';
 import 'key_language.dart';
 
 const Map<String, String> vi = {
@@ -25,15 +26,38 @@ const Map<String, String> vi = {
   KeyLanguage.add: 'Thêm',
   KeyLanguage.update: 'Lưu thay đổi',
   KeyLanguage.cancel: 'Hủy',
+  KeyLanguage.yes: 'Có',
+  KeyLanguage.no: 'Không',
   KeyLanguage.infoUser: 'Thông tin người dùng',
   KeyLanguage.notification: 'Thông báo',
   KeyLanguage.changePassword: 'Thay đổi mật khẩu',
+  KeyLanguage.posts: 'Tất cả bài viết',
+  KeyLanguage.addPost: 'Thêm bài viết',
+  KeyLanguage.like: 'Thích',
+  KeyLanguage.comment: 'Bình luận',
   KeyLanguage.logout: 'Đăng xuất',
+  KeyLanguage.logoutQuestion: 'Bạn có muốn đăng xuất?',
   KeyLanguage.dark: 'Tối',
   KeyLanguage.light: 'Sáng',
+  KeyLanguage.addSuccess: 'Bạn đã thêm thành công',
+  KeyLanguage.updateSuccess: 'Bạn đã cập nhật thành công',
+  KeyLanguage.deleteSuccess: 'Bạn đã xóa thành công',
   KeyLanguage.errorFillInAllInfo: 'Bạn cần điền đầy đủ thông tin',
   KeyLanguage.errorAnUnknow: 'Lỗi không xác định',
+  KeyLanguage.errorUnauthentication: 'Bạn không có quyền truy cập',
   KeyLanguage.errorWrongUsernameOrPassword:
       'Tài khoản hoặc mật khẩu không chính xác',
   KeyLanguage.errorPasswordsDuplicate: 'Mật khẩu phải trùng nhau',
+  KeyLanguage.male: 'Nam',
+  KeyLanguage.female: 'Nữ',
+  KeyLanguage.save: 'Lưu thay đổi',
+  KeyLanguage.listEmpty: 'Danh sách trống',
+  KeyLanguage.validNull: 'Nhập thông tin',
+  KeyLanguage.validEmail: 'Sai định dạng email (example@gmail.com) ',
+  KeyLanguage.validPassword:
+      'Mật khẩu phải từ ${Dimensions.MIN_LENGTH_PASSWORD} đến ${Dimensions.MAX_LENGTH_PASSWORD} ký tự',
+  KeyLanguage.trackingContent: "Nội dung theo dõi",
+  KeyLanguage.trackingUpdate: "Chỉnh sửa Theo dõi",
+  KeyLanguage.attendanceSuccess: "Điểm danh thành công",
+  KeyLanguage.attendanced: "Hôm nay bạn đã điểm danh",
 };

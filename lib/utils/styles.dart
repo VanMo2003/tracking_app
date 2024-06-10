@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traking_app/utils/color_resources.dart';
 
 import 'dimensions.dart';
 
@@ -24,4 +25,5 @@ final robotoBlack = TextStyle(
   fontFamily: 'NotoSerif',
   fontWeight: FontWeight.w900,
   fontSize: Dimensions.fontSizeDefault,
+  color: ColorResources.getBlackColor(),
 );

@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
+import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/widgets/dialog_widget.dart';
-import 'package:traking_app/views/widgets/text_field_widget.dart';
+import 'package:traking_app/views/widgets/dialog_add_widget.dart';
 import 'package:get/get.dart';
 
-class InfoUserScreen extends StatelessWidget {
-  InfoUserScreen({super.key});
+class InfoUserScreen extends StatefulWidget {
+  const InfoUserScreen({super.key});
+
+  @override
+  State<InfoUserScreen> createState() => _InfoUserScreenState();
+}
+
+class _InfoUserScreenState extends State<InfoUserScreen> {
   final TextEditingController editingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Thông tin người dùng"),
+        title: Text(KeyLanguage.infoUser.tr),
         centerTitle: true,
       ),
       body: GetBuilder<AuthController>(
@@ -27,11 +34,20 @@ class InfoUserScreen extends StatelessWidget {
           }
           return Column(
             children: [
-              showInfo(context, "email", user.email!, editingController, user),
-              showInfo(context, "display name", user.displayName!,
-                  editingController, user),
-              showInfo(context, "university", user.university!,
-                  editingController, user),
+              showInfo(context, KeyLanguage.email.tr,
+                  user.email ?? "example@gmail.com", editingController, user),
+              showInfo(
+                  context,
+                  KeyLanguage.displayName.tr,
+                  user.displayName ?? KeyLanguage.displayName.tr,
+                  editingController,
+                  user),
+              showInfo(
+                  context,
+                  KeyLanguage.university.tr,
+                  user.university ?? KeyLanguage.university.tr,
+                  editingController,
+                  user),
             ],
           );
         },
@@ -63,17 +79,17 @@ class InfoUserScreen extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) {
-              return showDialogCustom(
+              return showDialogAddWidget(
                 hintText: label,
-                textButton: "Lưu thay đổi",
+                textButton: KeyLanguage.save.tr,
                 context: context,
                 controller: controller,
                 onAdd: () {
-                  if (label == "email") {
+                  if (label == KeyLanguage.email.tr) {
                     user.email = controller.text;
-                  } else if (label == "display name") {
+                  } else if (label == KeyLanguage.displayName.tr) {
                     user.displayName = controller.text;
-                  } else if (label == "university") {
+                  } else if (label == KeyLanguage.university.tr) {
                     user.university = controller.text;
                   }
 

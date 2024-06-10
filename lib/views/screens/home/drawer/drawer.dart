@@ -1,21 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/screens/home/drawer/widgets/custom_button.dart';
-import 'package:traking_app/views/screens/home/drawer/widgets/dropdown_language.dart';
+import 'package:traking_app/views/screens/home/drawer/widgets/button_widget.dart';
+import 'package:traking_app/helper/dropdown_language.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/widgets/loading_widget.dart';
+import 'package:traking_app/views/widgets/dialog_add_widget.dart';
 
-import '../../../../../controllers/auth_controller.dart';
+import '../../../../controllers/auth_controller.dart';
 
-import '../../../../../controllers/loading_controller.dart';
-import '../../../../../controllers/theme_controller.dart';
-import '../../../../../helper/loading_helper.dart';
-import '../../../../../utils/color_resources.dart';
-import '../../../../../utils/dimensions.dart';
-import '../../../../../utils/styles.dart';
+import '../../../../controllers/post_controller.dart';
+import '../../../../controllers/theme_controller.dart';
+import '../../../../helper/loading_helper.dart';
+import '../../../../models/body/posts/content.dart';
+import '../../../../utils/color_resources.dart';
+import '../../../../utils/dimensions.dart';
+import '../../../../utils/icons.dart';
+import '../../../../utils/styles.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key, required this.scaffoldKey});
@@ -26,11 +30,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  TextEditingController editingController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-  }
+  TextEditingController contentPostController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         height: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                       Text(
-                        controller.user!.username ?? "username",
+                        controller.user!.username ?? KeyLanguage.username.tr,
                         style: robotoBold.copyWith(
                           color: ColorResources.getWhiteColor(),
                           fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                         ),
                       ),
                       Text(
-                        "( ${controller.user!.displayName ?? "display name"} )",
+                        "( ${controller.user!.displayName ?? KeyLanguage.displayName.tr} )",
                         style: robotoRegular.copyWith(
                           color:
                               ColorResources.getBlackColor().withOpacity(0.5),
@@ -102,46 +102,83 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     children: [
                       Column(
                         children: [
-                          CustomButton(
+                          ButtonDrawerWidget(
                             label: KeyLanguage.infoUser.tr,
                             onTap: () {
-                              Get.toNamed(RouteHelper.getInfoUser());
+                              Get.toNamed(RouteHelper.getInfoUserRoute());
                             },
                           ),
-                          CustomButton(
-                            label: KeyLanguage.changePassword.tr,
-                            onTap: () {
-                              Get.toNamed(RouteHelper.getChangePassword());
+                          PopupMenuButton<String>(
+                            onSelected: (String item) {
+                              switch (item) {
+                                case 'settings':
+                                  // Chuyển đến màn hình cài đặt
+                                  break;
+                                case 'help':
+                                  // Hiển thị hộp thoại trợ giúp
+                                  break;
+                                case 'logout':
+                                  // Thực hiện hành động đăng xuất
+                                  break;
+                              }
                             },
+                            itemBuilder: (BuildContext context) {
+                              return _menuItems(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: Dimensions.PADDING_SIZE_SMALL),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.RADIUS_SIZE_SMALL),
+                                color: ColorResources.getGreyColor()
+                                    .withOpacity(0.5),
+                              ),
+                              height: 50,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Bài viết",
+                                    style: robotoBold,
+                                  ),
+                                  Image.asset(
+                                    IconUtil.back,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          CustomButton(
+                          ButtonDrawerWidget(
                             label: Get.find<ThemeController>().darkTheme
                                 ? KeyLanguage.dark.tr
                                 : KeyLanguage.light.tr,
                             onTap: () async {
                               await animatedLoading();
                               Get.find<ThemeController>().toggleTheme();
-                              Get.find<LoadingController>().noLoading();
+                              animatedNoLoading();
                               widget.scaffoldKey.currentState?.closeDrawer();
                             },
                           ),
                         ],
                       ),
-                      CustomButton(
+                      ButtonDrawerWidget(
                         label: KeyLanguage.logout.tr,
                         onTap: () {
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: const Text('Đăng xuất'),
-                                content: const Text('Bạn có muốn đăng xuất?'),
+                                title: Text(KeyLanguage.logout.tr),
+                                content: Text(KeyLanguage.logoutQuestion.tr),
                                 actions: <Widget>[
                                   ElevatedButton(
                                     onPressed: () {
                                       Navigator.of(context).pop(false);
                                     },
-                                    child: const Text('Hủy'),
+                                    child: Text(KeyLanguage.cancel.tr),
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
@@ -149,7 +186,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                       //     'SystemNavigator.pop'); // thoát app
                                       logout();
                                     },
-                                    child: const Text('Có'),
+                                    child: Text(KeyLanguage.yes.tr),
                                   ),
                                 ],
                               );
@@ -184,11 +221,57 @@ class _CustomDrawerState extends State<CustomDrawer> {
         if (value == 200) {
           Get.offNamed(RouteHelper.getSignInRoute());
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Đã có lỗi xảy ra vui lòng thử lại")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(KeyLanguage.errorAnUnknow.tr),
+            ),
+          );
         }
       },
     );
-    Get.find<LoadingController>().noLoading();
+    animatedNoLoading();
+  }
+
+  List<PopupMenuEntry<String>> _menuItems(BuildContext context) {
+    return <PopupMenuEntry<String>>[
+      PopupMenuItem<String>(
+        value: 'settings',
+        child: ButtonDrawerWidget(
+          label: KeyLanguage.posts.tr,
+          onTap: () {
+            Get.toNamed(RouteHelper.getPostRoute());
+          },
+        ),
+      ),
+      PopupMenuItem<String>(
+        value: 'settings',
+        child: ButtonDrawerWidget(
+          label: KeyLanguage.addPost.tr,
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return showDialogAddWidget(
+                  context: context,
+                  onAdd: () {
+                    Content content = Content(
+                      id: 0,
+                      date: DateTime.now().millisecondsSinceEpoch,
+                      content: contentPostController.text,
+                      user: Get.find<AuthController>().user,
+                    );
+                    widget.scaffoldKey.currentState?.closeDrawer();
+                    Get.find<PostController>().addContent(content);
+                  },
+                  controller: contentPostController,
+                  textButton: KeyLanguage.add.tr,
+                  hintText: "Nội dung bài viết",
+                );
+              },
+            );
+          },
+        ),
+      ),
+    ];
   }
 }

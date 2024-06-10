@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/controllers/loading_controller.dart';
+import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
 
 import '../../../../helper/loading_helper.dart';
@@ -18,7 +18,8 @@ class AttendanceScreen extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           await animatedLoading();
-          Get.find<LoadingController>().noLoading();
+          Get.find<AuthController>().checkIn();
+          animatedNoLoading();
         },
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -31,7 +32,8 @@ class AttendanceScreen extends StatelessWidget {
           child: Center(
             child: Text(
               KeyLanguage.attendance.tr,
-              style: robotoMedium.copyWith(fontSize: 18, color: Colors.white),
+              style: robotoMedium.copyWith(
+                  fontSize: 18, color: ColorResources.getWhiteColor()),
             ),
           ),
         ),

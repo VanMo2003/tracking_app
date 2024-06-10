@@ -1,12 +1,12 @@
-class RoleBody {
+class Role {
   int? id;
   String? name;
   String? description;
   String? authority;
 
-  RoleBody({this.id, this.name, this.description, this.authority});
+  Role({this.id, this.name, this.description, this.authority});
 
-  RoleBody.fromJson(Map<String, dynamic> json) {
+  Role.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

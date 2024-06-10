@@ -7,7 +7,7 @@ import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/styles.dart';
 import 'package:get/get.dart';
 
-import '../../../../../services/language_service.dart';
+import '../services/language_service.dart';
 
 class DropdownLangue extends StatefulWidget {
   const DropdownLangue({super.key});

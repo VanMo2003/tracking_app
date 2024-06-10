@@ -7,7 +7,7 @@ class Notifications extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Thay đổi mật khẩu"),
+        title: const Text("Thông báo"),
         centerTitle: true,
       ),
     );

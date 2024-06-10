@@ -5,8 +5,8 @@ import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/styles.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton(
+class ButtonDrawerWidget extends StatelessWidget {
+  const ButtonDrawerWidget(
       {super.key, this.label, required this.onTap, this.child, this.icon});
 
   final String? label;

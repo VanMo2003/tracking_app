@@ -1,4 +1,4 @@
-import 'package:traking_app/models/body/role_body.dart';
+import 'package:traking_app/models/body/role.dart';
 
 class UserRes {
   int? id;
@@ -14,7 +14,7 @@ class UserRes {
   String? birthPlace;
   String? email;
   bool? hasPhoto;
-  List<RoleBody>? roles;
+  List<Role>? roles;
   String? gender;
   String? university;
   int? year;
@@ -64,9 +64,9 @@ class UserRes {
     email = json['email'];
     hasPhoto = json['hasPhoto'];
     if (json['roles'] != null) {
-      roles = <RoleBody>[];
+      roles = <Role>[];
       json['roles'].forEach((v) {
-        roles!.add(new RoleBody.fromJson(v));
+        roles!.add(Role.fromJson(v));
       });
     }
     gender = json['gender'];
@@ -80,31 +80,31 @@ class UserRes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    data['username'] = this.username;
-    data['password'] = this.password;
-    data['confirmPassword'] = this.confirmPassword;
-    data['changePass'] = this.changePass;
-    data['active'] = this.active;
-    data['lastName'] = this.lastName;
-    data['firstName'] = this.firstName;
-    data['dob'] = this.dob;
-    data['birthPlace'] = this.birthPlace;
-    data['email'] = this.email;
-    data['hasPhoto'] = this.hasPhoto;
-    if (this.roles != null) {
-      data['roles'] = this.roles!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['displayName'] = displayName;
+    data['username'] = username;
+    data['password'] = password;
+    data['confirmPassword'] = confirmPassword;
+    data['changePass'] = changePass;
+    data['active'] = active;
+    data['lastName'] = lastName;
+    data['firstName'] = firstName;
+    data['dob'] = dob;
+    data['birthPlace'] = birthPlace;
+    data['email'] = email;
+    data['hasPhoto'] = hasPhoto;
+    if (roles != null) {
+      data['roles'] = roles!.map((v) => v.toJson()).toList();
     }
-    data['gender'] = this.gender;
-    data['university'] = this.university;
-    data['year'] = this.year;
-    data['countDayCheckin'] = this.countDayCheckin;
-    data['countDayTracking'] = this.countDayTracking;
-    data['tokenDevice'] = this.tokenDevice;
-    data['image'] = this.image;
-    data['setPassword'] = this.setPassword;
+    data['gender'] = gender;
+    data['university'] = university;
+    data['year'] = year;
+    data['countDayCheckin'] = countDayCheckin;
+    data['countDayTracking'] = countDayTracking;
+    data['tokenDevice'] = tokenDevice;
+    data['image'] = image;
+    data['setPassword'] = setPassword;
     return data;
   }
 }

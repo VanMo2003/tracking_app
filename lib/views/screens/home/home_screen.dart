@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
-import 'package:traking_app/controllers/theme_controller.dart';
+import 'package:traking_app/controllers/search_controller.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/views/screens/home/attendance/attendance_screen.dart';
@@ -13,7 +13,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../../controllers/tracking_controller.dart';
 import '../../../utils/color_resources.dart';
-import 'drawer/widgets/drawer_widget.dart';
+import 'drawer/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,13 +42,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<TrackingController>().getAllByUser();
-    Get.find<AuthController>().getCurrentUser();
+    Get.find<TrackingController>()
+      ..clearData()
+      ..getAllByUser();
+    Get.find<AuthController>()
+      ..clearData()
+      ..getCurrentUser();
+    Get.find<SearchByPageController>()
+      ..clearData()
+      ..getAllUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.find<TrackingController>().clearData();
+    Get.find<AuthController>().clearData();
+    Get.find<SearchByPageController>().clearData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return loading(
+    return loadingWidget(
       Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(

@@ -62,6 +62,11 @@ class DateConverter {
     return DateFormat('HH:mm').parse(time);
   }
 
+  static String convertTimeStampToString(int timestamp) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return formatDate(dateTime);
+  }
+
   static bool isAvailable(String start, String end, {DateTime? time}) {
     DateTime _currentTime;
     if (time != null) {

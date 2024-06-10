@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:traking_app/models/body/search_body.dart';
 import 'package:traking_app/models/request/token_request.dart';
-import 'package:traking_app/models/body/user_body.dart';
+import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/networks/api/api_client.dart';
 import 'package:traking_app/utils/app_constant.dart';
@@ -36,7 +35,7 @@ class AuthRepo {
     );
   }
 
-  Future<Response> registor(UserBody user) async {
+  Future<Response> registor(User user) async {
     return await apiClient.postData(AppConstant.REGISTOR_URI, user.toJson());
   }
 
@@ -50,6 +49,13 @@ class AuthRepo {
 
   Future<Response> logout() async {
     return await apiClient.deleteData(AppConstant.LOG_OUT);
+  }
+
+  Future<Response> checkIn(String ip) async {
+    return await apiClient.getData(
+      AppConstant.CHECK_IN,
+      query: {"ip": ip},
+    );
   }
 
   Future<bool> saveUserToken(String token) async {
