@@ -4,18 +4,15 @@ import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/helper/route_helper.dart';
-import 'package:traking_app/models/body/user_body.dart';
-import 'package:traking_app/services/birth_place_service.dart';
+import 'package:traking_app/models/body/user.dart';
+import 'package:traking_app/utils/app_constant.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/widgets/radio_button_gender.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import '../../../controllers/loading_controller.dart';
 import '../../../helper/loading_helper.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/styles.dart';
-import '../../widgets/loading_widget.dart';
 import '../../widgets/text_field_widget.dart';
 
 enum Gender { male, female }
@@ -40,6 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   var isLoading = false.obs;
 
+  final key = GlobalKey<FormState>();
+
   String? selectedBirthPlace;
   Gender? _character = Gender.male;
 
@@ -59,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var safePadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         height: double.infinity,
         child: SingleChildScrollView(
           child: Padding(
@@ -70,128 +69,161 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.05,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        KeyLanguage.signUp.tr,
-                        style: robotoBold.copyWith(
-                          fontSize: 40,
-                          color: ColorResources.getBlackColor(),
+                  child: Form(
+                    key: key,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          KeyLanguage.signUp.tr,
+                          style: robotoBold.copyWith(
+                            fontSize: 40,
+                            color: ColorResources.getBlackColor(),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                      TextFieldWidget(
-                        controller: _usernameController,
-                        labelText: KeyLanguage.username.tr,
-                        isPasswordField: false,
-                      ),
-                      TextFieldWidget(
-                        controller: _passwordController,
-                        labelText: KeyLanguage.password.tr,
-                        isPasswordField: true,
-                      ),
-                      TextFieldWidget(
-                        controller: _comfirmPasswordController,
-                        labelText: KeyLanguage.comfirmPassword.tr,
-                        isPasswordField: true,
-                      ),
-                      TextFieldWidget(
-                        controller: _emailController,
-                        labelText: KeyLanguage.email.tr,
-                        isPasswordField: false,
-                      ),
-                      TextFieldWidget(
-                        controller: _displaynameController,
-                        labelText: KeyLanguage.displayName.tr,
-                        isPasswordField: false,
-                      ),
-                      TextFieldWidget(
-                        controller: _fullNameController,
-                        labelText: KeyLanguage.fullname.tr,
-                        isPasswordField: false,
-                      ),
-                      TextFieldWidget(
-                        controller: _universityController,
-                        labelText: KeyLanguage.university.tr,
-                        isPasswordField: false,
-                      ),
-                      TextFieldWidget(
-                        controller: _yearOldController,
-                        labelText: KeyLanguage.age.tr,
-                        isPasswordField: false,
-                      ),
-                      birthPlaceDropdown(
-                        BirthPlaceService.birthPlaces,
-                        KeyLanguage.birthPlace.tr,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: Dimensions.PADDING_SIZE_SMALL,
-                            left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Giới tính : ",
-                              style: TextStyle(
-                                color: ColorResources.getBlackColor(),
-                                fontSize: 16,
+                        const SizedBox(height: 30),
+                        TextFieldWidget(
+                          controller: _usernameController,
+                          labelText: KeyLanguage.username.tr,
+                          isPasswordField: false,
+                        ),
+                        TextFieldWidget(
+                          controller: _passwordController,
+                          labelText: KeyLanguage.password.tr,
+                          isPasswordField: true,
+                          validator: (value) {
+                            if (GetUtils.isNull(value != "" ? value : null)) {
+                              return KeyLanguage.validNull.tr;
+                            }
+                            if (!GetUtils.isLengthBetween(value!, 5, 20)) {
+                              return KeyLanguage.validPassword.tr;
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFieldWidget(
+                          controller: _comfirmPasswordController,
+                          labelText: KeyLanguage.comfirmPassword.tr,
+                          isPasswordField: true,
+                          validator: (value) {
+                            if (GetUtils.isNull(value != "" ? value : null)) {
+                              return KeyLanguage.validNull.tr;
+                            }
+                            if (!GetUtils.isLengthBetween(
+                              value!,
+                              Dimensions.MIN_LENGTH_PASSWORD,
+                              Dimensions.MAX_LENGTH_PASSWORD,
+                            )) {
+                              return KeyLanguage.validPassword.tr;
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFieldWidget(
+                          controller: _emailController,
+                          labelText: KeyLanguage.email.tr,
+                          isPasswordField: false,
+                          validator: (value) {
+                            if (GetUtils.isNull(value != "" ? value : null)) {
+                              return KeyLanguage.validNull.tr;
+                            }
+                            if (!GetUtils.isEmail(value!)) {
+                              return KeyLanguage.validEmail.tr;
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFieldWidget(
+                          controller: _displaynameController,
+                          labelText: KeyLanguage.displayName.tr,
+                          isPasswordField: false,
+                        ),
+                        TextFieldWidget(
+                          controller: _fullNameController,
+                          labelText: KeyLanguage.fullname.tr,
+                          isPasswordField: false,
+                        ),
+                        TextFieldWidget(
+                          controller: _universityController,
+                          labelText: KeyLanguage.university.tr,
+                          isPasswordField: false,
+                        ),
+                        TextFieldWidget(
+                          controller: _yearOldController,
+                          labelText: KeyLanguage.age.tr,
+                          isPasswordField: false,
+                        ),
+                        birthPlaceDropdown(
+                          AppConstant.birthPlaces,
+                          KeyLanguage.birthPlace.tr,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: Dimensions.PADDING_SIZE_SMALL,
+                              left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${KeyLanguage.gender.tr} : ",
+                                style: TextStyle(
+                                  color: ColorResources.getBlackColor(),
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 70,
+                                width: double.infinity,
+                                child: radioGender(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        GestureDetector(
+                          onTap: () {
+                            signUp();
+                          },
+                          child: Container(
+                            height: size.height * 0.06,
+                            decoration: BoxDecoration(
+                              color: ColorResources.getPrimaryColor(),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                KeyLanguage.signUp.tr,
+                                style: robotoMedium.copyWith(
+                                    fontSize: 18, color: Colors.white),
                               ),
                             ),
-                            SizedBox(
-                              height: 70,
-                              width: double.infinity,
-                              child: radioGender(),
-                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(KeyLanguage.questionSignIn.tr),
+                            const SizedBox(width: 5),
+                            GestureDetector(
+                              onTap: () async {
+                                await animatedLoading();
+                                Get.offNamed(RouteHelper.signIn);
+                                animatedNoLoading();
+                              },
+                              child: Text(
+                                KeyLanguage.signIn.tr,
+                                style: TextStyle(
+                                  color: ColorResources.getPrimaryColor()
+                                      .withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                      GestureDetector(
-                        onTap: () async {
-                          await animatedLoading();
-                          signUp();
-                        },
-                        child: Container(
-                          height: size.height * 0.06,
-                          decoration: BoxDecoration(
-                            color: ColorResources.getPrimaryColor(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              KeyLanguage.signUp.tr,
-                              style: robotoMedium.copyWith(
-                                  fontSize: 18, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(KeyLanguage.questionSignIn.tr),
-                          const SizedBox(width: 5),
-                          GestureDetector(
-                            onTap: () async {
-                              await animatedLoading();
-                              Get.offNamed(RouteHelper.signIn);
-                              Get.find<LoadingController>().noLoading();
-                            },
-                            child: Text(
-                              KeyLanguage.signIn.tr,
-                              style: TextStyle(
-                                color: ColorResources.getPrimaryColor()
-                                    .withOpacity(0.8),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 GetBuilder<LoadingController>(
@@ -223,7 +255,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void signUp() {
+  void signUp() async {
     String username = _usernameController.text;
     String password = _passwordController.text;
     String comfirmPassword = _comfirmPasswordController.text;
@@ -233,23 +265,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String university = _universityController.text;
     String age = _yearOldController.text;
 
-    if (username.isEmpty ||
-        password.isEmpty ||
-        comfirmPassword.isEmpty ||
-        comfirmPassword.isEmpty ||
-        email.isEmpty ||
-        displayName.isEmpty ||
-        fullname.isEmpty ||
-        university.isEmpty ||
-        age.isEmpty) {
-      var snackBar = SnackBar(content: Text(KeyLanguage.errorFillInAllInfo.tr));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    if (!key.currentState!.validate()) {
     } else if (password != comfirmPassword) {
       var snackBar =
           SnackBar(content: Text(KeyLanguage.errorPasswordsDuplicate.tr));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
-      UserBody user = UserBody(
+      await animatedLoading();
+
+      User user = User(
         birthPlace: selectedBirthPlace,
         username: username,
         password: password,
@@ -258,13 +282,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         displayName: displayName,
         firstName: splitFirstName(fullname),
         lastName: splitLastName(fullname),
-        gender: _character == Gender.male ? "Nam" : "Nữ",
+        gender: _character == Gender.male
+            ? KeyLanguage.male.tr
+            : KeyLanguage.female.tr,
         university: university,
         year: int.parse(age),
       );
       Get.find<AuthController>().registor(user);
     }
-    Get.find<LoadingController>().noLoading();
+    animatedNoLoading();
   }
 
   String splitFirstName(String fullname) {
@@ -282,7 +308,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: <Widget>[
         Expanded(
           child: ListTile(
-            title: const Text('Nam'),
+            title: Text(KeyLanguage.male.tr),
             leading: Radio<Gender>(
               value: Gender.male,
               groupValue: _character,
@@ -296,7 +322,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         Expanded(
           child: ListTile(
-            title: const Text('Nữ'),
+            title: Text(KeyLanguage.female.tr),
             leading: Radio<Gender>(
               value: Gender.female,
               groupValue: _character,
@@ -322,10 +348,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           isExpanded: true,
           hint: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.list,
                 size: 18,
-                color: Colors.black,
+                color: ColorResources.getBlackColor(),
               ),
               const SizedBox(
                 width: 4,
@@ -333,10 +359,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Expanded(
                 child: Text(
                   labelText,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: ColorResources.getBlackColor(),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -370,7 +396,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: Colors.black26,
+                color: ColorResources.getBlackColor().withOpacity(0.5),
               ),
               color: ColorResources.getWhiteColor(),
             ),

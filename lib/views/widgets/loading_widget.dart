@@ -5,7 +5,7 @@ import "package:get/get.dart";
 
 import '../../controllers/loading_controller.dart';
 
-Widget loading(Widget child) {
+Widget loadingWidget(Widget child) {
   return Stack(
     children: [
       child,
@@ -28,9 +28,3 @@ Widget loading(Widget child) {
     ],
   );
 }
-
-
-// SpinKitSquareCircle(
-//   color: ColorResources.getPrimaryColor(),
-//   size: 50.0,
-// );

@@ -1,3 +1,5 @@
+import 'package:traking_app/utils/dimensions.dart';
+
 import 'key_language.dart';
 
 const Map<String, String> en = {
@@ -25,14 +27,37 @@ const Map<String, String> en = {
   KeyLanguage.add: 'Add',
   KeyLanguage.update: 'Update',
   KeyLanguage.cancel: 'Cancel',
+  KeyLanguage.yes: 'Yes',
+  KeyLanguage.no: 'No',
   KeyLanguage.infoUser: 'User Infomation',
   KeyLanguage.notification: 'Notification',
   KeyLanguage.changePassword: 'Change Password',
+  KeyLanguage.posts: 'All Post',
+  KeyLanguage.addPost: 'Add Post',
+  KeyLanguage.like: 'Like',
+  KeyLanguage.comment: 'Comment',
   KeyLanguage.logout: 'Logout',
+  KeyLanguage.logoutQuestion: 'Do you want to log out?',
   KeyLanguage.dark: 'Dark',
   KeyLanguage.light: 'Light',
+  KeyLanguage.addSuccess: 'You have added successfully',
+  KeyLanguage.updateSuccess: 'You have updated successfully',
+  KeyLanguage.deleteSuccess: 'You have deleted successfully',
   KeyLanguage.errorFillInAllInfo: 'You need to fill in all information',
   KeyLanguage.errorAnUnknow: 'An unknown error',
   KeyLanguage.errorWrongUsernameOrPassword: 'Account or password is incorrect',
+  KeyLanguage.errorUnauthentication: 'You don\'t have access',
   KeyLanguage.errorPasswordsDuplicate: 'Passwords must match',
+  KeyLanguage.male: 'Male',
+  KeyLanguage.female: 'Female',
+  KeyLanguage.save: 'Save Changes',
+  KeyLanguage.listEmpty: 'List Empty',
+  KeyLanguage.validNull: 'Enter information',
+  KeyLanguage.validEmail: 'Wrong email format (example@gmail.com)',
+  KeyLanguage.validPassword:
+      'Password must be between ${Dimensions.MIN_LENGTH_PASSWORD} and ${Dimensions.MAX_LENGTH_PASSWORD} characters long',
+  KeyLanguage.trackingContent: "Tracking Content",
+  KeyLanguage.trackingUpdate: "Tracking Update",
+  KeyLanguage.attendanceSuccess: "Successful attendance",
+  KeyLanguage.attendanced: "Today you took attendance",
 };

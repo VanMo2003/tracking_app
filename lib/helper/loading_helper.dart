@@ -8,3 +8,7 @@ Future<void> animatedLoading() async {
     () {},
   );
 }
+
+Future<void> animatedNoLoading() async {
+  Get.find<LoadingController>().noLoading();
+}

@@ -5,12 +5,13 @@ class TokenRequest {
   String? grantType;
   String? clientSecret;
 
-  TokenRequest(
-      {this.username,
-      this.password,
-      this.clientId,
-      this.grantType,
-      this.clientSecret});
+  TokenRequest({
+    this.username,
+    this.password,
+    this.clientId,
+    this.grantType,
+    this.clientSecret,
+  });
 
   TokenRequest.fromJson(Map<String, dynamic> json) {
     username = json['username'];
@@ -21,12 +22,12 @@ class TokenRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['password'] = this.password;
-    data['client_id'] = this.clientId;
-    data['grant_type'] = this.grantType;
-    data['client_secret'] = this.clientSecret;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['username'] = username;
+    data['password'] = password;
+    data['client_id'] = clientId;
+    data['grant_type'] = grantType;
+    data['client_secret'] = clientSecret;
     return data;
   }
 }

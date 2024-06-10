@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/models/body/search_body.dart';
+import 'package:traking_app/models/body/search.dart';
 import 'package:traking_app/networks/repository/search_repo.dart';
 import 'package:traking_app/utils/dimensions.dart';
 
@@ -10,21 +9,19 @@ class SearchByPageController extends GetxController implements GetxService {
   final SearchRepo searchRepo;
 
   SearchByPageController({required this.searchRepo}) {
-    searchKey = SearchBody(
+    searchKey = Search(
       keyWord: "",
       pageIndex: 1,
-      size: Dimensions.SIZE_OF_PAGE,
+      size: Dimensions.SIZE_OF_PAGE_USERS,
       status: 0,
     );
   }
 
-  SearchBody? searchKey;
+  Search? searchKey;
 
-  List<UserRes> _listResult = [];
+  List<dynamic>? _listResult;
 
-  List<UserRes> get listResult {
-    return _listResult;
-  }
+  List<dynamic>? get listResult => _listResult;
 
   bool _isPageLast = false;
 
@@ -36,11 +33,13 @@ class SearchByPageController extends GetxController implements GetxService {
     updateSearchKey(pageIndex ?? 1);
     Response response = await searchRepo.getAll(searchKey!);
     if (response.statusCode == 200) {
+      _listResult ??= [];
       for (var element in response.body["content"]) {
-        var user = UserRes.fromJson(element);
-        debugPrint('$user');
-        _listResult.add(user);
+        UserRes user = UserRes.fromJson(element);
+        _listResult?.add(user);
       }
+
+      _isPageLast = response.body["last"];
     } else if (response.statusCode == 401) {
       clearData();
     } else {
@@ -51,15 +50,16 @@ class SearchByPageController extends GetxController implements GetxService {
   }
 
   void updateSearchKey(int pageIndex) {
-    searchKey = SearchBody(
+    searchKey = Search(
       keyWord: "",
       pageIndex: pageIndex,
-      size: Dimensions.SIZE_OF_PAGE,
+      size: Dimensions.SIZE_OF_PAGE_USERS,
       status: 0,
     );
   }
 
   void clearData() {
-    _listResult = [];
+    _listResult = null;
+    _isPageLast = false;
   }
 }

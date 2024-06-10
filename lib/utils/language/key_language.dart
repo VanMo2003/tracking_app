@@ -2,6 +2,7 @@ class KeyLanguage {
   static const String signIn = "sign_in";
   static const String signUp = "sign_up";
   static const String logout = "logout";
+  static const String logoutQuestion = "logout_question";
   static const String questionSignUp = "question_sign_up";
   static const String questionSignIn = "question_sign_in";
   static const String username = "username";
@@ -24,14 +25,35 @@ class KeyLanguage {
   static const String add = "add";
   static const String update = "update";
   static const String cancel = "cancel";
+  static const String yes = "yes";
+  static const String no = "no";
   static const String infoUser = "info_user";
   static const String notification = "notification";
   static const String changePassword = "change_password";
+  static const String posts = "posts";
+  static const String addPost = "add_post";
+  static const String like = "like";
+  static const String comment = "post_comment";
   static const String dark = "dark";
   static const String light = "light";
+  static const String addSuccess = "add_success";
+  static const String updateSuccess = "update_success";
+  static const String deleteSuccess = "delete_success";
   static const String errorFillInAllInfo = "fill_in_all_information";
   static const String errorAnUnknow = "an_unknow";
+  static const String errorUnauthentication = "un_authentication";
   static const String errorWrongUsernameOrPassword =
       "wrong_username_or_password";
   static const String errorPasswordsDuplicate = "password_duplicate";
+  static const String listEmpty = "list_empty";
+  static const String male = "male";
+  static const String female = "female";
+  static const String save = "save";
+  static const String validNull = "valid_null";
+  static const String validEmail = "valid_email";
+  static const String validPassword = "valid_password";
+  static const String trackingContent = "tracking_content";
+  static const String trackingUpdate = "tracking_update";
+  static const String attendanceSuccess = "attendance_success";
+  static const String attendanced = "attendanced";
 }

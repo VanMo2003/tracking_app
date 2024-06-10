@@ -1,4 +1,4 @@
-class UserBody {
+class User {
   bool? active;
   String? birthPlace;
   bool? changePass;
@@ -13,7 +13,7 @@ class UserBody {
   String? username;
   int? year;
 
-  UserBody({
+  User({
     this.active = true,
     this.birthPlace,
     this.changePass = true,
@@ -29,7 +29,7 @@ class UserBody {
     this.year,
   });
 
-  UserBody.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     active = json['active'];
     birthPlace = json['birthPlace'];
     changePass = json['changePass'];

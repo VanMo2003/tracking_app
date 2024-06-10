@@ -5,7 +5,7 @@ import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/views/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
 
-Widget showDialogCustom({
+Widget showDialogAddWidget({
   required BuildContext context,
   required void Function() onAdd,
   required TextEditingController controller,
@@ -27,7 +27,7 @@ Widget showDialogCustom({
             child: TextFieldWidget(
               autoFocus: true,
               controller: controller,
-              hintText: hintText ?? "Nội dung theo dõi",
+              hintText: hintText ?? KeyLanguage.trackingContent.tr,
             ),
           ),
           const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),

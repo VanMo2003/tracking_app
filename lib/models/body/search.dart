@@ -1,12 +1,12 @@
-class SearchBody {
+class Search {
   String? keyWord;
   int? pageIndex;
   int? size;
   int? status;
 
-  SearchBody({this.keyWord, this.pageIndex, this.size, this.status});
+  Search({this.keyWord, this.pageIndex, this.size, this.status});
 
-  SearchBody.fromJson(Map<String, dynamic> json) {
+  Search.fromJson(Map<String, dynamic> json) {
     keyWord = json['keyWord'];
     pageIndex = json['pageIndex'];
     size = json['size'];

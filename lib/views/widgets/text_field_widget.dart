@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
+import 'package:get/get.dart';
+import 'package:traking_app/utils/language/key_language.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final Key? fieldKey;
   final bool isPasswordField;
   final bool? isSearchField;
@@ -16,10 +18,11 @@ class TextFieldWidget extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputType? inputType;
   final bool autoFocus;
+  final String? error;
 
   const TextFieldWidget({
     super.key,
-    this.controller,
+    required this.controller,
     this.fieldKey,
     this.isPasswordField = false,
     this.isSearchField,
@@ -32,6 +35,7 @@ class TextFieldWidget extends StatefulWidget {
     this.onFieldSubmitted,
     this.inputType,
     this.autoFocus = false,
+    this.error,
   });
 
   @override
@@ -49,14 +53,22 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: ColorResources.getBlackColor()),
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,
         obscureText: widget.isPasswordField,
         onSaved: widget.onSaved,
         onChanged: widget.onChanged,
-        validator: widget.validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: widget.validator ??
+            (value) {
+              debugPrint('$value');
+              if (GetUtils.isNull(value != "" ? value : null)) {
+                return KeyLanguage.validNull.tr;
+              }
+              return null;
+            },
         autofocus: widget.autoFocus,
         onFieldSubmitted: widget.onFieldSubmitted,
         decoration: InputDecoration(
@@ -68,14 +80,14 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               TextStyle(color: ColorResources.getBlackColor(), fontSize: 18),
           prefixIcon:
               widget.isSearchField == true ? const Icon(Icons.search) : null,
-          // hintStyle:
-          //     TextStyle(color: ColorResources.getGreyColor(), fontSize: 18),
-          // hintText: widget.hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black26, width: 1),
+            borderSide: BorderSide(
+              color: ColorResources.getBlackColor().withOpacity(0.5),
+              width: 1,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
@@ -93,7 +105,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 ? Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
                     color: _obscureText
-                        ? Colors.black38
+                        ? ColorResources.getBlackColor().withOpacity(0.5)
                         : ColorResources.getPrimaryColor().withOpacity(0.8),
                   )
                 : const Text(''),

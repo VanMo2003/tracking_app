@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Get.offAll(
                     const HomeScreen(),
                     transition: Transition.size,
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 200),
                     curve: Curves.easeIn,
                   )
                 }
