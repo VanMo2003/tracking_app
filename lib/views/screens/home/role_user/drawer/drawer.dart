@@ -1,25 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/screens/home/drawer/widgets/button_widget.dart';
-import 'package:traking_app/helper/dropdown_language.dart';
+import 'package:traking_app/helper/widgets/button_widget.dart';
+import 'package:traking_app/helper/widgets/dropdown_language_widget.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/widgets/dialog_add_widget.dart';
+import 'package:traking_app/helper/widgets/dialog_widget.dart';
 
-import '../../../../controllers/auth_controller.dart';
+import '../../../../../controllers/auth_controller.dart';
 
-import '../../../../controllers/post_controller.dart';
-import '../../../../controllers/theme_controller.dart';
-import '../../../../helper/loading_helper.dart';
-import '../../../../models/body/posts/content.dart';
-import '../../../../utils/color_resources.dart';
-import '../../../../utils/dimensions.dart';
-import '../../../../utils/icons.dart';
-import '../../../../utils/styles.dart';
+import '../../../../../controllers/post_controller.dart';
+import '../../../../../controllers/theme_controller.dart';
+import '../../../../../helper/loading_helper.dart';
+import '../../../../../models/body/posts/content.dart';
+import '../../../../../utils/color_resources.dart';
+import '../../../../../utils/dimensions.dart';
+import '../../../../../utils/icons.dart';
+import '../../../../../utils/styles.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key, required this.scaffoldKey});
@@ -71,7 +67,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                       Text(
                         controller.user!.username ?? KeyLanguage.username.tr,
-                        style: robotoBold.copyWith(
+                        style: robotoBlack.copyWith(
                           color: ColorResources.getWhiteColor(),
                           fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                         ),
@@ -102,26 +98,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     children: [
                       Column(
                         children: [
-                          ButtonDrawerWidget(
+                          ButtonCustomWidget(
                             label: KeyLanguage.infoUser.tr,
                             onTap: () {
                               Get.toNamed(RouteHelper.getInfoUserRoute());
                             },
                           ),
                           PopupMenuButton<String>(
-                            onSelected: (String item) {
-                              switch (item) {
-                                case 'settings':
-                                  // Chuyển đến màn hình cài đặt
-                                  break;
-                                case 'help':
-                                  // Hiển thị hộp thoại trợ giúp
-                                  break;
-                                case 'logout':
-                                  // Thực hiện hành động đăng xuất
-                                  break;
-                              }
-                            },
                             itemBuilder: (BuildContext context) {
                               return _menuItems(context);
                             },
@@ -141,7 +124,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 children: [
                                   Text(
                                     "Bài viết",
-                                    style: robotoBold,
+                                    style: robotoBlack,
                                   ),
                                   Image.asset(
                                     IconUtil.back,
@@ -151,7 +134,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               ),
                             ),
                           ),
-                          ButtonDrawerWidget(
+                          ButtonCustomWidget(
                             label: Get.find<ThemeController>().darkTheme
                                 ? KeyLanguage.dark.tr
                                 : KeyLanguage.light.tr,
@@ -164,31 +147,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                         ],
                       ),
-                      ButtonDrawerWidget(
+                      ButtonCustomWidget(
                         label: KeyLanguage.logout.tr,
                         onTap: () {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: Text(KeyLanguage.logout.tr),
-                                content: Text(KeyLanguage.logoutQuestion.tr),
-                                actions: <Widget>[
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(false);
-                                    },
-                                    child: Text(KeyLanguage.cancel.tr),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      // SystemChannels.platform.invokeMethod(
-                                      //     'SystemNavigator.pop'); // thoát app
-                                      logout();
-                                    },
-                                    child: Text(KeyLanguage.yes.tr),
-                                  ),
-                                ],
+                              return showDialogQuestion(
+                                context,
+                                KeyLanguage.logout.tr,
+                                KeyLanguage.logoutQuestion.tr,
+                                () {
+                                  logout();
+                                },
                               );
                             },
                           );
@@ -212,13 +183,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   void logout() async {
-    Navigator.of(context).pop(false);
-
     await animatedLoading();
 
     Get.find<AuthController>().logout().then(
       (value) {
         if (value == 200) {
+          Get.find<AuthController>().clearData();
           Get.offNamed(RouteHelper.getSignInRoute());
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -235,8 +205,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
   List<PopupMenuEntry<String>> _menuItems(BuildContext context) {
     return <PopupMenuEntry<String>>[
       PopupMenuItem<String>(
-        value: 'settings',
-        child: ButtonDrawerWidget(
+        value: KeyLanguage.posts.tr,
+        child: ButtonCustomWidget(
           label: KeyLanguage.posts.tr,
           onTap: () {
             Get.toNamed(RouteHelper.getPostRoute());
@@ -244,14 +214,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
       PopupMenuItem<String>(
-        value: 'settings',
-        child: ButtonDrawerWidget(
+        value: KeyLanguage.addPost.tr,
+        child: ButtonCustomWidget(
           label: KeyLanguage.addPost.tr,
           onTap: () {
             showDialog(
               context: context,
               builder: (context) {
-                return showDialogAddWidget(
+                return showDialogAdd(
                   context: context,
                   onAdd: () {
                     Content content = Content(

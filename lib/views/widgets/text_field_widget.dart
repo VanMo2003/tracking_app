@@ -57,7 +57,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,
-        obscureText: widget.isPasswordField,
+        obscureText: widget.isPasswordField ? _obscureText : false,
         onSaved: widget.onSaved,
         onChanged: widget.onChanged,
         autovalidateMode: AutovalidateMode.onUserInteraction,

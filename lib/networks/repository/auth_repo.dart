@@ -43,12 +43,23 @@ class AuthRepo {
     return await apiClient.getData(AppConstant.GET_USER);
   }
 
-  Future<Response> changeInfoUser(UserRes user) async {
+  Future<Response> updateMyself(UserRes user) async {
     return await apiClient.postData(AppConstant.UPDATE_MYSELF, user);
+  }
+
+  Future<Response> updateUserById(UserRes user) async {
+    return await apiClient.postData(
+      "${AppConstant.UPDATE_USER}/${user.id}",
+      user,
+    );
   }
 
   Future<Response> logout() async {
     return await apiClient.deleteData(AppConstant.LOG_OUT);
+  }
+
+  Future<Response> lock(int id) async {
+    return await apiClient.getData("${AppConstant.LOCK}/$id");
   }
 
   Future<Response> checkIn(String ip) async {

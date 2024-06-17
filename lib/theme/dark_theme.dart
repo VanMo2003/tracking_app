@@ -6,7 +6,7 @@ ThemeData dark({Color color = const Color(0xFFFF74D9)}) => ThemeData(
       secondaryHeaderColor: Color(0xFFFF74D9),
       disabledColor: Color(0xFFEBF1F1),
 
-      scaffoldBackgroundColor: Color.fromARGB(255, 16, 18, 20),
+      scaffoldBackgroundColor: Color.fromARGB(255, 40, 49, 58),
       // errorColor: Color(0xFFdd3135),
       brightness: Brightness.dark,
       hintColor: Color(0xFFbebebe),

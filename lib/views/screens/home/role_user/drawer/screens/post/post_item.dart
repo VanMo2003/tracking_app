@@ -7,7 +7,7 @@ import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/drawer/screens/post/post_comment.dart';
+import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_comment.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({super.key, required this.content, this.isClick = true});
@@ -45,7 +45,7 @@ class PostItem extends StatelessWidget {
                   children: [
                     Text(
                       content.user!.displayName!,
-                      style: robotoBlack.copyWith(fontSize: 20),
+                      style: robotoBold.copyWith(fontSize: 20),
                     ),
                     Text(
                       content.date != null
@@ -67,7 +67,7 @@ class PostItem extends StatelessWidget {
               margin: const EdgeInsets.only(top: 8),
               child: Text(
                 content.content!,
-                style: robotoBlack.copyWith(
+                style: robotoBold.copyWith(
                   fontSize: 24,
                 ),
                 maxLines: 3,
@@ -90,7 +90,7 @@ class PostItem extends StatelessWidget {
                 ),
                 label: Text(
                   "${KeyLanguage.like.tr} (${content.likes == null ? 0 : content.likes!.length})",
-                  style: robotoBlack,
+                  style: robotoBold,
                 ),
               ),
               const SizedBox(width: 10),
@@ -109,7 +109,7 @@ class PostItem extends StatelessWidget {
                 ),
                 label: Text(
                   "${KeyLanguage.comment.tr} (${content.comments == null ? 0 : content.comments!.length})",
-                  style: robotoBlack,
+                  style: robotoBold,
                 ),
               ),
             ],

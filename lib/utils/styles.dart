@@ -15,13 +15,13 @@ final robotoMedium = TextStyle(
   fontSize: Dimensions.fontSizeDefault,
 );
 
-final robotoBold = TextStyle(
+final robotoBlack = TextStyle(
   fontFamily: 'NotoSerif',
   fontWeight: FontWeight.w700,
   fontSize: Dimensions.fontSizeDefault,
 );
 
-final robotoBlack = TextStyle(
+final robotoBold = TextStyle(
   fontFamily: 'NotoSerif',
   fontWeight: FontWeight.w900,
   fontSize: Dimensions.fontSizeDefault,

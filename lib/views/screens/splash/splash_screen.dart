@@ -1,17 +1,13 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:traking_app/utils/app_constant.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/icons.dart';
-import 'dart:developer' as developer;
 
 import '../../../controllers/auth_controller.dart';
 import '../../../helper/route_helper.dart';
 import '../../../utils/dimensions.dart';
 import '../../../utils/styles.dart';
-import '../home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -42,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
             Text(AppConstant.APP_NAME,
                 style: robotoMedium.copyWith(
-                  fontSize: 18,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   color: ColorResources.COLOR_PRIMARY,
                 )),
           ],
@@ -56,20 +52,18 @@ class _SplashScreenState extends State<SplashScreen> {
         await Get.find<AuthController>().authRepo.getUserToken();
     if (checkTokenLogin != null) {
       Get.find<AuthController>().getCurrentUser().then(
-            (value) => {
-              if (value == 200)
-                {
-                  Get.offAll(
-                    const HomeScreen(),
-                    transition: Transition.size,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeIn,
-                  )
-                }
-              else
-                {Get.offNamed(RouteHelper.getSignInRoute())}
-            },
-          );
+        (value) {
+          if (value == 200) {
+            if (Get.find<AuthController>().isAdmin) {
+              Get.offAllNamed(RouteHelper.getHomeAdminRoute());
+            } else {
+              Get.offAllNamed(RouteHelper.getHomeRoute());
+            }
+          } else {
+            Get.offNamed(RouteHelper.getSignInRoute());
+          }
+        },
+      );
     } else {
       await Future.delayed(
         const Duration(milliseconds: 2000),
