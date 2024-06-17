@@ -4,7 +4,7 @@ import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/widgets/dialog_add_widget.dart';
+import 'package:traking_app/helper/widgets/dialog_widget.dart';
 import 'package:get/get.dart';
 
 class InfoUserScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class _InfoUserScreenState extends State<InfoUserScreen> {
           children: <TextSpan>[
             TextSpan(
               text: "$label : ",
-              style: robotoBold.copyWith(
+              style: robotoBlack.copyWith(
                   fontSize: 18, color: ColorResources.getBlackColor()),
             ),
             TextSpan(text: content),
@@ -79,7 +79,7 @@ class _InfoUserScreenState extends State<InfoUserScreen> {
           showDialog(
             context: context,
             builder: (context) {
-              return showDialogAddWidget(
+              return showDialogAdd(
                 hintText: label,
                 textButton: KeyLanguage.save.tr,
                 context: context,
@@ -93,7 +93,7 @@ class _InfoUserScreenState extends State<InfoUserScreen> {
                     user.university = controller.text;
                   }
 
-                  Get.find<AuthController>().changeInfoUser(user);
+                  Get.find<AuthController>().updateMyself(user);
                 },
               );
             },

@@ -4,12 +4,12 @@ import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/screens/home/drawer/screens/post/post_item.dart';
-import 'package:traking_app/views/widgets/text_field_widget.dart';
+import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_item.dart';
+import 'package:traking_app/helper/widgets/text_field_widget.dart';
 
-import '../../../../../../controllers/auth_controller.dart';
-import '../../../../../../controllers/post_controller.dart';
-import '../../../../../../models/body/posts/comment.dart';
+import '../../../../../../../controllers/auth_controller.dart';
+import '../../../../../../../controllers/post_controller.dart';
+import '../../../../../../../models/body/posts/comment.dart';
 
 class PostComment extends StatefulWidget {
   const PostComment({super.key, required this.content});
@@ -81,7 +81,7 @@ class _PostCommentState extends State<PostComment> {
                                         Radius.circular(12))),
                                 child: RichText(
                                   text: TextSpan(
-                                    style: robotoBlack.copyWith(fontSize: 18),
+                                    style: robotoBold.copyWith(fontSize: 18),
                                     children: [
                                       TextSpan(
                                         text: comment.user!.displayName,
@@ -90,7 +90,7 @@ class _PostCommentState extends State<PostComment> {
                                       TextSpan(
                                         text: comment.content,
                                         style:
-                                            robotoBold.copyWith(fontSize: 16),
+                                            robotoBlack.copyWith(fontSize: 16),
                                       ),
                                     ],
                                   ),

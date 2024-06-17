@@ -24,7 +24,7 @@ class DateConverter {
   }
 
   static String dateTimeStringToDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy')
+    return DateFormat('dd/MM/yyyy')
         .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 

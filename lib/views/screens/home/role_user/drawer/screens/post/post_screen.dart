@@ -4,7 +4,7 @@ import 'package:traking_app/models/body/posts/content.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/drawer/screens/post/post_item.dart';
+import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_item.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});

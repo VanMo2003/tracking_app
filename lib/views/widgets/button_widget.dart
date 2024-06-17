@@ -5,8 +5,8 @@ import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/styles.dart';
 
-class ButtonDrawerWidget extends StatelessWidget {
-  const ButtonDrawerWidget(
+class ButtonCustomWidget extends StatelessWidget {
+  const ButtonCustomWidget(
       {super.key, this.label, required this.onTap, this.child, this.icon});
 
   final String? label;
@@ -37,7 +37,7 @@ class ButtonDrawerWidget extends StatelessWidget {
                 children: [
                   Text(
                     label ?? "Button",
-                    style: robotoBold,
+                    style: robotoBlack,
                   ),
                   icon ??
                       Image.asset(

@@ -1,6 +1,7 @@
-import 'package:traking_app/views/screens/home/drawer/screens/post/post_screen.dart';
-import 'package:traking_app/views/screens/home/drawer/screens/info_user_screen.dart';
-import 'package:traking_app/views/screens/home/home_screen.dart';
+import 'package:traking_app/views/screens/home/admin/home_admin_screen.dart';
+import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_screen.dart';
+import 'package:traking_app/views/screens/home/user/drawer/screens/info_user_screen.dart';
+import 'package:traking_app/views/screens/home/user/home_user_screen.dart';
 import 'package:traking_app/views/screens/sign_in/sign_in_screen.dart';
 import 'package:traking_app/views/screens/sign_up/sign_up_screen.dart';
 
@@ -13,6 +14,7 @@ class RouteHelper {
   static const String signIn = "/sign-in";
   static const String signUp = "/sign-up";
   static const String home = "/home";
+  static const String homeAdmin = "/home_admin";
   static const String infoUser = "/info_user";
   static const String changePassword = "/change_password";
   static const String post = "/post";
@@ -22,6 +24,7 @@ class RouteHelper {
   static String getSignInRoute() => signIn;
   static String getSignUpRoute() => signUp;
   static String getHomeRoute() => home;
+  static String getHomeAdminRoute() => homeAdmin;
   static String getInfoUserRoute() => infoUser;
   static String getChangePassword() => changePassword;
   static String getPostRoute() => post;
@@ -30,7 +33,8 @@ class RouteHelper {
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: signIn, page: () => const SignInScreen()),
     GetPage(name: signUp, page: () => const SignUpScreen()),
-    GetPage(name: home, page: () => const HomeScreen()),
+    GetPage(name: home, page: () => const HomeUserScreent()),
+    GetPage(name: homeAdmin, page: () => const HomeAdminScreent()),
     GetPage(name: infoUser, page: () => const InfoUserScreen()),
     GetPage(name: post, page: () => const PostScreen()),
   ];

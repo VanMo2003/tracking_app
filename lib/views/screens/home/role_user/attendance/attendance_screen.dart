@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
 
-import '../../../../helper/loading_helper.dart';
-import '../../../../utils/color_resources.dart';
-import '../../../../utils/language/key_language.dart';
-import '../../../../utils/styles.dart';
+import '../../../../../helper/loading_helper.dart';
+import '../../../../../utils/color_resources.dart';
+import '../../../../../utils/language/key_language.dart';
+import '../../../../../utils/styles.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});
@@ -27,13 +27,14 @@ class AttendanceScreen extends StatelessWidget {
           height: size.height * 0.06,
           decoration: BoxDecoration(
             color: ColorResources.getPrimaryColor(),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
           ),
           child: Center(
             child: Text(
               KeyLanguage.attendance.tr,
               style: robotoMedium.copyWith(
-                  fontSize: 18, color: ColorResources.getWhiteColor()),
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  color: ColorResources.getWhiteColor()),
             ),
           ),
         ),

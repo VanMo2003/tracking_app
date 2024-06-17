@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/tracking/button_widget.dart';
+import 'package:traking_app/views/screens/home/user/tracking/button_widget.dart';
 
-import '../../../../controllers/loading_controller.dart';
-import '../../../../controllers/tracking_controller.dart';
-import '../../../../helper/date_converter.dart';
-import '../../../../helper/loading_helper.dart';
-import '../../../../helper/snackbar_helper.dart';
-import '../../../../models/body/tracking.dart';
-import '../../../../utils/color_resources.dart';
-import '../../../../utils/dimensions.dart';
-import '../../../../utils/language/key_language.dart';
-import '../../../../utils/styles.dart';
-import '../../../widgets/dialog_add_widget.dart';
+import '../../../../../controllers/loading_controller.dart';
+import '../../../../../controllers/tracking_controller.dart';
+import '../../../../../helper/date_converter.dart';
+import '../../../../../helper/loading_helper.dart';
+import '../../../../../helper/snackbar_helper.dart';
+import '../../../../../models/body/tracking.dart';
+import '../../../../../utils/color_resources.dart';
+import '../../../../../utils/dimensions.dart';
+import '../../../../../utils/language/key_language.dart';
+import '../../../../../utils/styles.dart';
+import '../../../../../helper/widgets/dialog_widget.dart';
 
 class TrackingItem extends StatefulWidget {
   const TrackingItem(
@@ -35,11 +35,15 @@ class _TrackingItemState extends State<TrackingItem> {
 
     return Container(
       height: size.height * 0.1,
-      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(
+          vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+          horizontal: Dimensions.MARGIN_SIZE_SMALL),
+      padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.MARGIN_SIZE_SMALL,
+          horizontal: Dimensions.MARGIN_SIZE_SMALL),
       decoration: BoxDecoration(
           color: ColorResources.getWhiteColor(),
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SIZE_SMALL),
           boxShadow: [
             BoxShadow(
               offset: const Offset(2.0, 2.0),
@@ -58,7 +62,8 @@ class _TrackingItemState extends State<TrackingItem> {
                   widget.tracking.content == "string"
                       ? KeyLanguage.trackingContent.tr
                       : widget.tracking.content!,
-                  style: robotoBold.copyWith(fontSize: 22),
+                  style: robotoBlack.copyWith(
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE),
                 ),
                 const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                 Text(
@@ -149,7 +154,7 @@ class _TrackingItemState extends State<TrackingItem> {
     showDialog(
       context: context,
       builder: (context) {
-        return showDialogAddWidget(
+        return showDialogAdd(
           context: context,
           textButton: KeyLanguage.save.tr,
           controller: widget.contentController,

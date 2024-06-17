@@ -13,7 +13,7 @@ import '../../../controllers/loading_controller.dart';
 import '../../../helper/loading_helper.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/styles.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../../helper/widgets/text_field_widget.dart';
 
 enum Gender { male, female }
 
@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     var safePadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_LARGE),
         height: double.infinity,
         child: SingleChildScrollView(
           child: Padding(
@@ -76,12 +76,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         Text(
                           KeyLanguage.signUp.tr,
-                          style: robotoBold.copyWith(
-                            fontSize: 40,
+                          style: robotoBlack.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_TITLE_LARGE,
                             color: ColorResources.getBlackColor(),
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(
+                            height:
+                                Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
                         TextFieldWidget(
                           controller: _usernameController,
                           labelText: KeyLanguage.username.tr,
@@ -95,7 +97,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (GetUtils.isNull(value != "" ? value : null)) {
                               return KeyLanguage.validNull.tr;
                             }
-                            if (!GetUtils.isLengthBetween(value!, 5, 20)) {
+                            if (!GetUtils.isLengthBetween(
+                              value!,
+                              Dimensions.MIN_LENGTH_PASSWORD,
+                              Dimensions.MAX_LENGTH_PASSWORD,
+                            )) {
                               return KeyLanguage.validPassword.tr;
                             }
                             return null;
@@ -148,11 +154,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           labelText: KeyLanguage.university.tr,
                           isPasswordField: false,
                         ),
-                        TextFieldWidget(
-                          controller: _yearOldController,
-                          labelText: KeyLanguage.age.tr,
-                          isPasswordField: false,
-                        ),
                         birthPlaceDropdown(
                           AppConstant.birthPlaces,
                           KeyLanguage.birthPlace.tr,
@@ -179,7 +180,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(
+                            height:
+                                Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
                         GestureDetector(
                           onTap: () {
                             signUp();
@@ -194,7 +197,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: Text(
                                 KeyLanguage.signUp.tr,
                                 style: robotoMedium.copyWith(
-                                    fontSize: 18, color: Colors.white),
+                                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
@@ -360,7 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Text(
                   labelText,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
                     fontWeight: FontWeight.bold,
                     color: ColorResources.getBlackColor(),
                   ),
@@ -375,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Text(
                       item,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
                         fontWeight: FontWeight.bold,
                         color: ColorResources.getBlackColor(),
                       ),

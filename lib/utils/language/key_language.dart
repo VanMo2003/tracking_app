@@ -16,6 +16,9 @@ class KeyLanguage {
   static const String birthPlace = "birth_place";
   static const String dateOfBirth = "date_of_birth";
   static const String gender = "gender";
+  static const String status = "status";
+  static const String active = "active";
+  static const String noActive = "no_active";
   static const String connectionToApiServerFailed =
       "connection_to_api_server_failed";
   static const String tracking = "tracking";
@@ -24,6 +27,9 @@ class KeyLanguage {
   static const String person = "person";
   static const String add = "add";
   static const String update = "update";
+  static const String edit = "edit";
+  static const String lock = "lock";
+  static const String unlock = "un_lock";
   static const String cancel = "cancel";
   static const String yes = "yes";
   static const String no = "no";

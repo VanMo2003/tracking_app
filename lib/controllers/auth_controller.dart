@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/loading_controller.dart';
 import 'package:traking_app/controllers/search_controller.dart';
-import 'package:traking_app/controllers/tracking_controller.dart';
 import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/models/response/user_res.dart';
@@ -18,8 +17,10 @@ class AuthController extends GetxController implements GetxService {
   AuthController({required this.authRepo}) : _user = UserRes();
 
   UserRes? _user;
+  bool _isAdmin = false;
 
   UserRes? get user => _user;
+  bool get isAdmin => _isAdmin;
 
   Future<int> login(String username, String password) async {
     Get.find<LoadingController>().loading();
@@ -28,7 +29,6 @@ class AuthController extends GetxController implements GetxService {
 
     if (response.statusCode == 200) {
       TokenResponse tokenResponse = TokenResponse.fromJson(response.body);
-
       authRepo.saveUserToken(tokenResponse.accessToken!);
     } else {
       authRepo.removeUserToken();
@@ -55,6 +55,13 @@ class AuthController extends GetxController implements GetxService {
     Response response = await authRepo.getCurrentUser();
     if (response.statusCode == 200) {
       _user = UserRes.fromJson(response.body);
+      if (_user!.roles != null) {
+        for (var element in _user!.roles!) {
+          if (element.id == 3) {
+            _isAdmin = true;
+          }
+        }
+      }
     } else if (response.statusCode == 401) {
       clearData();
     } else {
@@ -64,10 +71,31 @@ class AuthController extends GetxController implements GetxService {
     return response.statusCode!;
   }
 
-  Future<int> changeInfoUser(UserRes userNew) async {
-    Response response = await authRepo.changeInfoUser(userNew);
+  Future<int> updateMyself(UserRes userNew) async {
+    Response response = await authRepo.updateMyself(userNew);
     if (response.statusCode == 200) {
       _user = UserRes.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      clearData();
+    } else {
+      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
+    }
+    update();
+    return response.statusCode!;
+  }
+
+  Future<int> updateInfoUser(UserRes userNew) async {
+    Response response = await authRepo.updateUserById(userNew);
+    if (response.statusCode == 200) {
+      for (var element in Get.find<SearchByPageController>().listResult!) {
+        if (element.id == userNew.id) {
+          int index =
+              Get.find<SearchByPageController>().listResult!.indexOf(element);
+          Get.find<SearchByPageController>()
+            ..listResult![index] = userNew
+            ..update();
+        }
+      }
     } else if (response.statusCode == 401) {
       clearData();
     } else {
@@ -104,7 +132,25 @@ class AuthController extends GetxController implements GetxService {
     return response.statusCode!;
   }
 
+  Future<int> lock(int id) async {
+    Response response = await authRepo.lock(id);
+    if (response.statusCode == 200) {
+      Get.find<SearchByPageController>()
+        ..listResult!
+            .singleWhere(
+              (element) => element.id == id,
+            )
+            .active = false
+        ..update();
+    } else if (response.statusCode == 401) {
+      clearData();
+    } else {}
+    update();
+    return response.statusCode!;
+  }
+
   void clearData() {
-    _user = null;
+    _user = UserRes();
+    _isAdmin = false;
   }
 }

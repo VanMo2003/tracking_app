@@ -8,8 +8,8 @@ import 'package:traking_app/utils/language/key_language.dart';
 
 import '../../../helper/loading_helper.dart';
 import '../../../utils/styles.dart';
-import '../../widgets/loading_widget.dart';
-import '../../widgets/text_field_widget.dart';
+import '../../../helper/widgets/loading_widget.dart';
+import '../../../helper/widgets/text_field_widget.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -49,12 +49,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       Text(
                         KeyLanguage.signIn.tr,
-                        style: robotoBold.copyWith(
-                          fontSize: 40,
+                        style: robotoBlack.copyWith(
+                          fontSize: Dimensions.FONT_SIZE_TITLE_LARGE,
                           color: ColorResources.getBlackColor(),
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(
+                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
                       TextFieldWidget(
                         controller: _usernameController,
                         labelText: KeyLanguage.username.tr,
@@ -84,7 +85,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(
+                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
                       GestureDetector(
                         onTap: () {
                           login();
@@ -99,12 +101,16 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: Text(
                               KeyLanguage.signIn.tr,
                               style: robotoMedium.copyWith(
-                                  fontSize: 18, color: Colors.white),
+                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                  color: Colors.white),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER *
+                              2 /
+                              3),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -142,13 +148,18 @@ class _SignInScreenState extends State<SignInScreen> {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    if (!key.currentState!.validate()) {
-    } else {
+    if (key.currentState!.validate()) {
       await animatedLoading();
+
       await Get.find<AuthController>().login(username, password).then(
-        (value) {
+        (value) async {
           if (value == 200) {
-            Get.offAllNamed(RouteHelper.getHomeRoute());
+            await Get.find<AuthController>().getCurrentUser();
+            if (Get.find<AuthController>().isAdmin) {
+              Get.offAllNamed(RouteHelper.getHomeAdminRoute());
+            } else {
+              Get.offAllNamed(RouteHelper.getHomeRoute());
+            }
           } else if (value == 400) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
