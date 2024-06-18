@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/helper/widgets/button_widget.dart';
-import 'package:traking_app/helper/widgets/dropdown_language_widget.dart';
+import 'package:traking_app/views/widgets/button_widget.dart';
+import 'package:traking_app/views/widgets/dropdown_language_widget.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/helper/widgets/dialog_widget.dart';
+import 'package:traking_app/views/widgets/dialog_widget.dart';
 
 import '../../../../../controllers/auth_controller.dart';
 
@@ -99,7 +99,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       Column(
                         children: [
                           ButtonCustomWidget(
-                            label: KeyLanguage.infoUser.tr,
+                            label: KeyLanguage.infoPerson.tr,
                             onTap: () {
                               Get.toNamed(RouteHelper.getInfoUserRoute());
                             },
@@ -123,7 +123,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Bài viết",
+                                    KeyLanguage.post.tr,
                                     style: robotoBlack,
                                   ),
                                   Image.asset(
@@ -235,7 +235,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   controller: contentPostController,
                   textButton: KeyLanguage.add.tr,
-                  hintText: "Nội dung bài viết",
+                  hintText: KeyLanguage.postContent.tr,
                 );
               },
             );

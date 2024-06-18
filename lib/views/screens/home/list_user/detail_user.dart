@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/helper/loading_helper.dart';
-import 'package:traking_app/helper/widgets/button_widget.dart';
-import 'package:traking_app/helper/widgets/loading_widget.dart';
+import 'package:traking_app/views/widgets/button_widget.dart';
+import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
@@ -12,8 +12,8 @@ import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
 
-import '../../../../../helper/snackbar_helper.dart';
-import '../../../../../helper/widgets/dialog_widget.dart';
+import '../../../../helper/snackbar_helper.dart';
+import '../../../widgets/dialog_widget.dart';
 
 class DetailUserScreen extends StatefulWidget {
   DetailUserScreen({super.key, UserRes? user}) : _user = user ?? UserRes();
@@ -28,12 +28,14 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
   TextEditingController displaynameController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController birthPlaceController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var safePaddingTop = MediaQuery.of(context).padding.top;
     return loadingWidget(
+      context,
       Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -42,7 +44,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                 child: Container(
                   height: size.height * 0.4,
                   decoration: BoxDecoration(
-                    color: ColorResources.getPrimaryColor(),
+                    color: Theme.of(context).primaryColor,
                     image: DecorationImage(
                       image: widget._user.image != null
                           ? NetworkImage(widget._user.image!)
@@ -76,7 +78,9 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                     Text(
                       "(${widget._user.firstName ?? "Họ"}${widget._user.lastName ?? " và tên"})",
                       style: robotoBold.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_OVER_OVER_LARGE),
+                        fontSize: Dimensions.FONT_SIZE_OVER_OVER_LARGE,
+                        color: Theme.of(context).disabledColor,
+                      ),
                     ),
                     Text(
                       "${KeyLanguage.displayName.tr} : ${widget._user.displayName ?? KeyLanguage.displayName.tr}",
@@ -99,7 +103,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                     ),
                     Text(
-                      "${KeyLanguage.gender.tr} : ${widget._user.gender ?? "Nam/Nữ"}",
+                      "${KeyLanguage.gender.tr} : ${widget._user.gender ?? "${KeyLanguage.male.tr}/${KeyLanguage.female.tr}"}",
                       style: robotoBlack.copyWith(
                           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                     ),
@@ -177,6 +181,8 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
         displaynameController.text = widget._user.displayName!;
         birthPlaceController.text = widget._user.birthPlace ?? "Hà Nội";
         universityController.text = widget._user.university ?? "Oceantech";
+        dateOfBirthController.text = DateConverter.dateTimeStringToDateOnly(
+            widget._user.dob ?? DateTime.now().toString());
         return showDialogUpdate(
           context,
           child: Column(
@@ -199,6 +205,12 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                   hintText: KeyLanguage.university.tr,
                 ),
               ),
+              TextFormField(
+                controller: dateOfBirthController,
+                decoration: InputDecoration(
+                  hintText: KeyLanguage.dateOfBirth.tr,
+                ),
+              ),
             ],
           ),
           opTap: () async {
@@ -206,6 +218,8 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
             user.displayName = displaynameController.text;
             user.birthPlace = birthPlaceController.text;
             user.university = universityController.text;
+            user.dob = DateConverter.dateTimeStringToDateTime(
+                birthPlaceController.text);
 
             await Get.find<AuthController>().updateInfoUser(user);
           },
@@ -219,15 +233,15 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
       context: context,
       builder: (context) => showDialogQuestion(
         context,
-        "Khóa tài khoản?",
-        "Bạn có chắc chắn khóa tài khoản (${widget._user.displayName})?",
+        KeyLanguage.lock.tr,
+        "${KeyLanguage.lockQuestion.tr} (${widget._user.displayName})?",
         () async {
           await animatedLoading();
           await Get.find<AuthController>().lock(widget._user.id!).then(
             (value) {
               if (value == 200) {
                 showCustomSnackBar(
-                  "Khóa tài khoản : ${widget._user.displayName}",
+                  "${KeyLanguage.lock.tr} : ${widget._user.displayName}",
                   isError: false,
                 );
                 setState(() {});

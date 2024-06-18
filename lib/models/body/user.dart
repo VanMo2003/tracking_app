@@ -15,18 +15,18 @@ class User {
 
   User({
     this.active = true,
-    this.birthPlace,
+    this.birthPlace = "",
     this.changePass = true,
     this.confirmPassword,
-    this.displayName,
-    this.email,
-    this.firstName,
-    this.gender,
-    this.lastName,
+    this.displayName = "",
+    this.email = "",
+    this.firstName = "",
+    this.gender = "",
+    this.lastName = "",
     this.password,
-    this.university,
+    this.university = "",
     this.username,
-    this.year,
+    this.year = 18,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -46,20 +46,52 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['active'] = this.active;
-    data['birthPlace'] = this.birthPlace;
-    data['changePass'] = this.changePass;
-    data['confirmPassword'] = this.confirmPassword;
-    data['displayName'] = this.displayName;
-    data['email'] = this.email;
-    data['firstName'] = this.firstName;
-    data['gender'] = this.gender;
-    data['lastName'] = this.lastName;
-    data['password'] = this.password;
-    data['university'] = this.university;
-    data['username'] = this.username;
-    data['year'] = this.year;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['active'] = active;
+    data['birthPlace'] = birthPlace;
+    data['changePass'] = changePass;
+    data['confirmPassword'] = confirmPassword;
+    data['displayName'] = displayName;
+    data['email'] = email;
+    data['firstName'] = firstName;
+    data['gender'] = gender;
+    data['lastName'] = lastName;
+    data['password'] = password;
+    data['university'] = university;
+    data['username'] = username;
+    data['year'] = year;
     return data;
+  }
+
+  User copyWith({
+    bool? active,
+    String? birthPlace,
+    bool? changePass,
+    String? confirmPassword,
+    String? displayName,
+    String? email,
+    String? firstName,
+    String? gender,
+    String? lastName,
+    String? password,
+    String? university,
+    String? username,
+    int? year,
+  }) {
+    return User(
+      username: username ?? this.username,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      university: university ?? this.university,
+      birthPlace: birthPlace ?? this.birthPlace,
+      gender: gender ?? this.gender,
+      active: active ?? this.active,
+      changePass: changePass ?? this.changePass,
+      year: year ?? this.year,
+    );
   }
 }

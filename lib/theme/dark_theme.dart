@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-ThemeData dark({Color color = const Color(0xFFFF74D9)}) => ThemeData(
+ThemeData dark({Color color = const Color(0xFFE054B8)}) => ThemeData(
       fontFamily: 'Roboto',
       primaryColor: color,
       secondaryHeaderColor: Color(0xFFFF74D9),
-      disabledColor: Color(0xFFEBF1F1),
+      disabledColor: Colors.white,
 
       scaffoldBackgroundColor: Color.fromARGB(255, 40, 49, 58),
       // errorColor: Color(0xFFdd3135),
       brightness: Brightness.dark,
-      hintColor: Color(0xFFbebebe),
+      hintColor: Color(0xFFEBF1F1),
       cardColor: Colors.black,
       colorScheme: ColorScheme.dark(primary: color, secondary: color),
       // textButtonTheme:

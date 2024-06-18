@@ -5,7 +5,8 @@ import "package:get/get.dart";
 
 import '../../controllers/loading_controller.dart';
 
-Widget loadingWidget(Widget child) {
+Widget loadingWidget(BuildContext context, Widget child) {
+  Size size = MediaQuery.of(context).size;
   return Stack(
     children: [
       child,
@@ -14,7 +15,8 @@ Widget loadingWidget(Widget child) {
           return Visibility(
             visible: controller.isLoading,
             child: Container(
-              color: Colors.white.withOpacity(0.4),
+              height: size.height,
+              color: ColorResources.getWhiteColor().withOpacity(0.2),
               child: Center(
                 child: SpinKitSquareCircle(
                   color: ColorResources.getPrimaryColor(),

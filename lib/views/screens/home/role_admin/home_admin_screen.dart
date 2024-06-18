@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/admin/person/person_screen.dart';
-import 'package:traking_app/views/screens/home/user/list_user/list_user_screen.dart';
+import 'package:traking_app/views/screens/home/role_admin/person/person_screen.dart';
+import 'package:traking_app/views/screens/home/list_user/list_user_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../../../controllers/search_controller.dart';
@@ -28,7 +28,6 @@ class _HomeAdminScreentState extends State<HomeAdminScreent> {
   ];
 
   var _currentIndex = 0.obs;
-  bool _enabled = true;
   @override
   void initState() {
     super.initState();
@@ -53,16 +52,17 @@ class _HomeAdminScreentState extends State<HomeAdminScreent> {
               SalomonBottomBarItem(
                 icon: Image.asset(
                   IconUtil.list,
+                  color: Theme.of(context).disabledColor,
                 ),
                 title: Text(KeyLanguage.listUser.tr),
                 selectedColor: Colors.orange,
               ),
               SalomonBottomBarItem(
                 icon: Image.asset(
-                  IconUtil.attendance,
-                  color: ColorResources.getBlackColor(),
+                  IconUtil.person,
+                  color: Theme.of(context).disabledColor,
                 ),
-                title: Text(KeyLanguage.attendance.tr),
+                title: Text(KeyLanguage.person.tr),
                 selectedColor: ColorResources.getPrimaryColor(),
               ),
             ],

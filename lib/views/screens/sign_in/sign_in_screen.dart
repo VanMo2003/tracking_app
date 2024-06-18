@@ -8,8 +8,8 @@ import 'package:traking_app/utils/language/key_language.dart';
 
 import '../../../helper/loading_helper.dart';
 import '../../../utils/styles.dart';
-import '../../../helper/widgets/loading_widget.dart';
-import '../../../helper/widgets/text_field_widget.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/text_field_widget.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -40,6 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
           height: size.height,
           child: Center(
             child: loadingWidget(
+              context,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: Form(

@@ -63,7 +63,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator ??
             (value) {
-              debugPrint('$value');
               if (GetUtils.isNull(value != "" ? value : null)) {
                 return KeyLanguage.validNull.tr;
               }
@@ -75,9 +74,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           hintText: widget.hintText,
           labelText: widget.labelText,
           labelStyle:
-              TextStyle(color: ColorResources.getGreyColor(), fontSize: 18),
+              TextStyle(color: ColorResources.getGreyColor(), fontSize: 16),
           floatingLabelStyle:
-              TextStyle(color: ColorResources.getBlackColor(), fontSize: 18),
+              TextStyle(color: ColorResources.getBlackColor(), fontSize: 16),
           prefixIcon:
               widget.isSearchField == true ? const Icon(Icons.search) : null,
           border: OutlineInputBorder(
@@ -95,21 +94,20 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 BorderSide(color: ColorResources.getBlackColor(), width: 1),
             borderRadius: BorderRadius.circular(12),
           ),
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            child: widget.isPasswordField == true
-                ? Icon(
+          suffixIcon: widget.isPasswordField == true
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
                     color: _obscureText
                         ? ColorResources.getBlackColor().withOpacity(0.5)
                         : ColorResources.getPrimaryColor().withOpacity(0.8),
-                  )
-                : const Text(''),
-          ),
+                  ))
+              : null,
         ),
       ),
     );

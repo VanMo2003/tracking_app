@@ -47,7 +47,7 @@ class _DropdownLangueState extends State<DropdownLangue> {
                 e,
                 style: robotoMedium.copyWith(
                   fontSize: 18,
-                  color: ColorResources.getBlackColor(),
+                  color: Theme.of(context).disabledColor,
                 ),
               ),
             );

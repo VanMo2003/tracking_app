@@ -4,10 +4,11 @@ import 'package:traking_app/controllers/post_controller.dart';
 import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/models/body/posts/content.dart';
 import 'package:traking_app/utils/color_resources.dart';
+import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_comment.dart';
+import 'package:traking_app/views/screens/home/role_user/drawer/screens/post/post_comment.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({super.key, required this.content, this.isClick = true});
@@ -32,8 +33,7 @@ class PostItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue,
-                radius: 30,
+                radius: Dimensions.RADIUS_EXTRA_LARGE_OVER,
                 child: content.user!.image != null
                     ? Image.asset(content.user!.image!)
                     : const Icon(Icons.image),
@@ -45,13 +45,19 @@ class PostItem extends StatelessWidget {
                   children: [
                     Text(
                       content.user!.displayName!,
-                      style: robotoBold.copyWith(fontSize: 20),
+                      style: robotoBold.copyWith(
+                        fontSize: 20,
+                        color: Theme.of(context).disabledColor,
+                      ),
                     ),
                     Text(
                       content.date != null
                           ? DateConverter.convertTimeStampToString(
                               content.date!)
                           : DateConverter.formatDate(DateTime.now()),
+                      style: robotoBlack.copyWith(
+                        color: Theme.of(context).disabledColor,
+                      ),
                     ),
                   ],
                 ),
@@ -61,7 +67,7 @@ class PostItem extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.maxFinite,
-              color: ColorResources.getGreyColor(),
+              color: Theme.of(context).hintColor,
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
               margin: const EdgeInsets.only(top: 8),
@@ -69,6 +75,7 @@ class PostItem extends StatelessWidget {
                 content.content!,
                 style: robotoBold.copyWith(
                   fontSize: 24,
+                  color: Colors.black,
                 ),
                 maxLines: 3,
                 textAlign: TextAlign.center,
@@ -90,7 +97,9 @@ class PostItem extends StatelessWidget {
                 ),
                 label: Text(
                   "${KeyLanguage.like.tr} (${content.likes == null ? 0 : content.likes!.length})",
-                  style: robotoBold,
+                  style: robotoBold.copyWith(
+                    color: Theme.of(context).disabledColor,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -109,7 +118,9 @@ class PostItem extends StatelessWidget {
                 ),
                 label: Text(
                   "${KeyLanguage.comment.tr} (${content.comments == null ? 0 : content.comments!.length})",
-                  style: robotoBold,
+                  style: robotoBold.copyWith(
+                    color: Theme.of(context).disabledColor,
+                  ),
                 ),
               ),
             ],
