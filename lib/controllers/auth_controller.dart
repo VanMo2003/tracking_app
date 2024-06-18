@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/loading_controller.dart';
 import 'package:traking_app/controllers/search_controller.dart';
@@ -43,10 +42,8 @@ class AuthController extends GetxController implements GetxService {
     Response response = await authRepo.registor(user);
 
     if (response.statusCode == 200) {
-      debugPrint('Đăng ký thành công');
-    } else {
-      debugPrint('Tài khoản đã tồn tại');
-    }
+      _user = UserRes.fromJson(response.body);
+    } else {}
     update();
     return response.statusCode!;
   }
@@ -65,7 +62,7 @@ class AuthController extends GetxController implements GetxService {
     } else if (response.statusCode == 401) {
       clearData();
     } else {
-      // showCustomSnackBar("Đã xảy ra lỗi không xác định");
+      // showCustomSnackBar(response.body);
     }
     update();
     return response.statusCode!;

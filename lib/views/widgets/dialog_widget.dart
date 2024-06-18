@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/helper/widgets/text_field_widget.dart';
+import 'package:traking_app/views/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
 

@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'package:traking_app/views/screens/home/user/list_user/detail_user.dart';
+import 'package:traking_app/views/screens/home/list_user/detail_user.dart';
 
-import '../../../../../utils/color_resources.dart';
-import '../../../../../utils/language/key_language.dart';
-import '../../../../../utils/styles.dart';
+import '../../../../utils/color_resources.dart';
+import '../../../../utils/language/key_language.dart';
+import '../../../../utils/styles.dart';
 
 enum SampleItem { update, lock, unlock }
 
@@ -31,7 +31,7 @@ class _ListUserItemState extends State<ListUserItem> {
       opacity: widget.user.active! ? 1 : 0.5,
       child: Container(
         decoration: BoxDecoration(
-          color: ColorResources.getWhiteColor(),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
           boxShadow: [
             BoxShadow(

@@ -107,4 +107,42 @@ class UserRes {
     data['setPassword'] = setPassword;
     return data;
   }
+
+  UserRes copyWith({
+    String? displayName,
+    String? username,
+    String? password,
+    String? confirmPassword,
+    bool? changePass,
+    bool? active,
+    String? lastName,
+    String? firstName,
+    String? dob,
+    String? birthPlace,
+    String? email,
+    bool? hasPhoto,
+    List<Role>? roles,
+    String? gender,
+    String? university,
+    int? year,
+    int? countDayCheckin,
+    int? countDayTracking,
+    String? tokenDevice,
+    String? image,
+    bool? setPassword,
+  }) {
+    return UserRes(
+      username: username ?? this.username,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      university: university ?? this.university,
+      dob: dob ?? this.dob,
+      birthPlace: birthPlace ?? this.birthPlace,
+      gender: gender ?? this.gender,
+    );
+  }
 }

@@ -4,7 +4,7 @@ import 'package:traking_app/controllers/tracking_controller.dart';
 import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/helper/widgets/dialog_widget.dart';
+import 'package:traking_app/views/widgets/dialog_widget.dart';
 
 import '../../../../../controllers/auth_controller.dart';
 import '../../../../../controllers/loading_controller.dart';

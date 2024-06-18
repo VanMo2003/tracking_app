@@ -29,13 +29,16 @@ class KeyLanguage {
   static const String update = "update";
   static const String edit = "edit";
   static const String lock = "lock";
+  static const String lockQuestion = "lock_question";
   static const String unlock = "un_lock";
   static const String cancel = "cancel";
   static const String yes = "yes";
   static const String no = "no";
-  static const String infoUser = "info_user";
+  static const String infoPerson = "info_person";
   static const String notification = "notification";
   static const String changePassword = "change_password";
+  static const String postContent = "post_content";
+  static const String post = "post";
   static const String posts = "posts";
   static const String addPost = "add_post";
   static const String like = "like";

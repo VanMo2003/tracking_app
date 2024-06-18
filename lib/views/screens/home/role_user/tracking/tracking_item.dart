@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/user/tracking/button_widget.dart';
+import 'package:traking_app/views/screens/home/role_user/tracking/button_widget.dart';
 
 import '../../../../../controllers/loading_controller.dart';
 import '../../../../../controllers/tracking_controller.dart';
@@ -13,7 +13,7 @@ import '../../../../../utils/color_resources.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../../../utils/language/key_language.dart';
 import '../../../../../utils/styles.dart';
-import '../../../../../helper/widgets/dialog_widget.dart';
+import '../../../../widgets/dialog_widget.dart';
 
 class TrackingItem extends StatefulWidget {
   const TrackingItem(
@@ -42,7 +42,7 @@ class _TrackingItemState extends State<TrackingItem> {
           vertical: Dimensions.MARGIN_SIZE_SMALL,
           horizontal: Dimensions.MARGIN_SIZE_SMALL),
       decoration: BoxDecoration(
-          color: ColorResources.getWhiteColor(),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SIZE_SMALL),
           boxShadow: [
             BoxShadow(

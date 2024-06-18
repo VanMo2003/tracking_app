@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/controllers/theme_controller.dart';
-import 'package:traking_app/helper/widgets/loading_widget.dart';
+import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/screens/home/user/drawer/drawer.dart';
-import 'package:traking_app/views/screens/home/user/drawer/screens/info_user_screen.dart';
+import 'package:traking_app/views/screens/home/role_user/drawer/drawer.dart';
+import 'package:traking_app/views/screens/home/role_user/drawer/screens/info_user_screen.dart';
 
 import '../../../../../helper/loading_helper.dart';
 import '../../../../../helper/route_helper.dart';
-import '../../../../../helper/widgets/dialog_widget.dart';
+import '../../../../widgets/dialog_widget.dart';
 import '../../../../../utils/color_resources.dart';
 import '../../../../../utils/dimensions.dart';
+import '../../../../widgets/dropdown_language_widget.dart';
 
 class PersonScreen extends StatefulWidget {
   const PersonScreen({super.key});
@@ -25,6 +26,7 @@ class _PersonScreenState extends State<PersonScreen> {
   @override
   Widget build(BuildContext context) {
     return loadingWidget(
+      context,
       GetBuilder<AuthController>(builder: (controller) {
         var user = controller.user!;
         return Container(
@@ -32,69 +34,77 @@ class _PersonScreenState extends State<PersonScreen> {
             horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE,
           ),
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Stack(
             children: [
-              CircleAvatar(
-                radius: Dimensions.RADIUS_SIZE_OVER_LARGE,
-                backgroundColor: ColorResources.getPrimaryColor(),
-                child: user.image != null
-                    ? Image.asset(user.image!)
-                    : Icon(
-                        Icons.person,
-                        size: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
-                        color: ColorResources.getBlackColor(),
-                      ),
-              ),
-              const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-              Text(
-                user.displayName ?? KeyLanguage.displayName.tr,
-                style: robotoBold.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
-                    color: ColorResources.getBlackColor()),
-              ),
-              const Divider(
-                height: 2,
-              ),
-              const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-              button(
-                "Thông tin cá nhân",
-                const Icon(Icons.person),
-                () {
-                  Get.to(const InfoUserScreen());
-                },
-              ),
-              const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-              button(
-                "Sáng/Tối",
-                Icon(
-                  Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
-                  color: ColorResources.getBlackColor(),
-                ),
-                () {
-                  Get.find<ThemeController>().toggleTheme();
-                },
-              ),
-              const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-              button(
-                "Đăng xuất",
-                Icon(Icons.logout),
-                () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return showDialogQuestion(
-                        context,
-                        KeyLanguage.logout.tr,
-                        KeyLanguage.logoutQuestion.tr,
-                        () {
-                          logout();
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: Dimensions.RADIUS_SIZE_OVER_LARGE,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: user.image != null
+                        ? Image.asset(user.image!)
+                        : Icon(
+                            Icons.person,
+                            size: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
+                            color: Theme.of(context).cardColor,
+                          ),
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  Text(
+                    user.displayName ?? KeyLanguage.displayName.tr,
+                    style: robotoBold.copyWith(
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
+                        color: ColorResources.getBlackColor()),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  button(
+                    KeyLanguage.infoPerson.tr,
+                    const Icon(Icons.person),
+                    () {
+                      Get.to(const InfoUserScreen());
+                    },
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  button(
+                    "${KeyLanguage.light.tr}/${KeyLanguage.dark.tr}",
+                    Icon(
+                      Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                      color: ColorResources.getBlackColor(),
+                    ),
+                    () {
+                      changeTheme();
+                    },
+                  ),
+                  const Spacer(),
+                  button(
+                    KeyLanguage.logout.tr,
+                    const Icon(Icons.logout),
+                    () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return showDialogQuestion(
+                            context,
+                            KeyLanguage.logout.tr,
+                            KeyLanguage.logoutQuestion.tr,
+                            () {
+                              logout();
+                            },
+                          );
                         },
                       );
                     },
-                  );
-                },
+                  ),
+                ],
               ),
+              const Positioned(
+                right: 0,
+                child: DropdownLangue(),
+              )
             ],
           ),
         );
@@ -108,9 +118,7 @@ class _PersonScreenState extends State<PersonScreen> {
     Get.find<AuthController>().logout().then(
       (value) {
         if (value == 200) {
-          debugPrint('1');
           Get.find<AuthController>().clearData();
-          debugPrint('2');
           Get.offNamed(RouteHelper.getSignInRoute());
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -150,5 +158,12 @@ class _PersonScreenState extends State<PersonScreen> {
         ),
       ),
     );
+  }
+
+  void changeTheme() async {
+    await animatedLoading();
+    Get.find<ThemeController>().toggleTheme();
+
+    animatedNoLoading();
   }
 }

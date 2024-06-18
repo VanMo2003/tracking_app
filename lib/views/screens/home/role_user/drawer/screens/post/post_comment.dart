@@ -4,8 +4,8 @@ import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/screens/home/user/drawer/screens/post/post_item.dart';
-import 'package:traking_app/helper/widgets/text_field_widget.dart';
+import 'package:traking_app/views/screens/home/role_user/drawer/screens/post/post_item.dart';
+import 'package:traking_app/views/widgets/text_field_widget.dart';
 
 import '../../../../../../../controllers/auth_controller.dart';
 import '../../../../../../../controllers/post_controller.dart';
@@ -63,7 +63,6 @@ class _PostCommentState extends State<PostComment> {
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: CircleAvatar(
-                                backgroundColor: Colors.blue,
                                 radius: 20,
                                 child: widget.content.user!.image != null
                                     ? Image.asset(widget.content.user!.image!)
@@ -76,12 +75,15 @@ class _PostCommentState extends State<PostComment> {
                                     vertical: 8, horizontal: 8),
                                 height: 70,
                                 decoration: BoxDecoration(
-                                    color: ColorResources.getGreyColor(),
+                                    color: Theme.of(context).hintColor,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(12))),
                                 child: RichText(
                                   text: TextSpan(
-                                    style: robotoBold.copyWith(fontSize: 18),
+                                    style: robotoBold.copyWith(
+                                      fontSize: 18,
+                                      color: Theme.of(context).cardColor,
+                                    ),
                                     children: [
                                       TextSpan(
                                         text: comment.user!.displayName,
