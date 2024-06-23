@@ -30,23 +30,23 @@ class UserRes {
     this.username,
     this.password,
     this.confirmPassword,
-    this.changePass,
-    this.active,
+    this.changePass = false,
+    this.active = true,
     this.lastName,
     this.firstName,
     this.dob,
     this.birthPlace,
     this.email,
-    this.hasPhoto,
+    this.hasPhoto = false,
     this.roles,
     this.gender,
     this.university,
-    this.year,
+    this.year = 18,
     this.countDayCheckin,
     this.countDayTracking,
     this.tokenDevice,
     this.image,
-    this.setPassword,
+    this.setPassword = true,
   });
 
   UserRes.fromJson(Map<String, dynamic> json) {
@@ -109,6 +109,7 @@ class UserRes {
   }
 
   UserRes copyWith({
+    int? id,
     String? displayName,
     String? username,
     String? password,
@@ -132,17 +133,27 @@ class UserRes {
     bool? setPassword,
   }) {
     return UserRes(
+      id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
       username: username ?? this.username,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
-      email: email ?? this.email,
-      displayName: displayName ?? this.displayName,
+      changePass: changePass ?? this.changePass,
+      active: active ?? this.active,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      university: university ?? this.university,
       dob: dob ?? this.dob,
       birthPlace: birthPlace ?? this.birthPlace,
+      email: email ?? this.email,
+      roles: roles ?? this.roles,
       gender: gender ?? this.gender,
+      university: university ?? this.university,
+      year: year ?? this.year,
+      countDayCheckin: countDayCheckin ?? this.countDayCheckin,
+      countDayTracking: countDayTracking ?? this.countDayTracking,
+      tokenDevice: tokenDevice ?? this.tokenDevice,
+      image: image ?? this.image,
+      setPassword: setPassword ?? this.setPassword,
     );
   }
 }

@@ -7,13 +7,16 @@ import 'package:traking_app/controllers/theme_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/screens/home/role_user/attendance/attendance_screen.dart';
-import 'package:traking_app/views/screens/home/list_user/list_user_screen.dart';
-import 'package:traking_app/views/screens/home/role_user/tracking/tracking_screen.dart';
+import '../../../../controllers/post_controller.dart';
+import 'attendance/attendance_screen.dart';
+import '../list_user/list_user_screen.dart';
+import 'drawer/screens/post/post_comment.dart';
+import 'tracking/tracking_screen.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../../../controllers/tracking_controller.dart';
+import '../../../../helper/notification_helper.dart';
 import '../../../../utils/color_resources.dart';
 import 'drawer/drawer.dart';
 
@@ -43,9 +46,20 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
 
   @override
   void initState() {
+    listenToNotifications();
     super.initState();
     Get.find<TrackingController>().getAllByUser();
     Get.find<SearchByPageController>().getAllUser();
+  }
+
+  listenToNotifications() {
+    debugPrint('listening to notification');
+    NotificationHelper.onClickNotification.stream.listen(
+      (event) {
+        debugPrint('$event');
+        // Get.to(PostComment(id: event));
+      },
+    );
   }
 
   @override

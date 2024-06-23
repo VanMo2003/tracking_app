@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/role_user/tracking/button_widget.dart';
+import 'button_widget.dart';
 
 import '../../../../../controllers/loading_controller.dart';
 import '../../../../../controllers/tracking_controller.dart';

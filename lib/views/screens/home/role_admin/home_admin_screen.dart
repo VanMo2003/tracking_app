@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/role_admin/person/person_screen.dart';
-import 'package:traking_app/views/screens/home/list_user/list_user_screen.dart';
+import 'person/person_screen.dart';
+import '../list_user/list_user_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../../../controllers/search_controller.dart';

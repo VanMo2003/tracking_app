@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'package:traking_app/views/screens/home/list_user/detail_user.dart';
+import 'detail_user.dart';
 
 import '../../../../utils/color_resources.dart';
 import '../../../../utils/language/key_language.dart';

@@ -5,7 +5,7 @@ ThemeData light({Color color = const Color(0xFFFF74D9)}) => ThemeData(
       primaryColor: color,
       secondaryHeaderColor: Color(0xFFE054B8),
       disabledColor: Colors.black,
-      scaffoldBackgroundColor: Color(0xFFF3F3F3),
+      scaffoldBackgroundColor: Color.fromARGB(245, 255, 255, 255),
       // errorColor: Color(0xFFE84D4F),
       brightness: Brightness.light,
       hintColor: Color(0xFFBEC3C7),

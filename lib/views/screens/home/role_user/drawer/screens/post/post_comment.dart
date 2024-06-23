@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:traking_app/models/body/posts/content.dart';
-import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/screens/home/role_user/drawer/screens/post/post_item.dart';
+import 'post_item.dart';
 import 'package:traking_app/views/widgets/text_field_widget.dart';
 
 import '../../../../../../../controllers/auth_controller.dart';
@@ -12,9 +11,10 @@ import '../../../../../../../controllers/post_controller.dart';
 import '../../../../../../../models/body/posts/comment.dart';
 
 class PostComment extends StatefulWidget {
-  const PostComment({super.key, required this.content});
+  PostComment({super.key, this.content, this.id});
 
-  final Content content;
+  Content? content;
+  final String? id;
 
   @override
   State<PostComment> createState() => _PostCommentState();
@@ -24,6 +24,17 @@ class _PostCommentState extends State<PostComment> {
   final TextEditingController commentController = TextEditingController();
 
   final key = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.id != null) {
+      var content = Get.find<PostController>().contents.singleWhere(
+            (element) => element.id.toString() == widget.id,
+          );
+      widget.content = content;
+    }
+  }
 
   @override
   void dispose() {
@@ -40,7 +51,7 @@ class _PostCommentState extends State<PostComment> {
         ),
         body: GetBuilder<PostController>(
           builder: (controller) {
-            List<Comments> comments = widget.content.comments ?? [];
+            List<Comments> comments = widget.content!.comments ?? [];
 
             return Column(
               children: [
@@ -50,7 +61,7 @@ class _PostCommentState extends State<PostComment> {
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return PostItem(
-                          content: widget.content,
+                          content: widget.content!,
                           isClick: false,
                         );
                       }
@@ -64,8 +75,8 @@ class _PostCommentState extends State<PostComment> {
                               padding: const EdgeInsets.only(right: 8.0),
                               child: CircleAvatar(
                                 radius: 20,
-                                child: widget.content.user!.image != null
-                                    ? Image.asset(widget.content.user!.image!)
+                                child: widget.content!.user!.image != null
+                                    ? Image.asset(widget.content!.user!.image!)
                                     : const Icon(Icons.image),
                               ),
                             ),
@@ -127,7 +138,7 @@ class _PostCommentState extends State<PostComment> {
                               user: Get.find<AuthController>().user,
                             );
                             Get.find<PostController>()
-                                .commentPost(widget.content.id!, body);
+                                .commentPost(widget.content!.id!, body);
                             FocusScope.of(context).unfocus();
                             commentController.clear();
                           }

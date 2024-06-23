@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Notifications extends StatelessWidget {
-  const Notifications({super.key});
+class NotificationScreent extends StatelessWidget {
+  const NotificationScreent({super.key});
 
   @override
   Widget build(BuildContext context) {
