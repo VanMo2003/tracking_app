@@ -5,8 +5,8 @@ import 'package:traking_app/controllers/theme_controller.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/screens/home/role_user/drawer/drawer.dart';
-import 'package:traking_app/views/screens/home/role_user/drawer/screens/info_user_screen.dart';
+import '../../role_user/drawer/drawer.dart';
+import '../../role_user/drawer/screens/info_user_screen.dart';
 
 import '../../../../../helper/loading_helper.dart';
 import '../../../../../helper/route_helper.dart';

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960652171424",
+    "project_id": "test-notification-af33b",
+    "storage_bucket": "test-notification-af33b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960652171424:android:8a0be97347e2e3cc6691c5",
+        "android_client_info": {
+          "package_name": "com.example.traking_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB25zWIoOA1YQqZv3z4iph0IAW1dMBFSAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

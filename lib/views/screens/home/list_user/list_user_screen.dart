@@ -7,7 +7,7 @@ import 'package:traking_app/models/body/search.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'package:traking_app/views/screens/home/list_user/list_user_item.dart';
+import 'list_user_item.dart';
 
 import '../../../../utils/language/key_language.dart';
 

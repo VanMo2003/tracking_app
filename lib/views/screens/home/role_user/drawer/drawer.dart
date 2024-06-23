@@ -16,6 +16,7 @@ import '../../../../../utils/color_resources.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../../../utils/icons.dart';
 import '../../../../../utils/styles.dart';
+import '../notifications.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key, required this.scaffoldKey});
@@ -143,6 +144,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               Get.find<ThemeController>().toggleTheme();
                               animatedNoLoading();
                               widget.scaffoldKey.currentState?.closeDrawer();
+                            },
+                          ),
+                          ButtonCustomWidget(
+                            label: KeyLanguage.notification.tr,
+                            onTap: () async {
+                              Get.to(const NotificationScreent());
                             },
                           ),
                         ],

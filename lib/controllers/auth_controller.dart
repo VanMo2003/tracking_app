@@ -84,13 +84,15 @@ class AuthController extends GetxController implements GetxService {
   Future<int> updateInfoUser(UserRes userNew) async {
     Response response = await authRepo.updateUserById(userNew);
     if (response.statusCode == 200) {
-      for (var element in Get.find<SearchByPageController>().listResult!) {
-        if (element.id == userNew.id) {
-          int index =
-              Get.find<SearchByPageController>().listResult!.indexOf(element);
-          Get.find<SearchByPageController>()
-            ..listResult![index] = userNew
-            ..update();
+      if (Get.find<SearchByPageController>().listResult != null) {
+        for (var element in Get.find<SearchByPageController>().listResult!) {
+          if (element.id == userNew.id) {
+            int index =
+                Get.find<SearchByPageController>().listResult!.indexOf(element);
+            Get.find<SearchByPageController>()
+              ..listResult![index] = userNew
+              ..update();
+          }
         }
       }
     } else if (response.statusCode == 401) {

@@ -1,6 +1,8 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
+import 'package:traking_app/helper/date_converter.dart';
 import 'package:traking_app/helper/loading_helper.dart';
 import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/models/response/user_res.dart';
@@ -202,19 +204,18 @@ class _EnterInfoScreenState extends State<EnterInfoScreen> {
 
     if (key.currentState!.validate()) {
       await animatedLoading();
-
-      UserRes user = Get.find<AuthController>().user!;
-
-      user.copyWith(
-        email: email,
-        displayName: displayName,
-        firstName: splitFirstName(fullname),
-        lastName: splitLastName(fullname),
-        university: university,
-        dob: dataOfBirth,
-        birthPlace: selectedBirthPlace,
-        gender: _character!.gender,
-      );
+      debugPrint('${DateFormat("dd/MM/yyy").parse(dataOfBirth)}');
+      UserRes user = Get.find<AuthController>().user!.copyWith(
+            email: email,
+            displayName: displayName,
+            firstName: splitFirstName(fullname),
+            lastName: splitLastName(fullname),
+            university: university,
+            dob: DateFormat("dd/MM/yyy").parse(dataOfBirth).toIso8601String(),
+            birthPlace: selectedBirthPlace,
+            gender: _character!.gender,
+          );
+      debugPrint('${user.dob}');
 
       Get.find<AuthController>().updateMyself(user).then(
         (value) {

@@ -8,7 +8,7 @@ import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/screens/home/role_user/drawer/screens/post/post_comment.dart';
+import 'post_comment.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({super.key, required this.content, this.isClick = true});
