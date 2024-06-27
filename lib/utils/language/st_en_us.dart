@@ -69,4 +69,6 @@ const Map<String, String> en = {
   KeyLanguage.trackingUpdate: "Tracking Update",
   KeyLanguage.attendanceSuccess: "Successful attendance",
   KeyLanguage.attendanced: "Today you took attendance",
+  KeyLanguage.noInternet: "No internet connection",
+  KeyLanguage.hasInternet: "An internet connection is available",
 };

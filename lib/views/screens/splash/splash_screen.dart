@@ -7,6 +7,7 @@ import 'package:traking_app/utils/app_constant.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:traking_app/utils/language/key_language.dart';
 
 import '../../../controllers/auth_controller.dart';
 import '../../../helper/route_helper.dart';
@@ -22,6 +23,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool isFirstTime = true;
+
   @override
   void initState() {
     super.initState();
@@ -30,20 +33,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _onConnectivityChange(ConnectivityResult result) async {
-    setState(() async {
-      if (result != ConnectivityResult.wifi) {
-        showCustomSnackBar("Không có kết nối internet");
+    if (result != ConnectivityResult.wifi) {
+      if (isFirstTime) {
+        showCustomSnackBar(KeyLanguage.noInternet.tr, duration: 6000);
       } else {
-        await _route();
-        showCustomSnackBar("Đã kết nối internet: $result", isError: false);
+        showCustomSnackBar(KeyLanguage.noInternet.tr);
       }
-    });
-  }
-
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel(); // Hủy đăng ký
-    super.dispose();
+    } else {
+      if (isFirstTime) {
+        await _route();
+        hideSnackBar(context);
+      }
+      showCustomSnackBar(KeyLanguage.hasInternet.tr, isError: false);
+      isFirstTime = false;
+    }
   }
 
   @override

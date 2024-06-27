@@ -3,12 +3,12 @@ import 'package:traking_app/models/body/posts/content.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'post_item.dart';
+import 'widget/post_item.dart';
 import 'package:traking_app/views/widgets/text_field_widget.dart';
 
-import '../../../../../../../controllers/auth_controller.dart';
-import '../../../../../../../controllers/post_controller.dart';
-import '../../../../../../../models/body/posts/comment.dart';
+import '../../../../controllers/auth_controller.dart';
+import '../../../../controllers/post_controller.dart';
+import '../../../../models/body/posts/comment.dart';
 
 class PostComment extends StatefulWidget {
   PostComment({super.key, this.content, this.id});

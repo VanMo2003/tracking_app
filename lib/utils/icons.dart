@@ -7,6 +7,7 @@ class IconUtil {
   static const String attendance = "$icons_path/attendance.png";
   static const String list = "$icons_path/list.png";
   static const String back = "$icons_path/back.png";
+  static const String back_bottom = "$icons_path/back_bottom.png";
   static const String image = "$icons_path/image.png";
   static const String person = "$icons_path/person.png";
 }

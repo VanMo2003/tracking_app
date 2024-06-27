@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
-import 'package:traking_app/helper/date_converter.dart';
+import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/helper/loading_helper.dart';
 import 'package:traking_app/views/widgets/button_widget.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
@@ -12,8 +12,8 @@ import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
 
-import '../../../../helper/snackbar_helper.dart';
-import '../../../widgets/dialog_widget.dart';
+import '../../../helper/snackbar_helper.dart';
+import '../../widgets/dialog/dialog_widget.dart';
 
 class DetailUserScreen extends StatefulWidget {
   DetailUserScreen({super.key, UserRes? user}) : _user = user ?? UserRes();
@@ -124,7 +124,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: ButtonCustomWidget(
+                              child: ButtonWidget(
                                 onTap: () {
                                   edit();
                                 },
@@ -136,14 +136,14 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                                 width: Dimensions.PADDING_SIZE_DEFAULT),
                             Expanded(
                               child: widget._user.active!
-                                  ? ButtonCustomWidget(
+                                  ? ButtonWidget(
                                       onTap: () {
                                         lock(context);
                                       },
                                       label: KeyLanguage.lock.tr,
                                       icon: const Icon(Icons.lock_outline),
                                     )
-                                  : ButtonCustomWidget(
+                                  : ButtonWidget(
                                       onTap: () {
                                         debugPrint('click unlock');
                                       },

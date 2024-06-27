@@ -4,7 +4,7 @@ import 'package:traking_app/models/body/posts/content.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
-import 'post_item.dart';
+import 'widget/post_item.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -34,12 +34,6 @@ class _PostScreenState extends State<PostScreen> {
         }
       }
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    Get.find<PostController>().clearData();
   }
 
   @override

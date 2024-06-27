@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/controllers/theme_controller.dart';
+import 'package:traking_app/services/firebase_service.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import '../../role_user/drawer/drawer.dart';
-import '../../role_user/drawer/screens/info_user_screen.dart';
+import '../../../widgets/drawer_widget.dart';
+import '../../home_user/info_user/info_user_screen.dart';
 
-import '../../../../../helper/loading_helper.dart';
-import '../../../../../helper/route_helper.dart';
-import '../../../../widgets/dialog_widget.dart';
-import '../../../../../utils/color_resources.dart';
-import '../../../../../utils/dimensions.dart';
-import '../../../../widgets/dropdown_language_widget.dart';
+import '../../../../helper/loading_helper.dart';
+import '../../../../helper/route_helper.dart';
+import '../../../widgets/dialog/dialog_widget.dart';
+import '../../../../utils/color_resources.dart';
+import '../../../../utils/dimensions.dart';
+import '../../../widgets/dropdown_language_widget.dart';
 
 class PersonScreen extends StatefulWidget {
   const PersonScreen({super.key});
@@ -118,6 +119,7 @@ class _PersonScreenState extends State<PersonScreen> {
     Get.find<AuthController>().logout().then(
       (value) {
         if (value == 200) {
+          FirebaseService.removeCurrentUserToken();
           Get.find<AuthController>().clearData();
           Get.offNamed(RouteHelper.getSignInRoute());
         } else {

@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'detail_user.dart';
 
-import '../../../../utils/color_resources.dart';
-import '../../../../utils/language/key_language.dart';
-import '../../../../utils/styles.dart';
+import '../../../utils/color_resources.dart';
+import '../../../utils/language/key_language.dart';
+import '../../../utils/styles.dart';
 
 enum SampleItem { update, lock, unlock }
 

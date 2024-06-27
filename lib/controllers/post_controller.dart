@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/models/body/posts/comment.dart';
@@ -48,7 +49,7 @@ class PostController extends GetxController implements GetxService {
   Future<int> addContent(Content content) async {
     Response response = await repo.addContent(content);
     if (response.statusCode == 200) {
-      showCustomSnackBar("Thêm thành công bài viết : ${content.content}");
+      debugPrint("Thêm thành công bài viết : ${content.content}");
     } else {}
 
     update();

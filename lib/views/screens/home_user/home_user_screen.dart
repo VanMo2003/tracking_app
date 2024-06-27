@@ -3,22 +3,20 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/controllers/search_controller.dart';
-import 'package:traking_app/controllers/theme_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import '../../../../controllers/post_controller.dart';
+import '../../../controllers/post_controller.dart';
 import 'attendance/attendance_screen.dart';
 import '../list_user/list_user_screen.dart';
-import 'drawer/screens/post/post_comment.dart';
 import 'tracking/tracking_screen.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import '../../../../controllers/tracking_controller.dart';
-import '../../../../helper/notification_helper.dart';
-import '../../../../utils/color_resources.dart';
-import 'drawer/drawer.dart';
+import '../../../controllers/tracking_controller.dart';
+import '../../../helper/notification_helper.dart';
+import '../../../utils/color_resources.dart';
+import '../../widgets/drawer_widget.dart';
 
 class HomeUserScreent extends StatefulWidget {
   const HomeUserScreent({super.key});
@@ -50,6 +48,7 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
     super.initState();
     Get.find<TrackingController>().getAllByUser();
     Get.find<SearchByPageController>().getAllUser();
+    // NotificationHelper.getDeviceToken();
   }
 
   listenToNotifications() {
@@ -68,6 +67,7 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
     Get.find<TrackingController>().clearData();
     Get.find<AuthController>().clearData();
     Get.find<SearchByPageController>().clearData();
+    Get.find<PostController>().clearData();
   }
 
   @override
@@ -97,7 +97,7 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
             title: Text(listTitle[_currentIndex.value].tr),
             centerTitle: true,
           ),
-          drawer: CustomDrawer(scaffoldKey: _scaffoldKey),
+          drawer: DrawerWidget(scaffoldKey: _scaffoldKey),
           body: listWidget[_currentIndex.value],
           bottomNavigationBar: SalomonBottomBar(
             currentIndex: _currentIndex.value,

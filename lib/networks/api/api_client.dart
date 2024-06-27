@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/models/response/error_response.dart';
+import 'package:traking_app/models/response/error_res.dart';
 import 'package:traking_app/utils/app_constant.dart';
 import 'package:http/http.dart' as Http;
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:traking_app/utils/language/key_language.dart';
+
+import '../../models/body/multipart.dart';
 
 class ApiClient extends GetxService {
   final String urlBase;
@@ -91,6 +97,34 @@ class ApiClient extends GetxService {
     }
   }
 
+  Future<Response> postMultipartData(String uri, MultipartBody multipartBody,
+      {required Map<String, String>? headers, String? filename}) async {
+    try {
+      if (Foundation.kDebugMode) {
+        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+        debugPrint(
+            '====> API Body: {${multipartBody.key} : ${multipartBody.file}}');
+      }
+      Http.MultipartRequest _request =
+          Http.MultipartRequest('POST', Uri.parse(urlBase + uri));
+      _request.headers.addAll(headers ?? _mainHeaders);
+      if (multipartBody.file != null) {
+        Uint8List _list = await multipartBody.file!.readAsBytes();
+        _request.files.add(Http.MultipartFile(
+          multipartBody.key,
+          multipartBody.file!.readAsBytes().asStream(),
+          _list.length,
+          filename: filename,
+        ));
+      }
+      Http.Response _response =
+          await Http.Response.fromStream(await _request.send());
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   Future<Response> postDataLogin(
       String uri, dynamic body, Map<String, String>? header) async {
     try {
@@ -156,6 +190,7 @@ class ApiClient extends GetxService {
         _body = jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
       }
     } catch (e) {
+      // _body = jsonDecode(response.body);
       debugPrint('Error : ${e.toString()}');
     }
     Response _response = Response(
@@ -187,8 +222,7 @@ class ApiClient extends GetxService {
       );
     }
     if (Foundation.kDebugMode) {
-      debugPrint(
-          '====> Api Response : [${_response.statusCode}] $uri\n${_response.body}');
+      debugPrint('====> Api Response : [${_response.statusCode}] $uri\n');
     }
     return _response;
   }

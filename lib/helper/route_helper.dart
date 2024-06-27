@@ -1,9 +1,9 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../views/screens/home/role_admin/home_admin_screen.dart';
-import '../views/screens/home/role_user/drawer/screens/post/post_screen.dart';
-import '../views/screens/home/role_user/drawer/screens/info_user_screen.dart';
-import '../views/screens/home/role_user/home_user_screen.dart';
+import '../views/screens/home_admin/home_admin_screen.dart';
+import '../views/screens/home_user/post/post_screen.dart';
+import '../views/screens/home_user/info_user/info_user_screen.dart';
+import '../views/screens/home_user/home_user_screen.dart';
 import 'package:traking_app/views/screens/sign_in/sign_in_screen.dart';
 import 'package:traking_app/views/screens/sign_up/enter_info_screen.dart';
 import 'package:traking_app/views/screens/sign_up/sign_up_screen.dart';
@@ -19,9 +19,9 @@ class RouteHelper {
   static const String signUp = "/sign-up";
   static const String enterInfo = "/enter-info";
   static const String home = "/home";
-  static const String homeAdmin = "/home_admin";
-  static const String infoUser = "/info_user";
-  static const String changePassword = "/change_password";
+  static const String homeAdmin = "/home-admin";
+  static const String infoUser = "/info-user";
+  static const String changePassword = "/change-password";
   static const String post = "/post";
   static const String message = "/message";
 
@@ -46,6 +46,6 @@ class RouteHelper {
     GetPage(name: homeAdmin, page: () => const HomeAdminScreent()),
     GetPage(name: infoUser, page: () => const InfoUserScreen()),
     GetPage(name: post, page: () => const PostScreen()),
-    GetPage(name: message, page: () => const MessageScreens()),
+    GetPage(name: message, page: () => const MessageScreent()),
   ];
 }

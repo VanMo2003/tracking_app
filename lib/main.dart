@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/app_binding.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'package:traking_app/controllers/langue_controller.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/services/language_service.dart';
@@ -22,22 +28,51 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // if (ResponsiveHelper.isMobilePhone()) {
-  //   HttpOverrides.global = MyHttpOverrides();
-  // }
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // setPathUrlStrategy();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (GetPlatform.isMobile) {
+    HttpOverrides.global = MyHttpOverrides();
+  }
 
   try {
     if (GetPlatform.isMobile) {
       await NotificationHelper.init();
       await NotificationHelper.initialize();
       FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (message) {
+          debugPrint('to message : $message');
+          Get.toNamed(RouteHelper.getMessage(), arguments: message);
+        },
+      );
+
+      FirebaseMessaging.onMessage.listen(
+        (message) {
+          String payloadData = jsonEncode(message.data);
+          debugPrint('got a message in foreground');
+          if (message.notification != null) {
+            NotificationHelper.showSimpleNotification(
+              title: message.notification!.title!,
+              body: message.notification!.body!,
+              payload: payloadData,
+            );
+          }
+        },
+      );
+
+      //handle in terminated state
+      final RemoteMessage? message =
+          await FirebaseMessaging.instance.getInitialMessage();
+      if (message != null) {
+        debugPrint('launched from terminated state');
+        Future.delayed(
+          Duration(seconds: 1),
+          () {
+            Get.toNamed(RouteHelper.getMessage(), arguments: message);
+          },
+        );
+      }
     }
   } catch (e) {}
 
@@ -55,6 +90,7 @@ class MyApp extends StatelessWidget {
       builder: (themeController) {
         return GetBuilder<LanguageController>(
           builder: (languageController) {
+            FlutterNativeSplash.remove();
             return GetMaterialApp(
               enableLog: true,
               debugShowCheckedModeBanner: false,
@@ -74,5 +110,18 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+/// hàm callback được cung cấp luôn trả về true,
+/// thực sự bỏ qua mọi lỗi xác thực chứng chỉ.
+/// Điều này thường được sử dụng trong quá trình phát triển để cho phép kết nối với các máy chủ có chứng chỉ tự ký,
+/// vốn không được tin cậy mặc định vì lý do bảo mật
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

@@ -3,6 +3,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:get/get.dart';
+import 'package:traking_app/controllers/auth_controller.dart';
+import 'package:traking_app/helper/route_helper.dart';
+import 'package:traking_app/services/firebase_service.dart';
 
 class NotificationHelper {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -10,8 +14,11 @@ class NotificationHelper {
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   static final _analytics = FirebaseAnalytics.instance;
   static final onClickNotification = BehaviorSubject<String>();
+
+  // ontap local notification foreground
   static void onNotification(NotificationResponse notificationResponse) {
-    onClickNotification.add(notificationResponse.input!);
+    // onClickNotification.add(notificationResponse.input!);
+    Get.toNamed(RouteHelper.getMessage(), arguments: notificationResponse);
   }
 
   static Future init() async {
@@ -24,11 +31,25 @@ class NotificationHelper {
       provisional: true,
       sound: true,
     );
+  }
 
-    await _analytics.logBeginCheckout();
-
+  static Future getDeviceToken() async {
     final token = await _firebaseMessaging.getToken();
     debugPrint('device token : $token');
+    if (Get.find<AuthController>().user != null) {
+      await FirebaseService.saveUserToken(token!);
+      debugPrint('save to firestore');
+    }
+
+    // also save if token changes
+    _firebaseMessaging.onTokenRefresh.listen(
+      (event) async {
+        if (Get.find<AuthController>().user != null) {
+          await FirebaseService.saveUserToken(token!);
+          debugPrint('save to firestore');
+        }
+      },
+    );
   }
 
   static Future<void> initialize() async {
@@ -50,21 +71,35 @@ class NotificationHelper {
     );
   }
 
-  static Future<void> showTextNotification(
-      String title, String body, String payload) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  // show a simple notifications
+  static Future<void> showSimpleNotification({
+    required String title,
+    required String body,
+    required String payload,
+  }) async {
+    const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-      '6ammart',
-      '6ammart',
-      // playSound: true,
+      "your channel id",
+      "your channel name",
+      channelDescription: "your channel description",
       importance: Importance.max,
       priority: Priority.high,
       ticker: "ticker",
-      // sound: RawResourceAndroidNotificationSound('file_music'),
     );
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+    );
+
     await _flutterLocalNotificationsPlugin
-        .show(0, title, body, platformChannelSpecifics, payload: payload);
+        .show(0, title, body, notificationDetails, payload: payload);
+  }
+
+  static Future sendMessage() async {
+    await FirebaseMessaging.instance.sendMessage(
+      to: "f0b0LVMWTVuPs7FvXxnEhz:APA91bFWGwYsMqP0xpStxf2Wxe-zBk2dBe4A6lwV2VRMx-rOgeDZH7rcxG1WtIo2wW_GI7JVSJuaY-WgyjCFWz4OAxPgsjA10sCPqMHPVPxcxVA09hr6GMLCbPYCJuYIOadqLmFYr1t6",
+      data: {
+        "hello": "data",
+      },
+    );
   }
 }
