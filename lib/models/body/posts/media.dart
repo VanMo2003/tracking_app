@@ -13,7 +13,7 @@ class Media {
       this.contentType,
       this.contentSize,
       this.name,
-      this.extension,
+      this.extension = "string",
       this.filePath,
       this.isVideo,
       this.posts});

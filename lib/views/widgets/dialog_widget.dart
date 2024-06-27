@@ -95,8 +95,6 @@ Widget showDialogAdd({
                   style: ButtonStyle(
                     backgroundColor:
                         WidgetStateProperty.all(ColorResources.getWhiteColor()),
-                    // textStyle: WidgetStateProperty.all(
-                    //     TextStyle(color: ColorResources.getBlackColor())),
                   ),
                   onPressed: () {
                     onAdd();

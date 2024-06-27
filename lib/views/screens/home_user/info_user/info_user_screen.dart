@@ -4,7 +4,7 @@ import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/widgets/dialog_widget.dart';
+import 'package:traking_app/views/widgets/dialog/dialog_widget.dart';
 import 'package:get/get.dart';
 
 class InfoUserScreen extends StatefulWidget {

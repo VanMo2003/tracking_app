@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helper/notification_helper.dart';
 import 'person/person_screen.dart';
 import '../list_user/list_user_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import '../../../../controllers/search_controller.dart';
-import '../../../../utils/color_resources.dart';
-import '../../../../utils/icons.dart';
-import '../../../../utils/language/key_language.dart';
+import '../../../controllers/search_controller.dart';
+import '../../../utils/color_resources.dart';
+import '../../../utils/icons.dart';
+import '../../../utils/language/key_language.dart';
 
 class HomeAdminScreent extends StatefulWidget {
   const HomeAdminScreent({super.key});
@@ -31,8 +32,14 @@ class _HomeAdminScreentState extends State<HomeAdminScreent> {
   @override
   void initState() {
     super.initState();
-
     Get.find<SearchByPageController>().getAllUser();
+    NotificationHelper.getDeviceToken();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.find<SearchByPageController>().clearData();
   }
 
   @override

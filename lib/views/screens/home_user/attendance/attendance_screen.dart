@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
 
-import '../../../../../helper/loading_helper.dart';
-import '../../../../../utils/language/key_language.dart';
-import '../../../../../utils/styles.dart';
+import '../../../../helper/loading_helper.dart';
+import '../../../../utils/language/key_language.dart';
+import '../../../../utils/styles.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});

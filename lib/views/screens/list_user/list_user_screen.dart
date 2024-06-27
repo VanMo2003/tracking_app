@@ -9,7 +9,7 @@ import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'list_user_item.dart';
 
-import '../../../../utils/language/key_language.dart';
+import '../../../utils/language/key_language.dart';
 
 class ListUserScreen extends StatefulWidget {
   ListUserScreen({super.key, this.enabled = true});
@@ -57,6 +57,11 @@ class _ListUserScreenState extends State<ListUserScreen> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

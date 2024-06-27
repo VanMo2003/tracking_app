@@ -4,12 +4,13 @@ import 'package:traking_app/utils/color_resources.dart';
 import '../utils/dimensions.dart';
 import '../utils/styles.dart';
 
-void showCustomSnackBar(String message, {bool isError = true}) {
+void showCustomSnackBar(String message,
+    {bool isError = true, int duration = 2}) {
   if (message.isNotEmpty) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
       dismissDirection: DismissDirection.horizontal,
       margin: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: duration),
       backgroundColor: isError ? Colors.red : Colors.green,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
@@ -22,4 +23,8 @@ void showCustomSnackBar(String message, {bool isError = true}) {
       ),
     ));
   }
+}
+
+void hideSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
 }

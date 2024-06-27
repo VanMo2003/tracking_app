@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class MessageScreens extends StatefulWidget {
-  const MessageScreens({super.key});
+class MessageScreent extends StatefulWidget {
+  const MessageScreent({super.key});
 
   @override
-  State<MessageScreens> createState() => _MessageScreensState();
+  State<MessageScreent> createState() => _MessageScreentState();
 }
 
-class _MessageScreensState extends State<MessageScreens> {
+class _MessageScreentState extends State<MessageScreent> {
   Map payload = {};
   @override
   Widget build(BuildContext context) {

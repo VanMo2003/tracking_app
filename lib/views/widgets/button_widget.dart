@@ -5,20 +5,33 @@ import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/styles.dart';
 
-class ButtonCustomWidget extends StatelessWidget {
-  const ButtonCustomWidget(
-      {super.key, this.label, required this.onTap, this.child, this.icon});
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
+    super.key,
+    this.label,
+    required this.onTap,
+    this.child,
+    this.icon,
+    this.isMenuItem = false,
+  });
 
   final String? label;
   final void Function() onTap;
   final Widget? child;
   final Widget? icon;
+  final bool isMenuItem;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      padding: isMenuItem
+          ? const EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_LARGE,
+              top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            )
+          : const EdgeInsets.symmetric(
+              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: GestureDetector(
         onTap: () {
           onTap();
@@ -43,6 +56,7 @@ class ButtonCustomWidget extends StatelessWidget {
                       Image.asset(
                         IconUtil.back,
                         fit: BoxFit.cover,
+                        color: Theme.of(context).dividerColor,
                       ),
                 ],
               ),

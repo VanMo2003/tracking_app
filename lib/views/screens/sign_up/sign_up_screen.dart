@@ -7,7 +7,6 @@ import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/screens/sign_up/enter_info_screen.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import '../../../helper/loading_helper.dart';
 import '../../../utils/color_resources.dart';

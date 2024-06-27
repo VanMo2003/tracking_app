@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/loading_controller.dart';
 import 'package:traking_app/controllers/search_controller.dart';
-import 'package:traking_app/helper/date_converter.dart';
+import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/networks/repository/auth_repo.dart';
-import 'package:traking_app/models/response/token_response.dart';
+import 'package:traking_app/models/response/token_res.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 
 import '../helper/snackbar_helper.dart';
@@ -59,10 +59,8 @@ class AuthController extends GetxController implements GetxService {
           }
         }
       }
-    } else if (response.statusCode == 401) {
-      clearData();
     } else {
-      // showCustomSnackBar(response.body);
+      clearData();
     }
     update();
     return response.statusCode!;

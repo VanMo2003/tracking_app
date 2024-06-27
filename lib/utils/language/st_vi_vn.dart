@@ -69,4 +69,6 @@ const Map<String, String> vi = {
   KeyLanguage.trackingUpdate: "Chỉnh sửa Theo dõi",
   KeyLanguage.attendanceSuccess: "Điểm danh thành công",
   KeyLanguage.attendanced: "Hôm nay bạn đã điểm danh",
+  KeyLanguage.noInternet: "Không có kết nối internet",
+  KeyLanguage.hasInternet: "Đã có kêt nối internet",
 };

@@ -65,4 +65,6 @@ class KeyLanguage {
   static const String trackingUpdate = "tracking_update";
   static const String attendanceSuccess = "attendance_success";
   static const String attendanced = "attendanced";
+  static const String noInternet = "no_internet";
+  static const String hasInternet = "has_internet";
 }
