@@ -38,14 +38,14 @@ class RouteHelper {
   static String getMessage() => message;
 
   static List<GetPage> routes = [
-    GetPage(name: splash, page: () => const SplashScreen()),
-    GetPage(name: signIn, page: () => const SignInScreen()),
-    GetPage(name: signUp, page: () => const SignUpScreen()),
-    GetPage(name: enterInfo, page: () => EnterInfoScreen()),
+    GetPage(name: splash, page: () => const SplashScreent()),
+    GetPage(name: signIn, page: () => const SignInScreent()),
+    GetPage(name: signUp, page: () => const SignUpScreent()),
+    GetPage(name: enterInfo, page: () => EnterInfoScreent()),
     GetPage(name: home, page: () => const HomeUserScreent()),
     GetPage(name: homeAdmin, page: () => const HomeAdminScreent()),
-    GetPage(name: infoUser, page: () => const InfoUserScreen()),
-    GetPage(name: post, page: () => const PostScreen()),
+    GetPage(name: infoUser, page: () => const InfoUserScreent()),
+    GetPage(name: post, page: () => const PostScreent()),
     GetPage(name: message, page: () => const MessageScreent()),
   ];
 }

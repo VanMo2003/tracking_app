@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'button_widget.dart';
+import 'button__tracking_widget.dart';
 
 import '../../../../../controllers/loading_controller.dart';
 import '../../../../../controllers/tracking_controller.dart';
@@ -47,7 +47,7 @@ class _TrackingItemState extends State<TrackingItem> {
           boxShadow: [
             BoxShadow(
               offset: const Offset(2.0, 2.0),
-              color: ColorResources.getBlackColor().withOpacity(0.1),
+              color: ColorResources.getBlackColor().withOpacity(0.3),
               blurRadius: 2,
             ),
           ]),
@@ -98,7 +98,7 @@ class _TrackingItemState extends State<TrackingItem> {
                       ),
                     ),
                   ),
-                  ButtonWidget(
+                  ButtonTrackingWidget(
                     onTap: () {
                       if (Foundation.kDebugMode) {
                         debugPrint('onClick Delete');
@@ -108,7 +108,7 @@ class _TrackingItemState extends State<TrackingItem> {
                     icon: Icons.delete,
                     color: Colors.red,
                   ),
-                  ButtonWidget(
+                  ButtonTrackingWidget(
                     onTap: () {
                       if (Foundation.kDebugMode) {
                         debugPrint('onClick Update');
@@ -154,7 +154,7 @@ class _TrackingItemState extends State<TrackingItem> {
     showDialog(
       context: context,
       builder: (context) {
-        return showDialogAdd(
+        return dialogAddWidget(
           context: context,
           textButton: KeyLanguage.save.tr,
           controller: widget.contentController,

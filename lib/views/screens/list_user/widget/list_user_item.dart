@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'detail_user.dart';
+import '../detail_user_screen.dart';
 
-import '../../../utils/color_resources.dart';
-import '../../../utils/language/key_language.dart';
-import '../../../utils/styles.dart';
+import '../../../../utils/color_resources.dart';
+import '../../../../utils/language/key_language.dart';
+import '../../../../utils/styles.dart';
 
 enum SampleItem { update, lock, unlock }
 
@@ -36,7 +36,7 @@ class _ListUserItemState extends State<ListUserItem> {
           boxShadow: [
             BoxShadow(
               offset: const Offset(2.0, 2.0),
-              color: ColorResources.getBlackColor().withOpacity(0.1),
+              color: ColorResources.getBlackColor().withOpacity(0.3),
               blurRadius: 2,
             ),
           ],
@@ -59,7 +59,7 @@ class _ListUserItemState extends State<ListUserItem> {
             ),
           ),
           onTap: () {
-            Get.to(DetailUserScreen(user: widget.user));
+            Get.to(DetailUserScreent(user: widget.user));
           },
           title: Text(
             widget.user.displayName ?? KeyLanguage.displayName.tr,

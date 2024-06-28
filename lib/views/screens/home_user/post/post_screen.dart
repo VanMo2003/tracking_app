@@ -6,14 +6,14 @@ import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'widget/post_item.dart';
 
-class PostScreen extends StatefulWidget {
-  const PostScreen({super.key});
+class PostScreent extends StatefulWidget {
+  const PostScreent({super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  State<PostScreent> createState() => _PostScreentState();
 }
 
-class _PostScreenState extends State<PostScreen> {
+class _PostScreentState extends State<PostScreent> {
   ScrollController scrollController = ScrollController();
   int pageIndex = 1;
 

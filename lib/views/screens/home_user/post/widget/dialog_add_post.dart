@@ -4,16 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/auth_controller.dart';
-import '../../../controllers/post_controller.dart';
-import '../../../controllers/upload_file_controller.dart';
-import '../../../models/body/multipart.dart';
-import '../../../models/body/posts/content.dart';
-import '../../../models/body/posts/media.dart';
-import '../../../utils/color_resources.dart';
-import '../../../utils/dimensions.dart';
-import '../../../utils/language/key_language.dart';
-import '../text_field_widget.dart';
+import '../../../../../controllers/auth_controller.dart';
+import '../../../../../controllers/post_controller.dart';
+import '../../../../../controllers/upload_file_controller.dart';
+import '../../../../../models/body/multipart.dart';
+import '../../../../../models/body/posts/content.dart';
+import '../../../../../models/body/posts/media.dart';
+import '../../../../../utils/color_resources.dart';
+import '../../../../../utils/dimensions.dart';
+import '../../../../../utils/language/key_language.dart';
+import '../../../../widgets/text_field_widget.dart';
 
 class AddPostDialogWidget extends StatelessWidget {
   const AddPostDialogWidget({
@@ -97,24 +97,32 @@ class AddPostDialogWidget extends StatelessWidget {
                       ),
                       onPressed: () {
                         late Content content;
-                        if (Get.find<ImageController>().image != null) {
-                          if (selectedFile != null) {
-                            String filename =
-                                "${Timestamp.fromDate(DateTime.now()).seconds}.png";
-                            content = Content(
+                        if (selectedFile != null) {
+                          debugPrint('has image');
+                          String filename =
+                              "${Timestamp.fromDate(DateTime.now()).seconds}.png";
+                          content = Content(
+                            id: 0,
+                            date: DateTime.now().millisecondsSinceEpoch,
+                            content: controller.text,
+                            user: Get.find<AuthController>().user,
+                            media: Media(
                               id: 0,
-                              date: DateTime.now().millisecondsSinceEpoch,
-                              content: controller.text,
-                              user: Get.find<AuthController>().user,
-                              media: Media(name: filename),
-                            );
+                              contentSize: 0,
+                              contentType: "string",
+                              extension: "string",
+                              filePath: "string",
+                              isVideo: true,
+                              name: filename,
+                            ),
+                          );
 
-                            Get.find<ImageController>().uploadImage(
-                              MultipartBody(file: selectedFile!),
-                              filename,
-                            );
-                          }
+                          Get.find<ImageController>().uploadImage(
+                            MultipartBody(file: selectedFile!),
+                            filename,
+                          );
                         } else {
+                          debugPrint('no image');
                           content = Content(
                             id: 0,
                             date: DateTime.now().millisecondsSinceEpoch,

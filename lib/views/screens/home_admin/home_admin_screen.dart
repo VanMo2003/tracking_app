@@ -19,8 +19,8 @@ class HomeAdminScreent extends StatefulWidget {
 
 class _HomeAdminScreentState extends State<HomeAdminScreent> {
   List<Widget> listWidget = [
-    ListUserScreen(),
-    const PersonScreen(),
+    ListUserScreent(),
+    const PersonScreent(),
   ];
 
   List<String> listTitle = [

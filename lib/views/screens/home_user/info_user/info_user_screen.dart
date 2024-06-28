@@ -4,17 +4,17 @@ import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import 'package:traking_app/views/widgets/dialog/dialog_widget.dart';
+import 'package:traking_app/views/widgets/dialog_widget.dart';
 import 'package:get/get.dart';
 
-class InfoUserScreen extends StatefulWidget {
-  const InfoUserScreen({super.key});
+class InfoUserScreent extends StatefulWidget {
+  const InfoUserScreent({super.key});
 
   @override
-  State<InfoUserScreen> createState() => _InfoUserScreenState();
+  State<InfoUserScreent> createState() => _InfoUserScreentState();
 }
 
-class _InfoUserScreenState extends State<InfoUserScreen> {
+class _InfoUserScreentState extends State<InfoUserScreent> {
   final TextEditingController editingController = TextEditingController();
 
   @override
@@ -79,7 +79,7 @@ class _InfoUserScreenState extends State<InfoUserScreen> {
           showDialog(
             context: context,
             builder: (context) {
-              return showDialogAdd(
+              return dialogAddWidget(
                 hintText: label,
                 textButton: KeyLanguage.save.tr,
                 context: context,

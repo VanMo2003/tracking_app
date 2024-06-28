@@ -6,7 +6,7 @@ import 'package:traking_app/views/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
 
-Widget showDialogUpdate(
+Widget dialogUpdateWidget(
   BuildContext context, {
   required Widget child,
   required void Function() opTap,
@@ -61,7 +61,7 @@ Widget showDialogUpdate(
   );
 }
 
-Widget showDialogAdd({
+Widget dialogAddWidget({
   required BuildContext context,
   required void Function() onAdd,
   required TextEditingController controller,
@@ -123,7 +123,7 @@ Widget showDialogAdd({
   return dialog;
 }
 
-Widget showDialogQuestion(
+Widget dialogQuestionWidget(
   BuildContext context,
   String label,
   String labelQuestion,
