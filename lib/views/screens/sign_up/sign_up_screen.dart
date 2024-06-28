@@ -15,14 +15,14 @@ import '../../widgets/text_field_widget.dart';
 
 enum Gender { male, female }
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreent extends StatefulWidget {
+  const SignUpScreent({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUpScreent> createState() => _SignUpScreentState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreentState extends State<SignUpScreent> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -46,9 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SizedBox(
         height: size.height,
         child: Center(
-          child: loadingWidget(
-            context,
-            Padding(
+          child: LoadingWidget(
+            child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.05,
               ),

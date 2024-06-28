@@ -2,9 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
-import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/helper/loading_helper.dart';
-import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -34,14 +32,14 @@ extension GenderX on Gender {
   }
 }
 
-class EnterInfoScreen extends StatefulWidget {
-  const EnterInfoScreen({super.key});
+class EnterInfoScreent extends StatefulWidget {
+  const EnterInfoScreent({super.key});
 
   @override
-  State<EnterInfoScreen> createState() => _EnterInfoScreenState();
+  State<EnterInfoScreent> createState() => _EnterInfoScreentState();
 }
 
-class _EnterInfoScreenState extends State<EnterInfoScreen> {
+class _EnterInfoScreentState extends State<EnterInfoScreent> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _displaynameController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
@@ -71,9 +69,8 @@ class _EnterInfoScreenState extends State<EnterInfoScreen> {
         child: SizedBox(
           height: size.height,
           child: Center(
-            child: loadingWidget(
-              context,
-              Padding(
+            child: LoadingWidget(
+              child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.05,
                 ),

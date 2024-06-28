@@ -92,7 +92,7 @@ class ApiClient extends GetxService {
 
       return handleResponse(response, uri);
     } catch (e) {
-      debugPrint('===> Error : ${e.toString()}');
+      // debugPrint('===> Error : ${e.toString()}');
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
@@ -222,7 +222,7 @@ class ApiClient extends GetxService {
       );
     }
     if (Foundation.kDebugMode) {
-      debugPrint('====> Api Response : [${_response.statusCode}] $uri\n');
+      debugPrint('====> Api Response : [${_response.statusCode}] $uri');
     }
     return _response;
   }

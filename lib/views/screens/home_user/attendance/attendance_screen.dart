@@ -7,8 +7,8 @@ import '../../../../helper/loading_helper.dart';
 import '../../../../utils/language/key_language.dart';
 import '../../../../utils/styles.dart';
 
-class AttendanceScreen extends StatelessWidget {
-  const AttendanceScreen({super.key});
+class AttendanceScreent extends StatelessWidget {
+  const AttendanceScreent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({
+class ButtonTrackingWidget extends StatelessWidget {
+  const ButtonTrackingWidget({
     super.key,
     required this.onTap,
     required this.icon,

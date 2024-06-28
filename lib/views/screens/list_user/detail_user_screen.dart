@@ -3,7 +3,6 @@ import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/helper/loading_helper.dart';
 import 'package:traking_app/views/widgets/button_widget.dart';
-import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
@@ -11,20 +10,21 @@ import 'package:traking_app/utils/icons.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
+import 'package:traking_app/views/widgets/loading_widget.dart';
 
 import '../../../helper/snackbar_helper.dart';
-import '../../widgets/dialog/dialog_widget.dart';
+import '../../widgets/dialog_widget.dart';
 
-class DetailUserScreen extends StatefulWidget {
-  DetailUserScreen({super.key, UserRes? user}) : _user = user ?? UserRes();
+class DetailUserScreent extends StatefulWidget {
+  DetailUserScreent({super.key, UserRes? user}) : _user = user ?? UserRes();
 
   final UserRes _user;
 
   @override
-  State<DetailUserScreen> createState() => _DetailUserScreenState();
+  State<DetailUserScreent> createState() => _DetailUserScreentState();
 }
 
-class _DetailUserScreenState extends State<DetailUserScreen> {
+class _DetailUserScreentState extends State<DetailUserScreent> {
   TextEditingController displaynameController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController birthPlaceController = TextEditingController();
@@ -34,9 +34,8 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var safePaddingTop = MediaQuery.of(context).padding.top;
-    return loadingWidget(
-      context,
-      Scaffold(
+    return LoadingWidget(
+      child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
             children: [
@@ -183,7 +182,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
         universityController.text = widget._user.university ?? "Oceantech";
         dateOfBirthController.text = DateConverter.dateTimeStringToDateOnly(
             widget._user.dob ?? DateTime.now().toString());
-        return showDialogUpdate(
+        return dialogUpdateWidget(
           context,
           child: Column(
             children: [
@@ -231,7 +230,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
   void lock(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => showDialogQuestion(
+      builder: (context) => dialogQuestionWidget(
         context,
         KeyLanguage.lock.tr,
         "${KeyLanguage.lockQuestion.tr} (${widget._user.displayName})?",

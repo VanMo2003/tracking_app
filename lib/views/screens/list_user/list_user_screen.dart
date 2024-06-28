@@ -7,20 +7,20 @@ import 'package:traking_app/models/body/search.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'list_user_item.dart';
+import 'widget/list_user_item.dart';
 
 import '../../../utils/language/key_language.dart';
 
-class ListUserScreen extends StatefulWidget {
-  ListUserScreen({super.key, this.enabled = true});
+class ListUserScreent extends StatefulWidget {
+  ListUserScreent({super.key, this.enabled = true});
 
   bool enabled;
 
   @override
-  State<ListUserScreen> createState() => _ListUserScreenState();
+  State<ListUserScreent> createState() => _ListUserScreentState();
 }
 
-class _ListUserScreenState extends State<ListUserScreen> {
+class _ListUserScreentState extends State<ListUserScreent> {
   ScrollController scrollController = ScrollController();
   int pageIndex = 1;
 

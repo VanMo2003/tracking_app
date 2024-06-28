@@ -10,17 +10,17 @@ import '../../../../controllers/auth_controller.dart';
 import '../../../../controllers/post_controller.dart';
 import '../../../../models/body/posts/comment.dart';
 
-class PostComment extends StatefulWidget {
-  PostComment({super.key, this.content, this.id});
+class PostCommentWidget extends StatefulWidget {
+  PostCommentWidget({super.key, this.content, this.id});
 
   Content? content;
   final String? id;
 
   @override
-  State<PostComment> createState() => _PostCommentState();
+  State<PostCommentWidget> createState() => _PostCommentWidgetState();
 }
 
-class _PostCommentState extends State<PostComment> {
+class _PostCommentWidgetState extends State<PostCommentWidget> {
   final TextEditingController commentController = TextEditingController();
 
   final key = GlobalKey<FormState>();

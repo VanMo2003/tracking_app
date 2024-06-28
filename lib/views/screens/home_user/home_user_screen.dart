@@ -31,9 +31,9 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
   var _currentIndex = 0.obs;
 
   List<Widget> listWidget = [
-    TrackingScreen(),
-    AttendanceScreen(),
-    ListUserScreen(),
+    TrackingScreent(),
+    AttendanceScreent(),
+    ListUserScreent(),
   ];
 
   List<String> listTitle = [
@@ -72,9 +72,8 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
 
   @override
   Widget build(BuildContext context) {
-    return loadingWidget(
-      context,
-      Obx(() {
+    return LoadingWidget(
+      child: Obx(() {
         return Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(

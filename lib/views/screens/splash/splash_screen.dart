@@ -14,14 +14,14 @@ import '../../../helper/route_helper.dart';
 import '../../../utils/dimensions.dart';
 import '../../../utils/styles.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreent extends StatefulWidget {
+  const SplashScreent({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreent> createState() => _SplashScreentState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreentState extends State<SplashScreent> {
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool isFirstTime = true;
 

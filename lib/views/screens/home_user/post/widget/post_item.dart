@@ -127,7 +127,7 @@ class _PostItemState extends State<PostItem> {
                     if (kDebugMode) {
                       debugPrint('click comments post ${widget.content.id}');
                     }
-                    Get.to(() => PostComment(content: widget.content));
+                    Get.to(() => PostCommentWidget(content: widget.content));
                   }
                 },
                 icon: Icon(

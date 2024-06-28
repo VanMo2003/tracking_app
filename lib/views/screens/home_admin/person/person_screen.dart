@@ -6,29 +6,27 @@ import 'package:traking_app/services/firebase_service.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/utils/styles.dart';
-import '../../../widgets/drawer_widget.dart';
 import '../../home_user/info_user/info_user_screen.dart';
 
 import '../../../../helper/loading_helper.dart';
 import '../../../../helper/route_helper.dart';
-import '../../../widgets/dialog/dialog_widget.dart';
+import '../../../widgets/dialog_widget.dart';
 import '../../../../utils/color_resources.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../widgets/dropdown_language_widget.dart';
 
-class PersonScreen extends StatefulWidget {
-  const PersonScreen({super.key});
+class PersonScreent extends StatefulWidget {
+  const PersonScreent({super.key});
 
   @override
-  State<PersonScreen> createState() => _PersonScreenState();
+  State<PersonScreent> createState() => _PersonScreentState();
 }
 
-class _PersonScreenState extends State<PersonScreen> {
+class _PersonScreentState extends State<PersonScreent> {
   @override
   Widget build(BuildContext context) {
-    return loadingWidget(
-      context,
-      GetBuilder<AuthController>(builder: (controller) {
+    return LoadingWidget(
+      child: GetBuilder<AuthController>(builder: (controller) {
         var user = controller.user!;
         return Container(
           padding: const EdgeInsets.symmetric(
@@ -66,7 +64,7 @@ class _PersonScreenState extends State<PersonScreen> {
                     KeyLanguage.infoPerson.tr,
                     const Icon(Icons.person),
                     () {
-                      Get.to(const InfoUserScreen());
+                      Get.to(const InfoUserScreent());
                     },
                   ),
                   const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
@@ -88,7 +86,7 @@ class _PersonScreenState extends State<PersonScreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return showDialogQuestion(
+                          return dialogQuestionWidget(
                             context,
                             KeyLanguage.logout.tr,
                             KeyLanguage.logoutQuestion.tr,
@@ -104,7 +102,7 @@ class _PersonScreenState extends State<PersonScreen> {
               ),
               const Positioned(
                 right: 0,
-                child: DropdownLangue(),
+                child: DropdownLangueWidget(),
               )
             ],
           ),

@@ -8,10 +8,10 @@ import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/services/firebase_service.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/views/widgets/button_widget.dart';
-import 'package:traking_app/views/widgets/dialog/dialog_add_post.dart';
+import 'package:traking_app/views/screens/home_user/post/widget/dialog_add_post.dart';
 import 'package:traking_app/views/widgets/dropdown_language_widget.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/views/widgets/dialog/dialog_widget.dart';
+import 'package:traking_app/views/widgets/dialog_widget.dart';
 
 import '../../controllers/auth_controller.dart';
 
@@ -21,7 +21,7 @@ import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/icons.dart';
 import '../../utils/styles.dart';
-import '../screens/home_user/notifications.dart';
+import '../screens/home_user/notification/notifications.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key, required this.scaffoldKey});
@@ -188,7 +188,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return showDialogQuestion(
+                                return dialogQuestionWidget(
                                   context,
                                   KeyLanguage.logout.tr,
                                   KeyLanguage.logoutQuestion.tr,
@@ -211,7 +211,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Positioned(
                 top: safe / 2 + 10,
                 left: 5,
-                child: const DropdownLangue(),
+                child: const DropdownLangueWidget(),
               )
             ],
           ),

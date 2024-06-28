@@ -9,14 +9,14 @@ import 'package:get/get.dart';
 
 import '../../services/language_service.dart';
 
-class DropdownLangue extends StatefulWidget {
-  const DropdownLangue({super.key});
+class DropdownLangueWidget extends StatefulWidget {
+  const DropdownLangueWidget({super.key});
 
   @override
-  State<DropdownLangue> createState() => _DropdownLangueState();
+  State<DropdownLangueWidget> createState() => _DropdownLangueWidgetState();
 }
 
-class _DropdownLangueState extends State<DropdownLangue> {
+class _DropdownLangueWidgetState extends State<DropdownLangueWidget> {
   String? selectedValue;
 
   @override

@@ -12,14 +12,14 @@ import '../../../utils/styles.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/text_field_widget.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignInScreent extends StatefulWidget {
+  const SignInScreent({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignInScreent> createState() => _SignInScreentState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreentState extends State<SignInScreent> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -40,9 +40,8 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SizedBox(
           height: size.height,
           child: Center(
-            child: loadingWidget(
-              context,
-              Padding(
+            child: LoadingWidget(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 child: Form(
                   key: key,
