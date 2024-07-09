@@ -18,7 +18,7 @@ class TrackingController extends GetxController implements GetxService {
     return _list;
   }
 
-  Future<int> getAllByUser() async {
+  void getAllByUser() async {
     Response response = await trackingRepo.getAllByUser();
     if (response.statusCode == 200) {
       _list = [];
@@ -33,7 +33,6 @@ class TrackingController extends GetxController implements GetxService {
     }
 
     update();
-    return response.statusCode!;
   }
 
   Future<int> addTracking(Tracking tracking) async {

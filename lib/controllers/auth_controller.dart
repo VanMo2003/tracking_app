@@ -95,9 +95,7 @@ class AuthController extends GetxController implements GetxService {
       }
     } else if (response.statusCode == 401) {
       clearData();
-    } else {
-      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
-    }
+    } else {}
     update();
     return response.statusCode!;
   }
@@ -105,15 +103,9 @@ class AuthController extends GetxController implements GetxService {
   Future<int> checkIn() async {
     Response response = await authRepo.checkIn(_user!.id.toString());
     if (response.statusCode == 200) {
-      showCustomSnackBar(
-        "${KeyLanguage.attendanceSuccess.tr} : ${DateConverter.formatDate(DateTime.now())}",
-        isError: false,
-      );
     } else if (response.statusCode == 500) {
       clearData();
-    } else {
-      showCustomSnackBar(KeyLanguage.attendanced.tr);
-    }
+    } else {}
     update();
     return response.statusCode!;
   }

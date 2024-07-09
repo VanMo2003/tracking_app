@@ -29,7 +29,7 @@ class SearchByPageController extends GetxController implements GetxService {
     return _isPageLast;
   }
 
-  Future<int> getAllUser({int? pageIndex}) async {
+  void getAllUser({int? pageIndex}) async {
     updateSearchKey(pageIndex ?? 1);
     Response response = await searchRepo.getAll(searchKey!);
     if (response.statusCode == 200) {
@@ -46,7 +46,6 @@ class SearchByPageController extends GetxController implements GetxService {
       clearData();
     }
     update();
-    return response.statusCode!;
   }
 
   void updateSearchKey(int pageIndex) {

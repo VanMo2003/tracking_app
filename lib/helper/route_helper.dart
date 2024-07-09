@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:traking_app/views/screens/home_user/post/add_post_screen.dart';
 
 import '../views/screens/home_admin/home_admin_screen.dart';
 import '../views/screens/home_user/post/post_screen.dart';
@@ -23,6 +24,7 @@ class RouteHelper {
   static const String infoUser = "/info-user";
   static const String changePassword = "/change-password";
   static const String post = "/post";
+  static const String addPost = "/add_post";
   static const String message = "/message";
 
   static String getInitialRoute() => initial;
@@ -35,17 +37,19 @@ class RouteHelper {
   static String getInfoUserRoute() => infoUser;
   static String getChangePassword() => changePassword;
   static String getPostRoute() => post;
+  static String getAddPostRoute() => addPost;
   static String getMessage() => message;
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreent()),
     GetPage(name: signIn, page: () => const SignInScreent()),
     GetPage(name: signUp, page: () => const SignUpScreent()),
-    GetPage(name: enterInfo, page: () => EnterInfoScreent()),
+    GetPage(name: enterInfo, page: () => const EnterInfoScreent()),
     GetPage(name: home, page: () => const HomeUserScreent()),
     GetPage(name: homeAdmin, page: () => const HomeAdminScreent()),
     GetPage(name: infoUser, page: () => const InfoUserScreent()),
     GetPage(name: post, page: () => const PostScreent()),
+    GetPage(name: addPost, page: () => AddPostScreent()),
     GetPage(name: message, page: () => const MessageScreent()),
   ];
 }

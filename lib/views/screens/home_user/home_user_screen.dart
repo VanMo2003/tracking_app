@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/controllers/search_controller.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'package:traking_app/utils/icons.dart';
+import 'package:traking_app/utils/asset_util.dart';
 import 'package:traking_app/utils/language/key_language.dart';
+import 'package:traking_app/utils/styles.dart';
 import '../../../controllers/post_controller.dart';
 import 'attendance/attendance_screen.dart';
 import '../list_user/list_user_screen.dart';
@@ -74,60 +75,85 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
   Widget build(BuildContext context) {
     return LoadingWidget(
       child: Obx(() {
-        return Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            toolbarHeight: Dimensions.APPBAR_HEIGHT_SIZE,
-            elevation: 10,
-            leading: IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              icon: const Icon(Icons.menu),
+        return Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AssetUtil.background),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  debugPrint('click notifications');
-                },
-                icon: const Icon(Icons.notifications),
-              ),
-            ],
-            title: Text(listTitle[_currentIndex.value].tr),
-            centerTitle: true,
-          ),
-          drawer: DrawerWidget(scaffoldKey: _scaffoldKey),
-          body: listWidget[_currentIndex.value],
-          bottomNavigationBar: SalomonBottomBar(
-            currentIndex: _currentIndex.value,
-            onTap: (i) => _currentIndex.value = i,
-            items: [
-              SalomonBottomBarItem(
-                icon: Image.asset(
-                  IconUtil.tracking,
-                  color: Theme.of(context).disabledColor,
+            Scaffold(
+              backgroundColor: Theme.of(context)
+                  .cardColor
+                  .withAlpha(Get.isDarkMode ? 150 : 0),
+              key: _scaffoldKey,
+              appBar: AppBar(
+                toolbarHeight: Dimensions.APPBAR_HEIGHT_SIZE,
+                elevation: 10,
+                leading: IconButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.menu,
+                    color: Theme.of(context).cardColor,
+                  ),
                 ),
-                title: Text(KeyLanguage.tracking.tr),
-                selectedColor: ColorResources.getPrimaryColor(),
-              ),
-              SalomonBottomBarItem(
-                icon: Image.asset(
-                  IconUtil.attendance,
-                  color: Theme.of(context).disabledColor,
+                // actions: [
+                //   IconButton(
+                //     onPressed: () {
+                //       debugPrint('click notifications');
+                //     },
+                //     icon: Icon(
+                //       Icons.notifications,
+                //       color: Theme.of(context).cardColor,
+                //     ),
+                //   ),
+                // ],
+                title: Text(
+                  listTitle[_currentIndex.value].tr,
                 ),
-                title: Text(KeyLanguage.attendance.tr),
-                selectedColor: Colors.pink,
+                centerTitle: true,
               ),
-              SalomonBottomBarItem(
-                icon: Image.asset(
-                  IconUtil.list,
-                  color: Theme.of(context).disabledColor,
-                ),
-                title: Text(KeyLanguage.listUser.tr),
-                selectedColor: Colors.orange,
+              drawer: DrawerWidget(scaffoldKey: _scaffoldKey),
+              body: Container(
+                child: listWidget[_currentIndex.value],
               ),
-            ],
-          ),
+              bottomNavigationBar: SalomonBottomBar(
+                currentIndex: _currentIndex.value,
+                onTap: (i) => _currentIndex.value = i,
+                items: [
+                  SalomonBottomBarItem(
+                    icon: Image.asset(
+                      AssetUtil.tracking,
+                      color: Theme.of(context).disabledColor,
+                    ),
+                    title: Text(KeyLanguage.tracking.tr),
+                    selectedColor: ColorResources.getPrimaryColor(),
+                  ),
+                  SalomonBottomBarItem(
+                    icon: Image.asset(
+                      AssetUtil.attendance,
+                      color: Theme.of(context).disabledColor,
+                    ),
+                    title: Text(KeyLanguage.attendance.tr),
+                    selectedColor: Colors.pink,
+                  ),
+                  SalomonBottomBarItem(
+                    icon: Image.asset(
+                      AssetUtil.list,
+                      color: Theme.of(context).disabledColor,
+                    ),
+                    title: Text(KeyLanguage.listUser.tr),
+                    selectedColor: Colors.orange,
+                  ),
+                ],
+              ),
+            ),
+          ],
         );
       }),
     );

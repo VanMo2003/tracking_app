@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/networks/repository/upload_file_repo.dart';
+import 'package:traking_app/utils/language/key_language.dart';
 import '../models/body/multipart.dart';
 
 class ImageController extends GetxController implements GetxService {
@@ -16,35 +17,29 @@ class ImageController extends GetxController implements GetxService {
 
   Uint8List? get image => _image;
 
-  Future<int> uploadImage(MultipartBody multipartBody, String filename) async {
+  void uploadImage(MultipartBody multipartBody, String filename) async {
     Response response =
         await uploadFileRepo.uploadFile(multipartBody, filename: filename);
 
     if (response.statusCode == 200) {
-      debugPrint("upload thành công");
     } else if (response.statusCode == 401) {
-      showCustomSnackBar("Không có quyền truy cấp");
+      showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
     } else {
-      showCustomSnackBar("Lỗi k xác định");
+      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
     }
-
-    return response.statusCode!;
   }
 
-  Future<int> getImageByName(String filemame) async {
+  void getImageByName(String filemame) async {
     Response response = await uploadFileRepo.getFileByName(filemame);
 
     if (response.statusCode == 200) {
-      debugPrint('get thành công');
       _image = Uint8List.fromList(response.body.codeUnits);
       update();
     } else if (response.statusCode == 401) {
-      showCustomSnackBar("Không có quyền truy cấp");
+      showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
     } else {
-      showCustomSnackBar("Lỗi k xác định");
+      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
     }
-
-    return response.statusCode!;
   }
 
   updateImage(Uint8List image) {
@@ -53,7 +48,6 @@ class ImageController extends GetxController implements GetxService {
   }
 
   clearImage() {
-    debugPrint('clear image');
     _image = null;
     update();
   }

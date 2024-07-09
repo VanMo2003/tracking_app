@@ -43,9 +43,9 @@ class Dimensions {
   static const double FONT_SIZE_LARGE = 16.0;
   static const double FONT_SIZE_EXTRA_LARGE = 18.0;
   static const double FONT_SIZE_OVER_LARGE = 20.0;
-  static const double FONT_SIZE_EXTRA_OVER_LARGE = 22.0;
+  static const double FONT_SIZE_EXTRA_OVER_LARGE = 24.0;
   static const double FONT_SIZE_OVER_OVER_LARGE = 28.0;
-  static const double FONT_SIZE_TITLE_LARGE = 40.0;
+  static const double FONT_SIZE_TITLE_LARGE = 32.0;
 
   static const double RADIUS_SIZE_VERY_SMALL = 4.0;
   static const double RADIUS_SIZE_EXTRA_SMALL = 8.0;

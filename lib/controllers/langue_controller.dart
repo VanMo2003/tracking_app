@@ -8,11 +8,10 @@ class LanguageController extends GetxController implements GetxService {
 
   LanguageController({required this.sharedPreferences});
 
-  Future<bool> changeLocale(String langCode) async {
+  void changeLocale(String langCode) async {
     LanguageService.changeLocale(langCode);
 
-    return await sharedPreferences.setString(
-        AppConstant.LANGUAGE_CODE, langCode);
+    await sharedPreferences.setString(AppConstant.LANGUAGE_CODE, langCode);
   }
 
   String getLocale() {

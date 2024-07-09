@@ -33,11 +33,14 @@ class _ListUserItemState extends State<ListUserItem> {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
+          border: Border.all(
+            color: Theme.of(context).disabledColor.withOpacity(0.2),
+          ),
           boxShadow: [
             BoxShadow(
               offset: const Offset(2.0, 2.0),
-              color: ColorResources.getBlackColor().withOpacity(0.3),
-              blurRadius: 2,
+              color: Theme.of(context).disabledColor.withOpacity(0.3),
+              blurRadius: 3,
             ),
           ],
         ),

@@ -143,7 +143,10 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
                             commentController.clear();
                           }
                         },
-                        icon: const Icon(Icons.send),
+                        icon: Icon(
+                          Icons.send,
+                          color: Theme.of(context).dividerColor,
+                        ),
                       )
                     ],
                   ),

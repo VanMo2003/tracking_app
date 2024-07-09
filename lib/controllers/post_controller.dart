@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/models/body/posts/comment.dart';
 import 'package:traking_app/models/body/posts/like.dart';
 import 'package:traking_app/models/body/posts/post.dart';
@@ -30,7 +28,7 @@ class PostController extends GetxController implements GetxService {
   List<Content> get contents => _contents;
   // List<Comments> get comments => _comments;
 
-  Future<int> getPosts({int? pageIndex}) async {
+  void getPosts({int? pageIndex}) async {
     if (pageIndex != 1) {
       updateSearchKey(pageIndex ?? 1);
     }
@@ -43,45 +41,37 @@ class PostController extends GetxController implements GetxService {
     } else {}
 
     update();
-    return response.statusCode!;
   }
 
   Future<int> addContent(Content content) async {
     Response response = await repo.addContent(content);
     if (response.statusCode == 200) {
-      debugPrint("Thêm thành công bài viết : ${content.content}");
     } else {}
 
     update();
     return response.statusCode!;
   }
 
-  Future<int> likePost(int id) async {
+  void likePost(int id) async {
     Response response = await repo.likePost(id);
     if (response.statusCode == 200) {
-      var content = _contents.singleWhere(
-        (element) => element.id == id,
-      );
+      var content = _contents.where((element) => element.id == id).first;
       content.likes ??= [];
       content.likes!.add(Likes.fromJson(response.body));
     } else {}
 
     update();
-    return response.statusCode!;
   }
 
-  Future<int> commentPost(int id, Comments body) async {
+  void commentPost(int id, Comments body) async {
     Response response = await repo.commentPost(id, body);
     if (response.statusCode == 200) {
-      var content = _contents.singleWhere(
-        (element) => element.id == id,
-      );
+      var content = _contents.where((element) => element.id == id).first;
       content.comments ??= [];
       content.comments!.add(Comments.fromJson(response.body));
     } else {}
 
     update();
-    return response.statusCode!;
   }
 
   void updateSearchKey(int pageIndex) {

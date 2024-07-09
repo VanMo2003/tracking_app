@@ -22,10 +22,10 @@ class LoadingWidget extends StatelessWidget {
               visible: controller.isLoading,
               child: Container(
                 height: size.height,
-                color: ColorResources.getWhiteColor().withOpacity(0.2),
+                color: Theme.of(context).cardColor.withOpacity(0.5),
                 child: Center(
                   child: SpinKitSquareCircle(
-                    color: ColorResources.getPrimaryColor(),
+                    color: Theme.of(context).primaryColor,
                     size: 50.0,
                   ),
                 ),

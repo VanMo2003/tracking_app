@@ -50,6 +50,7 @@ const Map<String, String> en = {
   KeyLanguage.dark: 'Dark',
   KeyLanguage.light: 'Light',
   KeyLanguage.addSuccess: 'You have added successfully',
+  KeyLanguage.addPostSuccess: 'Post added successfully',
   KeyLanguage.updateSuccess: 'You have updated successfully',
   KeyLanguage.deleteSuccess: 'You have deleted successfully',
   KeyLanguage.errorFillInAllInfo: 'You need to fill in all information',
@@ -61,7 +62,7 @@ const Map<String, String> en = {
   KeyLanguage.female: 'Female',
   KeyLanguage.save: 'Save Changes',
   KeyLanguage.listEmpty: 'List Empty',
-  KeyLanguage.validNull: 'Enter information',
+  KeyLanguage.validNull: 'Obligatory',
   KeyLanguage.validEmail: 'Wrong email format (example@gmail.com)',
   KeyLanguage.validPassword:
       'Password must be between ${Dimensions.MIN_LENGTH_PASSWORD} and ${Dimensions.MAX_LENGTH_PASSWORD} characters long',
@@ -71,4 +72,6 @@ const Map<String, String> en = {
   KeyLanguage.attendanced: "Today you took attendance",
   KeyLanguage.noInternet: "No internet connection",
   KeyLanguage.hasInternet: "An internet connection is available",
+  KeyLanguage.pickImage: "Pick image",
+  KeyLanguage.completed: "Completed",
 };

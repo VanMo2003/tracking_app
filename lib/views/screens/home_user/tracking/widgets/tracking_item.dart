@@ -29,6 +29,22 @@ class TrackingItem extends StatefulWidget {
 class _TrackingItemState extends State<TrackingItem> {
   ScrollController scrollController = ScrollController();
 
+  RxBool isOpenMenu = false.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels > 70) {
+          isOpenMenu.value = true;
+        } else {
+          isOpenMenu.value = false;
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -37,18 +53,21 @@ class _TrackingItemState extends State<TrackingItem> {
       height: size.height * 0.1,
       margin: const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-          horizontal: Dimensions.MARGIN_SIZE_SMALL),
+          horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
       padding: const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_SMALL,
           horizontal: Dimensions.MARGIN_SIZE_SMALL),
       decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.RADIUS_SIZE_SMALL),
+          border: Border.all(
+            color: Theme.of(context).disabledColor.withOpacity(0.2),
+          ),
           boxShadow: [
             BoxShadow(
               offset: const Offset(2.0, 2.0),
-              color: ColorResources.getBlackColor().withOpacity(0.3),
-              blurRadius: 2,
+              color: Theme.of(context).disabledColor.withOpacity(0.3),
+              blurRadius: 3,
             ),
           ]),
       child: Stack(
@@ -81,46 +100,59 @@ class _TrackingItemState extends State<TrackingItem> {
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
             child: SizedBox(
-              width: size.width - 32 + 40 + 40,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        animateScroll(0.0);
-                      });
-                    },
-                    child: Opacity(
-                      opacity: 0.0,
-                      child: Container(
-                        color: ColorResources.getWhiteColor(),
-                        width: size.width - 32.0,
-                      ),
-                    ),
-                  ),
-                  ButtonTrackingWidget(
-                    onTap: () {
-                      if (Foundation.kDebugMode) {
-                        debugPrint('onClick Delete');
-                      }
-                      deleteTracking(widget.tracking);
-                    },
-                    icon: Icons.delete,
-                    color: Colors.red,
-                  ),
-                  ButtonTrackingWidget(
-                    onTap: () {
-                      if (Foundation.kDebugMode) {
-                        debugPrint('onClick Update');
-                        clickUpdate();
-                      }
-                    },
-                    icon: Icons.save_as_outlined,
-                    color: Colors.green,
-                  ),
-                ],
-              ),
-            ),
+                width: size.width - 32 + 40 + 40,
+                child: Obx(
+                  () {
+                    return Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            animateScroll(0.0);
+                            isOpenMenu.value = false;
+                          },
+                          child: Opacity(
+                            opacity: 0.0,
+                            child: Container(
+                              color: ColorResources.getWhiteColor(),
+                              width: isOpenMenu.value
+                                  ? size.width - 32.0
+                                  : size.width - 32.0 - 40,
+                            ),
+                          ),
+                        ),
+                        if (!isOpenMenu.value)
+                          ButtonTrackingWidget(
+                            onTap: () {
+                              animateScroll(80.0);
+                              isOpenMenu.value = true;
+                            },
+                            icon: Icons.swipe_left,
+                            color: Colors.grey.shade400,
+                          ),
+                        ButtonTrackingWidget(
+                          onTap: () {
+                            if (Foundation.kDebugMode) {
+                              debugPrint('onClick Delete');
+                            }
+                            deleteTracking(widget.tracking);
+                          },
+                          icon: Icons.delete,
+                          color: Colors.red,
+                        ),
+                        ButtonTrackingWidget(
+                          onTap: () {
+                            if (Foundation.kDebugMode) {
+                              debugPrint('onClick Update');
+                              clickUpdate();
+                            }
+                          },
+                          icon: Icons.save_as_outlined,
+                          color: Colors.green,
+                        ),
+                      ],
+                    );
+                  },
+                )),
           ),
         ],
       ),

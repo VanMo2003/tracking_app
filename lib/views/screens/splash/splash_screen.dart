@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/utils/app_constant.dart';
 import 'package:traking_app/utils/color_resources.dart';
-import 'package:traking_app/utils/icons.dart';
+import 'package:traking_app/utils/asset_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 
@@ -60,12 +60,12 @@ class _SplashScreentState extends State<SplashScreent> {
             child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(IconUtil.tracking_logo, scale: 0.8),
+            Image.asset(AssetUtil.tracking_logo, scale: 0.8),
             const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
             Text(AppConstant.APP_NAME,
                 style: robotoMedium.copyWith(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                  color: ColorResources.COLOR_PRIMARY,
+                  color: ColorResources.getPrimaryColor(),
                 )),
           ],
         )),

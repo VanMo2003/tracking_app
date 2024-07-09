@@ -7,7 +7,7 @@ import 'package:traking_app/controllers/upload_file_controller.dart';
 import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/services/firebase_service.dart';
 import 'package:traking_app/utils/language/key_language.dart';
-import 'package:traking_app/views/widgets/button_widget.dart';
+import 'package:traking_app/views/widgets/button_drawer_widget.dart';
 import 'package:traking_app/views/screens/home_user/post/widget/dialog_add_post.dart';
 import 'package:traking_app/views/widgets/dropdown_language_widget.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ import '../../controllers/theme_controller.dart';
 import '../../helper/loading_helper.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
-import '../../utils/icons.dart';
+import '../../utils/asset_util.dart';
 import '../../utils/styles.dart';
 import '../screens/home_user/notification/notifications.dart';
 
@@ -61,11 +61,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 top: 0,
                 left: 0,
                 child: Container(
+                  padding: EdgeInsets.only(
+                    top: safe,
+                    left: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                  ),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(AssetUtil.background_drawer),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   height: size.height * 0.3,
                   width: size.width * 0.8,
-                  color: ColorResources.getPrimaryColor().withOpacity(0.8),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CircleAvatar(
                         radius: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
@@ -79,21 +88,36 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                       ),
                       const SizedBox(
-                        height: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
-                      Text(
-                        authController.user!.username ??
-                            KeyLanguage.username.tr,
-                        style: robotoBlack.copyWith(
-                          color: ColorResources.getWhiteColor(),
-                          fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                          height: Dimensions.PADDING_SIZE_OVER_LARGE),
+                      RichText(
+                        text: TextSpan(
+                          style: robotoBold.copyWith(
+                            color: Theme.of(context).cardColor,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: authController.user!.username ??
+                                  KeyLanguage.username.tr,
+                            ),
+                            TextSpan(
+                              text:
+                                  " (${authController.user!.displayName ?? KeyLanguage.displayName.tr})",
+                              style: robotoBold.copyWith(
+                                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                color:
+                                    Theme.of(context).cardColor.withAlpha(200),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Text(
-                        "( ${authController.user!.displayName ?? KeyLanguage.displayName.tr} )",
-                        style: robotoRegular.copyWith(
-                          color:
-                              ColorResources.getBlackColor().withOpacity(0.5),
+                        authController.user!.email ??
+                            KeyLanguage.displayName.tr,
+                        style: robotoBlack.copyWith(
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                          color: Theme.of(context).cardColor.withAlpha(200),
                         ),
                       ),
                     ],
@@ -103,114 +127,90 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Positioned(
                 top: size.height * 0.3,
                 left: 0,
-                child: Obx(() {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    ),
-                    height: size.height * 0.7,
-                    width: size.width * 0.8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ButtonWidget(
-                          label: KeyLanguage.infoPerson.tr,
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getInfoUserRoute());
-                          },
-                          icon: Image.asset(
-                            IconUtil.person,
-                            color: Theme.of(context).dividerColor,
-                          ),
+                child: Container(
+                  height: size.height * 0.7,
+                  width: size.width * 0.8,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Column(
+                    children: [
+                      ButtonDrawerWidget(
+                        label: KeyLanguage.infoPerson.tr,
+                        onTap: () {
+                          Get.toNamed(RouteHelper.getInfoUserRoute());
+                        },
+                        icon: Image.asset(
+                          AssetUtil.person,
+                          color: Theme.of(context).dividerColor,
                         ),
-                        ButtonWidget(
-                          onTap: () {
-                            isOpenMenuPost.value = !isOpenMenuPost.value;
-                          },
-                          label: KeyLanguage.post.tr,
-                          icon: isOpenMenuPost.value
-                              ? Image.asset(
-                                  IconUtil.back_bottom,
-                                  fit: BoxFit.cover,
-                                  color: Theme.of(context).dividerColor,
-                                )
-                              : null,
+                      ),
+                      ButtonDrawerWidget(
+                        onTap: () {
+                          Get.toNamed(RouteHelper.getPostRoute());
+                        },
+                        label: KeyLanguage.post.tr,
+                        icon: Icon(
+                          Icons.list,
+                          color: Theme.of(context).dividerColor,
                         ),
-                        if (isOpenMenuPost.value) ...[
-                          ButtonWidget(
-                            onTap: () {
-                              Get.toNamed(RouteHelper.getPostRoute());
+                      ),
+                      ButtonDrawerWidget(
+                        label: Get.find<ThemeController>().darkTheme
+                            ? KeyLanguage.dark.tr
+                            : KeyLanguage.light.tr,
+                        onTap: () async {
+                          await animatedLoading();
+                          Get.find<ThemeController>().toggleTheme();
+                          animatedNoLoading();
+                          widget.scaffoldKey.currentState?.closeDrawer();
+                        },
+                        icon: Icon(
+                          Get.find<ThemeController>().darkTheme
+                              ? Icons.dark_mode
+                              : Icons.light_mode,
+                          color: Theme.of(context).dividerColor,
+                        ),
+                      ),
+                      ButtonDrawerWidget(
+                        label: KeyLanguage.notification.tr,
+                        onTap: () {
+                          Get.to(const NotificationScreent());
+                        },
+                        icon: Icon(
+                          Icons.notifications,
+                          color: Theme.of(context).dividerColor,
+                        ),
+                      ),
+                      const Spacer(),
+                      ButtonDrawerWidget(
+                        label: KeyLanguage.logout.tr,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return dialogQuestionWidget(
+                                context,
+                                KeyLanguage.logout.tr,
+                                KeyLanguage.logoutQuestion.tr,
+                                () {
+                                  logout();
+                                },
+                              );
                             },
-                            label: KeyLanguage.posts.tr,
-                            isMenuItem: true,
-                            icon: const Icon(Icons.list),
-                          ),
-                          ButtonWidget(
-                            onTap: () {
-                              addPost();
-                            },
-                            label: KeyLanguage.addPost.tr,
-                            isMenuItem: true,
-                            icon: const Icon(Icons.add),
-                          ),
-                        ],
-                        ButtonWidget(
-                          label: Get.find<ThemeController>().darkTheme
-                              ? KeyLanguage.dark.tr
-                              : KeyLanguage.light.tr,
-                          onTap: () async {
-                            await animatedLoading();
-                            Get.find<ThemeController>().toggleTheme();
-                            animatedNoLoading();
-                            widget.scaffoldKey.currentState?.closeDrawer();
-                          },
-                          icon: Icon(
-                            Get.find<ThemeController>().darkTheme
-                                ? Icons.dark_mode
-                                : Icons.light_mode,
-                          ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.logout,
+                          color: Theme.of(context).dividerColor,
                         ),
-                        ButtonWidget(
-                          label: KeyLanguage.notification.tr,
-                          onTap: () async {
-                            // NotificationHelper.sendMessage();
-                            Get.to(const NotificationScreent());
-                          },
-                          icon: Icon(
-                            Icons.notifications,
-                            color: Theme.of(context).dividerColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        ButtonWidget(
-                          label: KeyLanguage.logout.tr,
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return dialogQuestionWidget(
-                                  context,
-                                  KeyLanguage.logout.tr,
-                                  KeyLanguage.logoutQuestion.tr,
-                                  () {
-                                    logout();
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          icon: const Icon(Icons.logout),
-                        ),
-                        const SizedBox(
-                            height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT)
-                      ],
-                    ),
-                  );
-                }),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Positioned(
-                top: safe / 2 + 10,
-                left: 5,
+                top: safe + 5,
+                right: 25,
                 child: const DropdownLangueWidget(),
               )
             ],
