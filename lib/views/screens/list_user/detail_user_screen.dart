@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/helper/loading_helper.dart';
-import 'package:traking_app/views/widgets/button_widget.dart';
+import 'package:traking_app/views/widgets/button_drawer_widget.dart';
 import 'package:traking_app/models/response/user_res.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
-import 'package:traking_app/utils/icons.dart';
+import 'package:traking_app/utils/asset_util.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
 import 'package:traking_app/utils/styles.dart';
@@ -47,8 +47,8 @@ class _DetailUserScreentState extends State<DetailUserScreent> {
                     image: DecorationImage(
                       image: widget._user.image != null
                           ? NetworkImage(widget._user.image!)
-                          : const AssetImage(IconUtil.image),
-                      scale: 0.4,
+                          : const AssetImage(AssetUtil.image),
+                      scale: 0.3,
                     ),
                   ),
                 ),
@@ -123,7 +123,7 @@ class _DetailUserScreentState extends State<DetailUserScreent> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: ButtonWidget(
+                              child: ButtonDrawerWidget(
                                 onTap: () {
                                   edit();
                                 },
@@ -135,14 +135,14 @@ class _DetailUserScreentState extends State<DetailUserScreent> {
                                 width: Dimensions.PADDING_SIZE_DEFAULT),
                             Expanded(
                               child: widget._user.active!
-                                  ? ButtonWidget(
+                                  ? ButtonDrawerWidget(
                                       onTap: () {
                                         lock(context);
                                       },
                                       label: KeyLanguage.lock.tr,
                                       icon: const Icon(Icons.lock_outline),
                                     )
-                                  : ButtonWidget(
+                                  : ButtonDrawerWidget(
                                       onTap: () {
                                         debugPrint('click unlock');
                                       },
@@ -220,7 +220,16 @@ class _DetailUserScreentState extends State<DetailUserScreent> {
             user.dob = DateConverter.dateTimeStringToDateTime(
                 birthPlaceController.text);
 
-            await Get.find<AuthController>().updateInfoUser(user);
+            await Get.find<AuthController>().updateInfoUser(user).then(
+              (value) {
+                if (value == 400) {
+                  showCustomSnackBar(KeyLanguage.updateSuccess.tr,
+                      isError: false);
+                } else {
+                  showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
+                }
+              },
+            );
           },
         );
       },

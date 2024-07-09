@@ -48,7 +48,7 @@ class _ListUserScreentState extends State<ListUserScreent> {
           scrollController.position.maxScrollExtent) {
         if (!Get.find<SearchByPageController>().isPageLast) {
           Future.delayed(
-            const Duration(milliseconds: 1000),
+            const Duration(milliseconds: 500),
             () {
               Get.find<SearchByPageController>()
                   .getAllUser(pageIndex: ++pageIndex);
@@ -85,23 +85,26 @@ class _ListUserScreentState extends State<ListUserScreent> {
         return Skeletonizer(
           enabled: widget.enabled,
           enableSwitchAnimation: true,
-          child: ListView.builder(
-            controller: scrollController,
-            itemCount: controller.isPageLast ? list.length : list.length + 1,
-            itemBuilder: (context, index) {
-              if (index == list.length && !controller.isPageLast) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_SMALL),
-                    child: CircularProgressIndicator(
-                      color: ColorResources.getPrimaryColor(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: controller.isPageLast ? list.length : list.length + 1,
+              itemBuilder: (context, index) {
+                if (index == list.length && !controller.isPageLast) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: Dimensions.PADDING_SIZE_SMALL),
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
-                  ),
-                );
-              }
-              return ListUserItem(user: list[index]);
-            },
+                  );
+                }
+                return ListUserItem(user: list[index]);
+              },
+            ),
           ),
         );
       },

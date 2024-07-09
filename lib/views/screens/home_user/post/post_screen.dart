@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:traking_app/controllers/post_controller.dart';
+import 'package:traking_app/helper/route_helper.dart';
 import 'package:traking_app/models/body/posts/content.dart';
 import 'package:traking_app/utils/color_resources.dart';
+import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:get/get.dart';
+import 'package:traking_app/views/widgets/text_field_widget.dart';
 import 'widget/post_item.dart';
 
 class PostScreent extends StatefulWidget {
@@ -14,13 +18,17 @@ class PostScreent extends StatefulWidget {
 }
 
 class _PostScreentState extends State<PostScreent> {
+  TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
   int pageIndex = 1;
 
   @override
   void initState() {
     super.initState();
-    Get.find<PostController>().getPosts();
+    if (Get.find<PostController>().search.pageIndex == 1) {
+      debugPrint('get post');
+      Get.find<PostController>().getPosts();
+    }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -38,10 +46,26 @@ class _PostScreentState extends State<PostScreent> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(KeyLanguage.posts.tr),
         centerTitle: true,
+        leading: Padding(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            highlightColor: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(12),
+            child: Icon(
+              Icons.house_outlined,
+              size: 32,
+              color: Theme.of(context).cardColor,
+            ),
+          ),
+        ),
       ),
       backgroundColor: ColorResources.getGreyColor(),
       body: GetBuilder<PostController>(
@@ -50,31 +74,34 @@ class _PostScreentState extends State<PostScreent> {
           if (posts == null) {
             return Center(
               child: CircularProgressIndicator(
-                color: ColorResources.getPrimaryColor(),
+                color: Theme.of(context).primaryColor,
               ),
             );
           }
           List<Content> contents = controller.contents;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: ListView.builder(
-              controller: scrollController,
-              itemCount: posts.last! ? contents.length : contents.length + 1,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == contents.length && !controller.posts!.last!) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-                return PostItem(content: contents[index]);
-              },
-            ),
+          return ListView.builder(
+            controller: scrollController,
+            itemCount: posts.last! ? contents.length : contents.length + 1,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (index == contents.length && !controller.posts!.last!) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              return PostItem(content: contents[index]);
+            },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(RouteHelper.addPost);
+        },
+        child: const Icon(Icons.post_add),
       ),
     );
   }

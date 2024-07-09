@@ -28,36 +28,44 @@ class _DropdownLangueWidgetState extends State<DropdownLangueWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-      height: 30,
-      child: DropdownButton(
-        value: selectedValue,
-        onChanged: (value) {
-          setState(() {
-            selectedValue = value;
-            Get.find<LanguageController>().changeLocale(selectedValue ?? "vi");
-          });
-        },
-        alignment: Alignment.center,
-        items: LanguageService.langCodes.map(
-          (e) {
-            return DropdownMenuItem(
-              value: e,
-              child: Text(
-                e,
-                style: robotoMedium.copyWith(
-                  fontSize: 18,
-                  color: Theme.of(context).disabledColor,
-                ),
-              ),
-            );
+      height: 35,
+      width: 70,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+      ),
+      child: Center(
+        child: DropdownButton(
+          value: selectedValue,
+          borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value;
+              Get.find<LanguageController>()
+                  .changeLocale(selectedValue ?? "vi");
+            });
           },
-        ).toList(),
-        icon: Icon(
-          Icons.arrow_drop_down,
-          color: ColorResources.getBlackColor(),
+          alignment: Alignment.center,
+          items: LanguageService.langCodes.map(
+            (e) {
+              return DropdownMenuItem(
+                value: e,
+                child: Text(
+                  e,
+                  style: robotoBold.copyWith(
+                    fontSize: 18,
+                    color: ColorResources.getBlackColor(),
+                  ),
+                ),
+              );
+            },
+          ).toList(),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: ColorResources.getBlackColor(),
+          ),
+          underline: const SizedBox(),
         ),
-        underline: const SizedBox(),
       ),
     );
   }

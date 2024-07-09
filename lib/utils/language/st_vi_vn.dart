@@ -49,6 +49,7 @@ const Map<String, String> vi = {
   KeyLanguage.dark: 'Tối',
   KeyLanguage.light: 'Sáng',
   KeyLanguage.addSuccess: 'Bạn đã thêm thành công',
+  KeyLanguage.addPostSuccess: 'Thêm bài viết thành công',
   KeyLanguage.updateSuccess: 'Bạn đã cập nhật thành công',
   KeyLanguage.deleteSuccess: 'Bạn đã xóa thành công',
   KeyLanguage.errorFillInAllInfo: 'Bạn cần điền đầy đủ thông tin',
@@ -61,7 +62,7 @@ const Map<String, String> vi = {
   KeyLanguage.female: 'Nữ',
   KeyLanguage.save: 'Lưu thay đổi',
   KeyLanguage.listEmpty: 'Danh sách trống',
-  KeyLanguage.validNull: 'Nhập thông tin',
+  KeyLanguage.validNull: 'Bắt buộc',
   KeyLanguage.validEmail: 'Sai định dạng email (example@gmail.com) ',
   KeyLanguage.validPassword:
       'Mật khẩu phải từ ${Dimensions.MIN_LENGTH_PASSWORD} đến ${Dimensions.MAX_LENGTH_PASSWORD} ký tự',
@@ -71,4 +72,6 @@ const Map<String, String> vi = {
   KeyLanguage.attendanced: "Hôm nay bạn đã điểm danh",
   KeyLanguage.noInternet: "Không có kết nối internet",
   KeyLanguage.hasInternet: "Đã có kêt nối internet",
+  KeyLanguage.pickImage: "Chọn ảnh",
+  KeyLanguage.completed: "Hoàn thành",
 };

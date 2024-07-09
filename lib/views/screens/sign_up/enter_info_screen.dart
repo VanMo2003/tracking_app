@@ -11,10 +11,12 @@ import 'package:intl/intl.dart';
 import '../../../helper/route_helper.dart';
 import '../../../helper/snackbar_helper.dart';
 import '../../../utils/app_constant.dart';
+import '../../../utils/asset_util.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/dimensions.dart';
 import '../../../utils/language/key_language.dart';
 import '../../../utils/styles.dart';
+import '../../widgets/button_primary_widget.dart';
 import '../../widgets/text_field_widget.dart';
 
 enum Gender { male, female }
@@ -66,8 +68,16 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
-        child: SizedBox(
+        child: Container(
           height: size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                AssetUtil.background_login,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Center(
             child: LoadingWidget(
               child: Padding(
@@ -161,25 +171,11 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
                           ],
                         ),
                       ),
-                      GestureDetector(
+                      ButtonPrimaryWidget(
+                        label: KeyLanguage.completed.tr,
                         onTap: () {
                           completed();
                         },
-                        child: Container(
-                          height: size.height * 0.06,
-                          decoration: BoxDecoration(
-                            color: ColorResources.getPrimaryColor(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Hoàn thành",
-                              style: robotoMedium.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -218,7 +214,7 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
         (value) {
           if (value == 200) {
             Get.offAllNamed(RouteHelper.getHomeRoute());
-            showCustomSnackBar("Hoàn tất đăng ký");
+            showCustomSnackBar("Hoàn tất đăng ký", isError: false);
           } else {
             showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
           }

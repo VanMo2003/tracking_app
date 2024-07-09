@@ -7,8 +7,10 @@ import 'package:traking_app/helper/snackbar_helper.dart';
 import 'package:traking_app/models/body/user.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
+import 'package:traking_app/views/widgets/button_primary_widget.dart';
 import 'package:traking_app/views/widgets/loading_widget.dart';
 import '../../../helper/loading_helper.dart';
+import '../../../utils/asset_util.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/styles.dart';
 import '../../widgets/text_field_widget.dart';
@@ -42,9 +44,16 @@ class _SignUpScreentState extends State<SignUpScreent> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-          child: SizedBox(
+      body: Container(
         height: size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              AssetUtil.background_login,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: LoadingWidget(
             child: Padding(
@@ -108,25 +117,11 @@ class _SignUpScreentState extends State<SignUpScreent> {
                     ),
                     const SizedBox(
                         height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
-                    GestureDetector(
+                    ButtonPrimaryWidget(
+                      label: KeyLanguage.signUp.tr,
                       onTap: () {
                         signUp();
                       },
-                      child: Container(
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: ColorResources.getPrimaryColor(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            KeyLanguage.signUp.tr,
-                            style: robotoMedium.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 20),
                     Row(
@@ -143,7 +138,8 @@ class _SignUpScreentState extends State<SignUpScreent> {
                           child: Text(
                             KeyLanguage.signIn.tr,
                             style: TextStyle(
-                              color: ColorResources.getPrimaryColor()
+                              color: Theme.of(context)
+                                  .primaryColor
                                   .withOpacity(0.8),
                               fontWeight: FontWeight.bold,
                             ),
@@ -157,7 +153,7 @@ class _SignUpScreentState extends State<SignUpScreent> {
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 

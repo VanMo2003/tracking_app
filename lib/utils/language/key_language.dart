@@ -32,6 +32,7 @@ class KeyLanguage {
   static const String lockQuestion = "lock_question";
   static const String unlock = "un_lock";
   static const String cancel = "cancel";
+  static const String completed = "completed";
   static const String yes = "yes";
   static const String no = "no";
   static const String infoPerson = "info_person";
@@ -46,6 +47,7 @@ class KeyLanguage {
   static const String dark = "dark";
   static const String light = "light";
   static const String addSuccess = "add_success";
+  static const String addPostSuccess = "add_post_success";
   static const String updateSuccess = "update_success";
   static const String deleteSuccess = "delete_success";
   static const String errorFillInAllInfo = "fill_in_all_information";
@@ -67,4 +69,5 @@ class KeyLanguage {
   static const String attendanced = "attendanced";
   static const String noInternet = "no_internet";
   static const String hasInternet = "has_internet";
+  static const String pickImage = "pickImage";
 }

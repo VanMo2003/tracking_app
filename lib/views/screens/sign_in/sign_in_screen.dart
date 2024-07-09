@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:traking_app/controllers/auth_controller.dart';
 import 'package:traking_app/helper/notification_helper.dart';
 import 'package:traking_app/helper/route_helper.dart';
+import 'package:traking_app/utils/asset_util.dart';
 import 'package:traking_app/utils/color_resources.dart';
 import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
+import 'package:traking_app/views/widgets/button_primary_widget.dart';
 
 import '../../../helper/loading_helper.dart';
 import '../../../utils/styles.dart';
@@ -36,106 +38,99 @@ class _SignInScreentState extends State<SignInScreent> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: size.height,
-          child: Center(
-            child: LoadingWidget(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                child: Form(
-                  key: key,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        KeyLanguage.signIn.tr,
-                        style: robotoBlack.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_TITLE_LARGE,
-                          color: ColorResources.getBlackColor(),
-                        ),
+      body: Container(
+        height: size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              AssetUtil.background_login,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: LoadingWidget(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              child: Form(
+                key: key,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      KeyLanguage.signIn.tr,
+                      style: robotoBlack.copyWith(
+                        fontSize: Dimensions.FONT_SIZE_TITLE_LARGE,
+                        color: ColorResources.getBlackColor(),
                       ),
-                      const SizedBox(
-                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
-                      TextFieldWidget(
-                        controller: _usernameController,
-                        labelText: KeyLanguage.username.tr,
-                        isPasswordField: false,
-                        validator: (value) {
-                          if (GetUtils.isNull(value != "" ? value : null)) {
-                            return KeyLanguage.validNull.tr;
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFieldWidget(
-                        controller: _passwordController,
-                        labelText: KeyLanguage.password.tr,
-                        isPasswordField: true,
-                        validator: (value) {
-                          if (GetUtils.isNull(value != "" ? value : null)) {
-                            return KeyLanguage.validNull.tr;
-                          }
-                          if (!GetUtils.isLengthBetween(
-                            value!,
-                            Dimensions.MIN_LENGTH_PASSWORD,
-                            Dimensions.MAX_LENGTH_PASSWORD,
-                          )) {
-                            return KeyLanguage.validPassword.tr;
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
-                      GestureDetector(
-                        onTap: () {
-                          login();
-                        },
-                        child: Container(
-                          height: size.height * 0.06,
-                          decoration: BoxDecoration(
-                            color: ColorResources.getPrimaryColor(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              KeyLanguage.signIn.tr,
-                              style: robotoMedium.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                  color: Colors.white),
+                    ),
+                    const SizedBox(
+                        height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
+                    TextFieldWidget(
+                      controller: _usernameController,
+                      labelText: KeyLanguage.username.tr,
+                      isPasswordField: false,
+                      validator: (value) {
+                        if (GetUtils.isNull(value != "" ? value : null)) {
+                          return KeyLanguage.validNull.tr;
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFieldWidget(
+                      controller: _passwordController,
+                      labelText: KeyLanguage.password.tr,
+                      isPasswordField: true,
+                      validator: (value) {
+                        if (GetUtils.isNull(value != "" ? value : null)) {
+                          return KeyLanguage.validNull.tr;
+                        }
+                        if (!GetUtils.isLengthBetween(
+                          value!,
+                          Dimensions.MIN_LENGTH_PASSWORD,
+                          Dimensions.MAX_LENGTH_PASSWORD,
+                        )) {
+                          return KeyLanguage.validPassword.tr;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                        height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER),
+                    ButtonPrimaryWidget(
+                      label: KeyLanguage.signIn.tr,
+                      onTap: () {
+                        login();
+                      },
+                    ),
+                    const SizedBox(
+                        height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER *
+                            2 /
+                            3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(KeyLanguage.questionSignUp.tr),
+                        const SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () async {
+                            await animatedLoading();
+                            Get.offNamed(RouteHelper.signUp);
+                            animatedNoLoading();
+                          },
+                          child: Text(
+                            KeyLanguage.signUp.tr,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.8),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                          height: Dimensions.SIZE_BOX_HEIGHT_EXTRA_LARGE_OVER *
-                              2 /
-                              3),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(KeyLanguage.questionSignUp.tr),
-                          const SizedBox(width: 5),
-                          GestureDetector(
-                            onTap: () async {
-                              await animatedLoading();
-                              Get.offNamed(RouteHelper.signUp);
-                              animatedNoLoading();
-                            },
-                            child: Text(
-                              KeyLanguage.signUp.tr,
-                              style: TextStyle(
-                                color: ColorResources.getPrimaryColor()
-                                    .withOpacity(0.8),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

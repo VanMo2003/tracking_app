@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:traking_app/controllers/tracking_controller.dart';
 import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/helper/snackbar_helper.dart';
+import 'package:traking_app/utils/dimensions.dart';
 import 'package:traking_app/utils/language/key_language.dart';
 import 'package:traking_app/views/widgets/dialog_widget.dart';
 
@@ -10,7 +11,6 @@ import '../../../../controllers/auth_controller.dart';
 import '../../../../controllers/loading_controller.dart';
 import '../../../../helper/loading_helper.dart';
 import '../../../../models/body/tracking.dart';
-import '../../../../utils/color_resources.dart';
 
 import 'widgets/tracking_item.dart';
 
@@ -51,15 +51,18 @@ class _TrackingScreentState extends State<TrackingScreent> {
               );
             }
 
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                var tracking = list[index];
-                return TrackingItem(
-                  tracking: tracking,
-                  contentController: contentController,
-                );
-              },
+            return Padding(
+              padding: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
+              child: ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  var tracking = list[index];
+                  return TrackingItem(
+                    tracking: tracking,
+                    contentController: contentController,
+                  );
+                },
+              ),
             );
           },
         ),
@@ -67,13 +70,11 @@ class _TrackingScreentState extends State<TrackingScreent> {
           bottom: 0,
           right: 10,
           child: FloatingActionButton(
-            backgroundColor: ColorResources.getPrimaryColor().withOpacity(0.8),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) {
                   contentController.clear();
-
                   return dialogAddWidget(
                     textButton: KeyLanguage.add.tr,
                     context: context,
@@ -88,7 +89,7 @@ class _TrackingScreentState extends State<TrackingScreent> {
             tooltip: KeyLanguage.add.tr,
             child: Icon(
               Icons.add,
-              color: ColorResources.getWhiteColor(),
+              color: Theme.of(context).cardColor,
             ),
           ),
         )

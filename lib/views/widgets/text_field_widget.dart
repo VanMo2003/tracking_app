@@ -19,6 +19,7 @@ class TextFieldWidget extends StatefulWidget {
   final TextInputType? inputType;
   final bool autoFocus;
   final String? error;
+  final double? height;
 
   const TextFieldWidget({
     super.key,
@@ -36,6 +37,7 @@ class TextFieldWidget extends StatefulWidget {
     this.inputType,
     this.autoFocus = false,
     this.error,
+    this.height,
   });
 
   @override
@@ -47,6 +49,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: widget.height,
       margin: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -105,7 +108,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     _obscureText ? Icons.visibility_off : Icons.visibility,
                     color: _obscureText
                         ? ColorResources.getBlackColor().withOpacity(0.5)
-                        : ColorResources.getPrimaryColor().withOpacity(0.8),
+                        : Theme.of(context).primaryColor.withOpacity(0.8),
                   ))
               : null,
         ),
