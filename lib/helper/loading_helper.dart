@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:traking_app/controllers/loading_controller.dart';
+import '/controllers/loading_controller.dart';
 
 Future<void> animatedLoading() async {
   Get.find<LoadingController>().loading();

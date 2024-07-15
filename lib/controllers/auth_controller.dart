@@ -1,14 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/controllers/loading_controller.dart';
-import 'package:traking_app/controllers/search_controller.dart';
-import 'package:traking_app/helper/date_converter_hepler.dart';
-import 'package:traking_app/models/body/user.dart';
-import 'package:traking_app/models/response/user_res.dart';
-import 'package:traking_app/networks/repository/auth_repo.dart';
-import 'package:traking_app/models/response/token_res.dart';
-import 'package:traking_app/utils/language/key_language.dart';
+import '../helper/loading_helper.dart';
+import '../screens/widgets/dialog_widget.dart';
+import '../views/custom_snackbar.dart';
+import '/controllers/loading_controller.dart';
+import '/controllers/post_controller.dart';
+import '/controllers/search_controller.dart';
+import '../data/models/body/user.dart';
+import '../data/models/response/user_res.dart';
+import '../data/api/api_exception.dart';
+import '../data/repository/auth_repo.dart';
+import '../data/models/response/token_res.dart';
+import '/utils/language/key_language.dart';
 
-import '../helper/snackbar_helper.dart';
+import '../helper/date_converter_hepler.dart';
+import '../helper/route_helper.dart';
+import '../services/firebase_service.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -30,7 +37,7 @@ class AuthController extends GetxController implements GetxService {
       TokenResponse tokenResponse = TokenResponse.fromJson(response.body);
       authRepo.saveUserToken(tokenResponse.accessToken!);
     } else {
-      authRepo.removeUserToken();
+      ApiException.checkException(response.statusCode);
     }
 
     Get.find<LoadingController>().noLoading();
@@ -43,7 +50,9 @@ class AuthController extends GetxController implements GetxService {
 
     if (response.statusCode == 200) {
       _user = UserRes.fromJson(response.body);
-    } else {}
+    } else {
+      ApiException.checkException(response.statusCode);
+    }
     update();
     return response.statusCode!;
   }
@@ -60,7 +69,7 @@ class AuthController extends GetxController implements GetxService {
         }
       }
     } else {
-      clearData();
+      ApiException.checkException(response.statusCode);
     }
     update();
     return response.statusCode!;
@@ -70,16 +79,15 @@ class AuthController extends GetxController implements GetxService {
     Response response = await authRepo.updateMyself(userNew);
     if (response.statusCode == 200) {
       _user = UserRes.fromJson(response.body);
-    } else if (response.statusCode == 401) {
-      clearData();
+      Get.find<PostController>().clearData();
     } else {
-      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
+      ApiException.checkException(response.statusCode);
     }
     update();
     return response.statusCode!;
   }
 
-  Future<int> updateInfoUser(UserRes userNew) async {
+  void updateInfoUser(UserRes userNew) async {
     Response response = await authRepo.updateUserById(userNew);
     if (response.statusCode == 200) {
       if (Get.find<SearchByPageController>().listResult != null) {
@@ -90,50 +98,66 @@ class AuthController extends GetxController implements GetxService {
             Get.find<SearchByPageController>()
               ..listResult![index] = userNew
               ..update();
+            showCustomSnackBar(KeyLanguage.updateSuccess.tr, isError: false);
           }
         }
       }
-    } else if (response.statusCode == 401) {
-      clearData();
-    } else {}
+    } else {
+      ApiException.checkException(response.statusCode);
+    }
     update();
-    return response.statusCode!;
   }
 
-  Future<int> checkIn() async {
+  Future<void> checkIn() async {
     Response response = await authRepo.checkIn(_user!.id.toString());
     if (response.statusCode == 200) {
-    } else if (response.statusCode == 500) {
-      clearData();
-    } else {}
+      showCustomSnackBar(
+        "${KeyLanguage.attendanceSuccess.tr} : ${DateConverter.formatDate(DateTime.now())}",
+        isError: false,
+      );
+    } else {
+      ApiException.checkException(response.statusCode,
+          err: KeyLanguage.attendanced.tr);
+    }
     update();
-    return response.statusCode!;
   }
 
-  Future<int> logout() async {
-    Response response = await authRepo.logout();
-    if (response.statusCode == 200) {
-      authRepo.removeUserToken();
-    } else if (response.statusCode == 401) {
-      clearData();
-    } else {}
-    update();
-    return response.statusCode!;
+  void logout(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return dialogQuestionWidget(
+          context,
+          KeyLanguage.logout.tr,
+          KeyLanguage.logoutQuestion.tr,
+          () async {
+            await animatedLoading();
+            Response response = await authRepo.logout();
+            if (response.statusCode == 200) {
+              authRepo.removeUserToken();
+              FirebaseService.removeCurrentUserToken();
+              clearData();
+              update();
+              Get.offNamed(RouteHelper.getSignInRoute());
+            } else {
+              ApiException.checkException(response.statusCode);
+            }
+            animatedNoLoading();
+          },
+        );
+      },
+    );
   }
 
   Future<int> lock(int id) async {
     Response response = await authRepo.lock(id);
     if (response.statusCode == 200) {
       Get.find<SearchByPageController>()
-        ..listResult!
-            .singleWhere(
-              (element) => element.id == id,
-            )
-            .active = false
+        ..listResult!.where((element) => element.id == id).first.active = false
         ..update();
-    } else if (response.statusCode == 401) {
-      clearData();
-    } else {}
+    } else {
+      ApiException.checkException(response.statusCode);
+    }
     update();
     return response.statusCode!;
   }

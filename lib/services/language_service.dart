@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:ui';
 import 'package:get/get.dart';
-import 'package:traking_app/utils/language/st_en_us.dart';
-import 'package:traking_app/utils/language/st_vi_vn.dart';
+import '/utils/language/st_en_us.dart';
+import '/utils/language/st_vi_vn.dart';
 
 import '../controllers/langue_controller.dart';
 

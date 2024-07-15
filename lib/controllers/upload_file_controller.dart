@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/helper/snackbar_helper.dart';
-import 'package:traking_app/networks/repository/upload_file_repo.dart';
-import 'package:traking_app/utils/language/key_language.dart';
-import '../models/body/multipart.dart';
+import '../data/api/api_exception.dart';
+import '../data/repository/upload_file_repo.dart';
+import '../data/models/body/multipart.dart';
 
 class ImageController extends GetxController implements GetxService {
   UploadFileRepo uploadFileRepo;
@@ -22,10 +18,8 @@ class ImageController extends GetxController implements GetxService {
         await uploadFileRepo.uploadFile(multipartBody, filename: filename);
 
     if (response.statusCode == 200) {
-    } else if (response.statusCode == 401) {
-      showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
     } else {
-      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
+      ApiException.checkException(response.statusCode);
     }
   }
 
@@ -35,10 +29,8 @@ class ImageController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       _image = Uint8List.fromList(response.body.codeUnits);
       update();
-    } else if (response.statusCode == 401) {
-      showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
     } else {
-      showCustomSnackBar(KeyLanguage.errorAnUnknow.tr);
+      ApiException.checkException(response.statusCode);
     }
   }
 

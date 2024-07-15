@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:traking_app/models/body/tracking.dart';
-import 'package:traking_app/networks/repository/tracking_repo.dart';
+import 'dart:developer';
 
-import '../helper/snackbar_helper.dart';
+import 'package:get/get.dart';
+import '../data/models/body/tracking.dart';
+import '../data/repository/tracking_repo.dart';
+
+import '../views/custom_snackbar.dart';
+import '../data/api/api_exception.dart';
+import '../utils/language/key_language.dart';
 
 class TrackingController extends GetxController implements GetxService {
   final TrackingRepo trackingRepo;
@@ -22,34 +25,32 @@ class TrackingController extends GetxController implements GetxService {
     Response response = await trackingRepo.getAllByUser();
     if (response.statusCode == 200) {
       _list = [];
-      debugPrint('${response.body}');
+      log('${response.body}');
       for (var element in response.body) {
         var tracking = Tracking.fromJson(element);
         _list!.add(tracking);
       }
-    } else if (response.statusCode == 401) {
     } else {
-      showCustomSnackBar(response.statusText ?? "error");
+      ApiException.checkException(response.statusCode);
     }
-
     update();
   }
 
-  Future<int> addTracking(Tracking tracking) async {
+  void addTracking(Tracking tracking) async {
     Response response = await trackingRepo.addTracking(tracking);
     if (response.statusCode == 200) {
       var tracking = Tracking.fromJson(response.body);
       _list!.add(tracking);
-    } else if (response.statusCode == 401) {
-    } else {
-      showCustomSnackBar(response.statusText ?? "error");
-    }
 
+      showCustomSnackBar("${KeyLanguage.addSuccess.tr} : ${tracking.content}",
+          isError: false);
+    } else {
+      ApiException.checkException(response.statusCode);
+    }
     update();
-    return response.statusCode!;
   }
 
-  Future<int> updateTracking(Tracking tracking) async {
+  void updateTracking(Tracking tracking) async {
     Response response = await trackingRepo.updateTracking(tracking);
     if (response.statusCode == 200) {
       var tracking = Tracking.fromJson(response.body);
@@ -57,29 +58,29 @@ class TrackingController extends GetxController implements GetxService {
         (element) => element.id == tracking.id,
       );
       _list!.add(tracking);
-    } else if (response.statusCode == 401) {
+      showCustomSnackBar(
+          "${KeyLanguage.updateSuccess.tr}  : ${tracking.content}",
+          isError: false);
     } else {
-      showCustomSnackBar(response.statusText ?? "error");
+      ApiException.checkException(response.statusCode);
     }
-
     update();
-    return response.statusCode!;
   }
 
-  Future<int> deleteTracking(Tracking tracking) async {
+  void deleteTracking(Tracking tracking) async {
     Response response = await trackingRepo.deleteTracking(tracking);
     if (response.statusCode == 200) {
       _list!.removeWhere(
         (element) => element.id == tracking.id,
       );
-    } else if (response.statusCode == 401) {
-      clearData();
+      showCustomSnackBar(
+          "${KeyLanguage.deleteSuccess.tr}  : ${tracking.content}",
+          isError: false);
     } else {
-      showCustomSnackBar(response.statusText ?? "error");
+      ApiException.checkException(response.statusCode);
     }
 
     update();
-    return response.statusCode!;
   }
 
   void sortByDateDesc() {
