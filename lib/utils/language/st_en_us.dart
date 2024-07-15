@@ -1,4 +1,4 @@
-import 'package:traking_app/utils/dimensions.dart';
+import '/utils/dimensions.dart';
 
 import 'key_language.dart';
 
@@ -12,6 +12,8 @@ const Map<String, String> en = {
   KeyLanguage.password: 'Password',
   KeyLanguage.comfirmPassword: 'Comfirm Password',
   KeyLanguage.fullname: 'FullName',
+  KeyLanguage.firstName: 'First Name',
+  KeyLanguage.lastName: 'Last Name',
   KeyLanguage.university: 'University',
   KeyLanguage.age: 'Your Age',
   KeyLanguage.birthPlace: 'Birth Place',
@@ -40,7 +42,7 @@ const Map<String, String> en = {
   KeyLanguage.notification: 'Notification',
   KeyLanguage.changePassword: 'Change Password',
   KeyLanguage.postContent: '  Post Content',
-  KeyLanguage.post: 'Post',
+  KeyLanguage.post: 'Post Myself',
   KeyLanguage.posts: 'All Post',
   KeyLanguage.addPost: 'Add Post',
   KeyLanguage.like: 'Like',
@@ -53,8 +55,10 @@ const Map<String, String> en = {
   KeyLanguage.addPostSuccess: 'Post added successfully',
   KeyLanguage.updateSuccess: 'You have updated successfully',
   KeyLanguage.deleteSuccess: 'You have deleted successfully',
+  KeyLanguage.delete: 'Delete',
+  KeyLanguage.deleteQuestion: 'Are you sure you want to delete',
   KeyLanguage.errorFillInAllInfo: 'You need to fill in all information',
-  KeyLanguage.errorAnUnknow: 'An unknown error',
+  KeyLanguage.errorServer: 'There is no connection to the server',
   KeyLanguage.errorWrongUsernameOrPassword: 'Account or password is incorrect',
   KeyLanguage.errorUnauthentication: 'You don\'t have access',
   KeyLanguage.errorPasswordsDuplicate: 'Passwords must match',

@@ -1,21 +1,21 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:traking_app/controllers/auth_controller.dart';
-import 'package:traking_app/controllers/langue_controller.dart';
-import 'package:traking_app/controllers/loading_controller.dart';
-import 'package:traking_app/controllers/post_controller.dart';
-import 'package:traking_app/controllers/search_controller.dart';
-import 'package:traking_app/controllers/tracking_controller.dart';
-import 'package:traking_app/controllers/upload_file_controller.dart';
-import 'package:traking_app/networks/api/api_client.dart';
-import 'package:traking_app/networks/repository/auth_repo.dart';
-import 'package:traking_app/networks/repository/post_repo.dart';
-import 'package:traking_app/networks/repository/search_repo.dart';
-import 'package:traking_app/networks/repository/tracking_repo.dart';
-import 'package:traking_app/networks/repository/upload_file_repo.dart';
-import 'package:traking_app/services/language_service.dart';
-import 'package:traking_app/controllers/theme_controller.dart';
-import 'package:traking_app/utils/app_constant.dart';
+import '/controllers/auth_controller.dart';
+import '/controllers/langue_controller.dart';
+import '/controllers/loading_controller.dart';
+import '/controllers/post_controller.dart';
+import '/controllers/search_controller.dart';
+import '/controllers/tracking_controller.dart';
+import '/controllers/upload_file_controller.dart';
+import 'data/api/api_client.dart';
+import 'data/repository/auth_repo.dart';
+import 'data/repository/post_repo.dart';
+import 'data/repository/search_repo.dart';
+import 'data/repository/tracking_repo.dart';
+import 'data/repository/upload_file_repo.dart';
+import '/services/language_service.dart';
+import 'theme/theme_controller.dart';
+import '/utils/app_constant.dart';
 
 Future<void> binding() async {
   final sharedPreferences = await SharedPreferences.getInstance();

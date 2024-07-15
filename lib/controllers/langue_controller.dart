@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:traking_app/services/language_service.dart';
-import 'package:traking_app/utils/app_constant.dart';
+import '/services/language_service.dart';
+import '/utils/app_constant.dart';
 
 class LanguageController extends GetxController implements GetxService {
   final SharedPreferences sharedPreferences;

@@ -15,6 +15,7 @@ class AppConstant {
   static const String GET_ALL_USER = '/mita/users/searchByPage';
   static const String CHECK_IN = '/mita/time-sheets/check-in';
   static const String POSTS = '/mita/posts/get-news';
+  static const String POSTS_BY_USER = '/mita/posts/get-news-by-user';
   static const String ADD_POST = '/mita/posts/create';
   static const String LIKE_POST = '/mita/posts/likes';
   static const String COMMENT_POST = '/mita/posts/comments';

@@ -11,6 +11,8 @@ class KeyLanguage {
   static const String password = "password";
   static const String comfirmPassword = "confirm_password";
   static const String fullname = "fullname";
+  static const String firstName = "first_name";
+  static const String lastName = "last_name";
   static const String university = "university";
   static const String age = "age";
   static const String birthPlace = "birth_place";
@@ -50,8 +52,10 @@ class KeyLanguage {
   static const String addPostSuccess = "add_post_success";
   static const String updateSuccess = "update_success";
   static const String deleteSuccess = "delete_success";
+  static const String delete = "delete";
+  static const String deleteQuestion = "delete_questions";
   static const String errorFillInAllInfo = "fill_in_all_information";
-  static const String errorAnUnknow = "an_unknow";
+  static const String errorServer = "error_server";
   static const String errorUnauthentication = "un_authentication";
   static const String errorWrongUsernameOrPassword =
       "wrong_username_or_password";

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:traking_app/models/body/search.dart';
-import 'package:traking_app/networks/repository/search_repo.dart';
-import 'package:traking_app/utils/dimensions.dart';
+import '../data/models/body/search.dart';
+import '../data/api/api_exception.dart';
+import '../data/repository/search_repo.dart';
+import '/utils/dimensions.dart';
 
-import '../models/response/user_res.dart';
+import '../data/models/response/user_res.dart';
 
 class SearchByPageController extends GetxController implements GetxService {
   final SearchRepo searchRepo;
@@ -40,10 +41,8 @@ class SearchByPageController extends GetxController implements GetxService {
       }
 
       _isPageLast = response.body["last"];
-    } else if (response.statusCode == 401) {
-      clearData();
     } else {
-      clearData();
+      ApiException.checkException(response.statusCode);
     }
     update();
   }

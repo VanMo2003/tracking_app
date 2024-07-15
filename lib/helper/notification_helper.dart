@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/controllers/auth_controller.dart';
-import 'package:traking_app/helper/route_helper.dart';
-import 'package:traking_app/services/firebase_service.dart';
+import '/controllers/auth_controller.dart';
+import '/helper/route_helper.dart';
+import '/services/firebase_service.dart';
 
 class NotificationHelper {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -35,10 +37,10 @@ class NotificationHelper {
 
   static Future getDeviceToken() async {
     final token = await _firebaseMessaging.getToken();
-    debugPrint('device token : $token');
+    log('device token : $token');
     if (Get.find<AuthController>().user != null) {
       await FirebaseService.saveUserToken(token!);
-      debugPrint('save to firestore');
+      log('save to firestore');
     }
 
     // also save if token changes
@@ -46,7 +48,7 @@ class NotificationHelper {
       (event) async {
         if (Get.find<AuthController>().user != null) {
           await FirebaseService.saveUserToken(token!);
-          debugPrint('save to firestore');
+          log('save to firestore');
         }
       },
     );

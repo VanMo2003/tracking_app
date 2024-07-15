@@ -4,15 +4,14 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:traking_app/app_binding.dart';
+import '/app_binding.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'package:traking_app/controllers/langue_controller.dart';
-import 'package:traking_app/helper/route_helper.dart';
-import 'package:traking_app/services/language_service.dart';
-import 'package:traking_app/controllers/theme_controller.dart';
+import '/controllers/langue_controller.dart';
+import '/helper/route_helper.dart';
+import '/services/language_service.dart';
+import 'theme/theme_controller.dart';
 
 import 'firebase_options.dart';
 import 'helper/notification_helper.dart';
@@ -67,14 +66,16 @@ Future<void> main() async {
       if (message != null) {
         debugPrint('launched from terminated state');
         Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           () {
             Get.toNamed(RouteHelper.getMessage(), arguments: message);
           },
         );
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    throw Exception(e.toString());
+  }
 
   await binding();
 
@@ -103,8 +104,8 @@ class MyApp extends StatelessWidget {
               translations: LanguageService(),
               initialRoute: RouteHelper.getSplashRoute(),
               getPages: RouteHelper.routes,
-              defaultTransition: Transition.topLevel,
-              transitionDuration: const Duration(milliseconds: 250),
+              defaultTransition: Transition.leftToRight,
+              transitionDuration: const Duration(milliseconds: 200),
             );
           },
         );

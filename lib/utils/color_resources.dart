@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/theme_controller.dart';
+import '../theme/theme_controller.dart';
 
 class ColorResources {
   static Color getPrimaryColor() {
