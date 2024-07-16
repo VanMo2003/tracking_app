@@ -37,13 +37,10 @@ class ButtonDrawerWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              icon ??
-                  Image.asset(
-                    AssetUtil.back,
-                    fit: BoxFit.cover,
-                    color: Theme.of(context).dividerColor,
-                  ),
-              const SizedBox(width: Dimensions.SIZE_BOX_HEIGHT_LARGE),
+              if (icon != null) ...[
+                icon!,
+                const SizedBox(width: Dimensions.SIZE_BOX_HEIGHT_LARGE),
+              ],
               Text(
                 label ?? "Button",
                 style: robotoBlack.copyWith(

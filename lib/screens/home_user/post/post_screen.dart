@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../../../utils/styles.dart';
 import '/controllers/post_controller.dart';
 import '/helper/route_helper.dart';
 import '../../../data/models/body/posts/content.dart';
@@ -21,38 +20,29 @@ class PostScreent extends StatefulWidget {
 class _PostScreentState extends State<PostScreent> {
   TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
-
+  List<Content>? contents;
   String? id = Get.parameters["id"];
+  String? displayName = Get.parameters["displayName"];
 
   @override
   void initState() {
     super.initState();
-    if (id == "") {
-      if (Get.find<PostController>().currentPage == 1) {
-        Get.find<PostController>().getPosts();
-      }
-    } else {
-      if (Get.find<PostController>().currentPageByUser == 1) {
-        Get.find<PostController>().getPostsByUser();
-      }
-    }
+    // if (id == "") {
+    //   if (Get.find<PostController>().currentPage == 1) {
+    //     Get.find<PostController>().getPosts();
+    //   }
+    // } else {
+    //   if (Get.find<PostController>().currentPageByUser == 1) {
+    //     Get.find<PostController>().getPostsByUser();
+    //   }
+    // }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         if (!Get.find<PostController>().last && id == "") {
-          Future.delayed(
-            const Duration(milliseconds: 200),
-            () {
-              Get.find<PostController>().getPosts();
-            },
-          );
+          Get.find<PostController>().getPosts();
         } else if (!Get.find<PostController>().lastByUser && id != "") {
-          Future.delayed(
-            const Duration(milliseconds: 200),
-            () {
-              Get.find<PostController>().getPostsByUser();
-            },
-          );
+          Get.find<PostController>().getPostsByUser();
         }
       }
     });
@@ -62,9 +52,15 @@ class _PostScreentState extends State<PostScreent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Get.parameters["displayName"] == ""
-            ? KeyLanguage.posts.tr
-            : "Bài viết của ${Get.parameters["displayName"]}"),
+        title: Text(
+          displayName == ""
+              ? KeyLanguage.posts.tr
+              : "Bài viết của $displayName",
+          style: robotoBold.copyWith(
+            fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
+            color: Theme.of(context).cardColor,
+          ),
+        ),
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -85,22 +81,33 @@ class _PostScreentState extends State<PostScreent> {
       backgroundColor: ColorResources.getGreyColor(),
       body: GetBuilder<PostController>(
         builder: (controller) {
-          var posts = controller.posts;
-          if (posts == null) {
+          if (contents == null) {
+            Future.delayed(
+              const Duration(milliseconds: 1000),
+              () {
+                contents =
+                    id == "" ? controller.contents : controller.contentsByUser;
+                controller.update();
+              },
+            );
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).primaryColor,
               ),
             );
           }
-          List<Content> contents =
-              id == "" ? controller.contents : controller.contentsByUser;
+
+          if (contents!.isEmpty) {
+            return Center(
+              child: Text(KeyLanguage.listEmpty.tr),
+            );
+          }
           int length = 0;
           if (id == "") {
-            length = controller.last ? contents.length : contents.length + 1;
+            length = controller.last ? contents!.length : contents!.length + 1;
           } else {
             length =
-                controller.lastByUser ? contents.length : contents.length + 1;
+                controller.lastByUser ? contents!.length : contents!.length + 1;
           }
           return ListView.builder(
             controller: scrollController,
@@ -108,7 +115,7 @@ class _PostScreentState extends State<PostScreent> {
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               if (id == "") {
-                if (index == contents.length && !controller.last) {
+                if (index == contents!.length && !controller.last) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Center(
@@ -117,7 +124,7 @@ class _PostScreentState extends State<PostScreent> {
                   );
                 }
               } else {
-                if (index == contents.length && !controller.lastByUser) {
+                if (index == contents!.length && !controller.lastByUser) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Center(
@@ -128,18 +135,20 @@ class _PostScreentState extends State<PostScreent> {
               }
 
               return PostItem(
-                content: contents[index],
+                content: contents![index],
               );
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(RouteHelper.addPost);
-        },
-        child: const Icon(Icons.post_add),
-      ),
+      floatingActionButton: id == ""
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                Get.toNamed(RouteHelper.addPost);
+              },
+              child: const Icon(Icons.post_add),
+            ),
     );
   }
 }

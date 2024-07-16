@@ -78,4 +78,6 @@ const Map<String, String> en = {
   KeyLanguage.hasInternet: "An internet connection is available",
   KeyLanguage.pickImage: "Pick image",
   KeyLanguage.completed: "Completed",
+  KeyLanguage.usernameExist: "Username Existed",
+  KeyLanguage.registorSuccess: "Complete registration",
 };

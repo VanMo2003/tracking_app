@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -15,7 +13,6 @@ import '../../views/custom_loading.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controllers/tracking_controller.dart';
-import '../../helper/notification_helper.dart';
 import '../../utils/color_resources.dart';
 import '../widgets/drawer_widget.dart';
 
@@ -43,21 +40,11 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
 
   @override
   void initState() {
-    listenToNotifications();
     super.initState();
+    Get.find<PostController>().getPosts();
+    Get.find<PostController>().getPostsByUser();
     Get.find<TrackingController>().getAllByUser();
     Get.find<SearchByPageController>().getAllUser();
-    // NotificationHelper.getDeviceToken();
-  }
-
-  listenToNotifications() {
-    debugPrint('listening to notification');
-    NotificationHelper.onClickNotification.stream.listen(
-      (event) {
-        log(event);
-        // Get.to(PostComment(id: event));
-      },
-    );
   }
 
   @override

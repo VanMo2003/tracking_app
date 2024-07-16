@@ -25,9 +25,6 @@ class ButtonAnimated extends AnimatedWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        if (kDebugMode) {
-          debugPrint('click favarite post ${content.id}');
-        }
         Get.find<PostController>().likePost(content.id!);
         controller.forward();
       },

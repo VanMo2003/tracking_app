@@ -86,6 +86,9 @@ class PostController extends GetxController implements GetxService {
   void addContent(Content content) async {
     Response response = await repo.addContent(content);
     if (response.statusCode == 200) {
+      var content = Content.fromJson(response.body["data"]);
+      _contentsByUser.add(content);
+      _contents.add(content);
       showCustomSnackBar(KeyLanguage.addSuccess.tr, isError: false);
     } else {
       ApiException.checkException(response.statusCode);
@@ -101,7 +104,6 @@ class PostController extends GetxController implements GetxService {
         var content =
             _contents.where((element) => element.id == id).firstOrNull;
         if (content != null) {
-          log("likes post");
           content.likes ??= [];
           content.likes!.add(Likes.fromJson(response.body));
         }
@@ -110,7 +112,6 @@ class PostController extends GetxController implements GetxService {
         var contentByUser =
             _contentsByUser.where((element) => element.id == id).firstOrNull;
         if (contentByUser != null) {
-          log("likes post by user");
           contentByUser.likes ??= [];
           contentByUser.likes!.add(Likes.fromJson(response.body));
         }
