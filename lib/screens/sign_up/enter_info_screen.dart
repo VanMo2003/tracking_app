@@ -223,8 +223,8 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
     String dataOfBirth = _dateOfBirthController.text;
 
     if (key.currentState!.validate()) {
-      if (selectedBirthPlace != null) {
-        showCustomSnackBar("Chọn quê quán");
+      if (selectedBirthPlace == null) {
+        showCustomSnackBar("Mời bạn chọn quê quán");
       } else {
         await animatedLoading();
         debugPrint('${DateFormat("dd/MM/yyy").parse(dataOfBirth)}');
@@ -245,7 +245,8 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
                 (value) {
                   if (value == 200) {
                     Get.offAllNamed(RouteHelper.getHomeUserRoute());
-                    showCustomSnackBar("Hoàn tất đăng ký", isError: false);
+                    showCustomSnackBar(KeyLanguage.registorSuccess.tr,
+                        isError: false);
                   } else {
                     showCustomSnackBar(KeyLanguage.errorServer.tr);
                   }

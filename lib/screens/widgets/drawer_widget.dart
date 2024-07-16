@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:traking_app/data/models/response/user_res.dart';
+import '../../controllers/post_controller.dart';
 import '/controllers/upload_file_controller.dart';
 import '/helper/route_helper.dart';
 import '/utils/language/key_language.dart';
 import 'button_drawer_widget.dart';
 import 'dropdown_language_widget.dart';
 import 'package:get/get.dart';
-import 'dialog_widget.dart';
 
 import '../../controllers/auth_controller.dart';
 
@@ -36,20 +37,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   File? selectedFile;
 
   @override
-  void initState() {
-    super.initState();
-    if (Get.find<ImageController>().image == null) {
-      // Get.find<UploadFileController>().getFileByName("1719300911.png");
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var safe = MediaQuery.of(context).padding.top;
 
     return GetBuilder<AuthController>(
       builder: (authController) {
+        UserRes user = authController.user!;
         return Container(
           height: size.height,
           width: size.width * 0.8,
@@ -78,8 +72,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       CircleAvatar(
                         radius: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
                         backgroundColor: ColorResources.getWhiteColor(),
-                        child: authController.user!.image != null
-                            ? Image.asset(authController.user!.image!)
+                        child: user.image != null
+                            ? Image.asset(user.image!)
                             : Icon(
                                 Icons.person,
                                 size: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
@@ -96,12 +90,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ),
                           children: [
                             TextSpan(
-                              text: authController.user!.username ??
-                                  KeyLanguage.username.tr,
+                              text: user.username ?? KeyLanguage.username.tr,
                             ),
                             TextSpan(
                               text:
-                                  " (${authController.user!.displayName ?? KeyLanguage.displayName.tr})",
+                                  " (${user.displayName ?? KeyLanguage.displayName.tr})",
                               style: robotoBold.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                                 color:
@@ -112,8 +105,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                       ),
                       Text(
-                        authController.user!.email ??
-                            KeyLanguage.displayName.tr,
+                        user.email ?? KeyLanguage.displayName.tr,
                         style: robotoBlack.copyWith(
                           fontSize: Dimensions.FONT_SIZE_LARGE,
                           color: Theme.of(context).cardColor.withAlpha(200),
@@ -155,10 +147,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       ButtonDrawerWidget(
                         onTap: () {
-                          Get.toNamed(RouteHelper.getPostRoute(
-                            userId: authController.user!.id!.toString(),
-                            displayName: authController.user!.displayName,
-                          ));
+                          log(user.displayName!);
+                          Get.toNamed(
+                            RouteHelper.getPostRoute(
+                              userId: user.id!.toString(),
+                              displayName: user.displayName.toString(),
+                            ),
+                          );
                         },
                         label: KeyLanguage.post.tr,
                         icon: Icon(

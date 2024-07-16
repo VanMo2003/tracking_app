@@ -139,43 +139,18 @@ class _AddPostScreentState extends State<AddPostScreent> {
       await animatedLoading();
 
       late Content content;
-      if (selectedFile != null) {
-        String filename = "${Timestamp.fromDate(DateTime.now()).seconds}.png";
-        content = Content(
-          id: 0,
-          date: DateTime.now().millisecondsSinceEpoch,
-          content: contentController.text,
-          user: Get.find<AuthController>().user,
-          media: Media(
-            id: 0,
-            contentSize: 0,
-            contentType: "string",
-            extension: "string",
-            filePath: "string",
-            isVideo: true,
-            name: filename,
-          ),
-        );
 
-        Get.find<ImageController>().uploadImage(
-          MultipartBody(file: selectedFile!),
-          filename,
-        );
-      } else {
-        log('no image');
-        content = Content(
-          id: 0,
-          date: DateTime.now().millisecondsSinceEpoch,
-          content: contentController.text,
-          user: Get.find<AuthController>().user,
-        );
-      }
+      content = Content(
+        id: 0,
+        date: DateTime.now().millisecondsSinceEpoch,
+        content: contentController.text,
+        user: Get.find<AuthController>().user,
+      );
 
       Get.find<PostController>().addContent(content);
-
       Get.find<ImageController>().clearImage();
       contentController.clear();
-      Navigator.pop(context);
+      Get.back();
       animatedNoLoading();
     }
   }

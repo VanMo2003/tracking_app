@@ -74,4 +74,6 @@ class KeyLanguage {
   static const String noInternet = "no_internet";
   static const String hasInternet = "has_internet";
   static const String pickImage = "pickImage";
+  static const String usernameExist = "username_exist";
+  static const String registorSuccess = "registor_success";
 }

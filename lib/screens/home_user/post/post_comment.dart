@@ -11,10 +11,9 @@ import '../../../controllers/post_controller.dart';
 import '../../../data/models/body/posts/comment.dart';
 
 class PostCommentWidget extends StatefulWidget {
-  PostCommentWidget({super.key, this.content, this.id});
+  const PostCommentWidget({super.key, required this.content});
 
-  Content? content;
-  final String? id;
+  final Content content;
 
   @override
   State<PostCommentWidget> createState() => _PostCommentWidgetState();
@@ -24,17 +23,6 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
   final TextEditingController commentController = TextEditingController();
 
   final key = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.id != null) {
-      var content = Get.find<PostController>().contents.singleWhere(
-            (element) => element.id.toString() == widget.id,
-          );
-      widget.content = content;
-    }
-  }
 
   @override
   void dispose() {
@@ -51,7 +39,7 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
         ),
         body: GetBuilder<PostController>(
           builder: (controller) {
-            List<Comments> comments = widget.content!.comments ?? [];
+            List<Comments> comments = widget.content.comments ?? [];
 
             return Column(
               children: [
@@ -61,7 +49,7 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return PostItem(
-                          content: widget.content!,
+                          content: widget.content,
                           isClick: false,
                         );
                       }
@@ -75,8 +63,8 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
                               padding: const EdgeInsets.only(right: 8.0),
                               child: CircleAvatar(
                                 radius: 20,
-                                child: widget.content!.user!.image != null
-                                    ? Image.asset(widget.content!.user!.image!)
+                                child: widget.content.user!.image != null
+                                    ? Image.asset(widget.content.user!.image!)
                                     : const Icon(Icons.image),
                               ),
                             ),
@@ -138,7 +126,7 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
                               user: Get.find<AuthController>().user,
                             );
                             Get.find<PostController>()
-                                .commentPost(widget.content!.id!, body);
+                                .commentPost(widget.content.id!, body);
                             FocusScope.of(context).unfocus();
                             commentController.clear();
                           }

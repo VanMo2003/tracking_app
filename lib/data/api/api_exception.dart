@@ -5,11 +5,16 @@ import '../../views/custom_snackbar.dart';
 import '/utils/language/key_language.dart';
 
 class ApiException {
-  static void checkException(int? statusCode, {String? err}) {
+  static void checkException(int? statusCode,
+      {bool isRegistor = false, String? err}) {
     if (statusCode == 401) {
       Get.find<AuthController>().clearData();
-      Get.offAllNamed(RouteHelper.signIn);
-      showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
+      if (!isRegistor) {
+        Get.offAllNamed(RouteHelper.signIn);
+      }
+      isRegistor
+          ? showCustomSnackBar(KeyLanguage.usernameExist.tr)
+          : showCustomSnackBar(KeyLanguage.errorUnauthentication.tr);
     } else if (statusCode == 400) {
       showCustomSnackBar(KeyLanguage.errorWrongUsernameOrPassword.tr);
     } else {

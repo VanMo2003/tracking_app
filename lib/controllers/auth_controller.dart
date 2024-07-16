@@ -51,7 +51,7 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       _user = UserRes.fromJson(response.body);
     } else {
-      ApiException.checkException(response.statusCode);
+      ApiException.checkException(response.statusCode, isRegistor: true);
     }
     update();
     return response.statusCode!;

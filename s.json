@@ -1,0 +1,46 @@
+{
+    "id": 0,
+    "content": "haha",
+    "date": 1721100276088,
+    "user": {
+        "id": 165,
+        "displayName": "Xuan Van",
+        "username": "user3923",
+        "password": "$2a$10$hkQuGP9r1k/CCZE.RpHXwuM8DoFDE8WFqNuN9c8p4zT2w6CaUBxSe",
+        "confirmPassword": null,
+        "changePass": false,
+        "active": true,
+        "lastName": null,
+        "firstName": null,
+        "dob": null,
+        "birthPlace": null,
+        "email": "user39@gmail.com",
+        "hasPhoto": false,
+        "roles": [
+            {
+                "id": 4,
+                "name": "ROLE_USER",
+                "description": null,
+                "authority": "ROLE_USER"
+            }
+        ],
+        "gender": null,
+        "university": "hau",
+        "year": 18,
+        "countDayCheckin": null,
+        "countDayTracking": null,
+        "tokenDevice": null,
+        "image": null,
+        "setPassword": false
+    },
+    "media": {
+        "id": 0,
+        "contentType": "string",
+        "contentSize": 0,
+        "name": "1721100276.png",
+        "extension": "string",
+        "filePath": "string",
+        "isVideo": true,
+        "posts": null
+    }
+}

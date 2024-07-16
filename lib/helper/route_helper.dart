@@ -5,7 +5,6 @@ import '../screens/home_user/post/post_screen.dart';
 import '../screens/home_user/info_user/info_user_screen.dart';
 import '../screens/home_user/home_user_screen.dart';
 import '../screens/sign_in/sign_in_screen.dart';
-import '../screens/sign_up/enter_info_screen.dart';
 import '../screens/sign_up/sign_up_screen.dart';
 
 import '../message.dart';
@@ -36,7 +35,7 @@ class RouteHelper {
   static String getInfoUserRoute() => infoUser;
   static String getChangePassword() => changePassword;
   static String getPostRoute({String? userId, String? displayName}) =>
-      "$post?id=${userId ?? ""}?displayName=${displayName ?? ""}";
+      "$post?id=${userId ?? ""}&displayName=${displayName ?? ""}";
   static String getAddPostRoute() => addPost;
   static String getMessage() => message;
 
