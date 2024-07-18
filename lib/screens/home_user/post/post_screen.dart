@@ -27,15 +27,6 @@ class _PostScreentState extends State<PostScreent> {
   @override
   void initState() {
     super.initState();
-    // if (id == "") {
-    //   if (Get.find<PostController>().currentPage == 1) {
-    //     Get.find<PostController>().getPosts();
-    //   }
-    // } else {
-    //   if (Get.find<PostController>().currentPageByUser == 1) {
-    //     Get.find<PostController>().getPostsByUser();
-    //   }
-    // }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {

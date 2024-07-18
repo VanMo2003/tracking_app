@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
 
 import 'package:get/get.dart';
@@ -42,7 +44,7 @@ class _SplashScreentState extends State<SplashScreent> {
     } else {
       if (isFirstTime) {
         await _route();
-        hideSnackBar(context);
+        hideSnackBar();
       }
       showCustomSnackBar(KeyLanguage.hasInternet.tr, isError: false);
       isFirstTime = false;

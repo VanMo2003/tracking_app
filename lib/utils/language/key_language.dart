@@ -76,4 +76,5 @@ class KeyLanguage {
   static const String pickImage = "pickImage";
   static const String usernameExist = "username_exist";
   static const String registorSuccess = "registor_success";
+  static const String isNullBirthPlace = "null_birth_place";
 }

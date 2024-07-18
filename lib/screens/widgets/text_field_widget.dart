@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../helper/validation_helper.dart';
 import '/utils/color_resources.dart';
 import '/utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool autoFocus;
   final String? error;
   final double? height;
+  final Widget? suffixIcon;
 
   const TextFieldWidget({
     super.key,
@@ -38,6 +40,7 @@ class TextFieldWidget extends StatefulWidget {
     this.autoFocus = false,
     this.error,
     this.height,
+    this.suffixIcon,
   });
 
   @override
@@ -66,10 +69,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator ??
             (value) {
-              if (GetUtils.isNull(value != "" ? value : null)) {
-                return KeyLanguage.validNull.tr;
-              }
-              return null;
+              return ValidationHelper.validNull(value);
             },
         autofocus: widget.autoFocus,
         onFieldSubmitted: widget.onFieldSubmitted,
@@ -110,7 +110,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                         ? ColorResources.getBlackColor().withOpacity(0.5)
                         : Theme.of(context).primaryColor.withOpacity(0.8),
                   ))
-              : null,
+              : widget.suffixIcon,
         ),
       ),
     );

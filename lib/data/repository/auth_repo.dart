@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/request/token_request.dart';
-import '../models/body/user.dart';
+import '../models/request/user_request.dart';
 import '../models/response/user_res.dart';
 import '../api/api_client.dart';
 import '/utils/app_constant.dart';
@@ -35,7 +35,7 @@ class AuthRepo {
     );
   }
 
-  Future<Response> registor(User user) async {
+  Future<Response> registor(UserRes user) async {
     return await apiClient.postData(AppConstant.REGISTOR_URI, user.toJson());
   }
 

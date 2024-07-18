@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/utils/color_resources.dart';
 import '/utils/dimensions.dart';
 import '/utils/language/key_language.dart';
 import 'text_field_widget.dart';
@@ -11,6 +10,8 @@ Widget dialogUpdateWidget(
   required Widget child,
   required void Function() opTap,
 }) {
+  final key = GlobalKey<FormState>();
+
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0)), //this right here
@@ -24,35 +25,48 @@ Widget dialogUpdateWidget(
             padding: const EdgeInsets.symmetric(
               horizontal: Dimensions.PADDING_SIZE_OVER_LARGE,
             ),
-            child: child,
+            child: Form(
+              key: key,
+              child: child,
+            ),
           ),
           Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStateProperty.all(ColorResources.getWhiteColor()),
-                    // textStyle: WidgetStateProperty.all(
-                    //     TextStyle(color: ColorResources.getBlackColor())),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                          Theme.of(context).primaryColor),
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                    ),
+                    onPressed: () {
+                      if (key.currentState!.validate()) {
+                        opTap();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text(KeyLanguage.save.tr),
                   ),
-                  onPressed: () {
-                    opTap();
-                    Navigator.pop(context);
-                  },
-                  child: Text(KeyLanguage.save.tr),
-                ),
-                const SizedBox(
-                  width: Dimensions.PADDING_SIZE_LARGE,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(KeyLanguage.cancel.tr),
-                ),
-              ],
+                  const SizedBox(
+                    width: Dimensions.PADDING_SIZE_LARGE,
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                          Theme.of(context).primaryColor.withOpacity(0.2)),
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(KeyLanguage.cancel.tr),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -69,7 +83,11 @@ Widget dialogAddWidget({
   bool hasCancel = false,
   String? hintText,
 }) {
+  final key = GlobalKey<FormState>();
+
   Dialog dialog = Dialog(
+    elevation: 1,
+    shadowColor: Theme.of(context).disabledColor,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0)), //this right here
     child: SizedBox(
@@ -80,10 +98,13 @@ Widget dialogAddWidget({
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: TextFieldWidget(
-              autoFocus: true,
-              controller: controller,
-              hintText: hintText ?? KeyLanguage.trackingContent.tr,
+            child: Form(
+              key: key,
+              child: TextFieldWidget(
+                autoFocus: true,
+                controller: controller,
+                hintText: hintText ?? KeyLanguage.trackingContent.tr,
+              ),
             ),
           ),
           const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
@@ -95,12 +116,13 @@ Widget dialogAddWidget({
                   style: ButtonStyle(
                     backgroundColor:
                         WidgetStateProperty.all(Theme.of(context).primaryColor),
-                    foregroundColor:
-                        WidgetStateProperty.all(Theme.of(context).cardColor),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
                   ),
                   onPressed: () {
-                    onAdd();
-                    Navigator.pop(context);
+                    if (key.currentState!.validate()) {
+                      onAdd();
+                      Navigator.pop(context);
+                    }
                   },
                   child: Text(textButton),
                 ),
@@ -138,6 +160,9 @@ Widget dialogQuestionWidget(
   void Function() agree,
 ) {
   return AlertDialog(
+    elevation: 3,
+    shadowColor: Theme.of(context).disabledColor,
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     title: Text(label),
     content: Text(
       question,
@@ -151,9 +176,9 @@ Widget dialogQuestionWidget(
           Navigator.of(context).pop(false);
         },
         style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Theme.of(context).primaryColor),
-          foregroundColor: WidgetStateProperty.all(Theme.of(context).cardColor),
+          backgroundColor: WidgetStateProperty.all(
+              Theme.of(context).primaryColor.withOpacity(0.2)),
+          foregroundColor: WidgetStateProperty.all(Colors.white),
         ),
         child: Text(KeyLanguage.cancel.tr),
       ),
@@ -167,7 +192,7 @@ Widget dialogQuestionWidget(
         style: ButtonStyle(
           backgroundColor:
               WidgetStateProperty.all(Theme.of(context).primaryColor),
-          foregroundColor: WidgetStateProperty.all(Theme.of(context).cardColor),
+          foregroundColor: WidgetStateProperty.all(Colors.white),
         ),
         child: Text(KeyLanguage.yes.tr),
       ),

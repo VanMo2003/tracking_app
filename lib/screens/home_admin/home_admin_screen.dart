@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helper/notification_helper.dart';
+import '../../views/custom_loading.dart';
 import 'person/person_screen.dart';
 import '../list_user/list_user_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -46,51 +47,53 @@ class _HomeAdminScreentState extends State<HomeAdminScreent> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        return Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AssetUtil.background),
-                  fit: BoxFit.cover,
+        return LoadingWidget(
+          child: Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AssetUtil.background),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Scaffold(
-              backgroundColor: Theme.of(context)
-                  .cardColor
-                  .withAlpha(Get.isDarkMode ? 150 : 0),
-              appBar: _currentIndex.value == 1
-                  ? null
-                  : AppBar(
-                      title: Text(listTitle[_currentIndex.value].tr),
-                      centerTitle: true,
+              Scaffold(
+                backgroundColor: Theme.of(context)
+                    .cardColor
+                    .withAlpha(Get.isDarkMode ? 150 : 0),
+                appBar: _currentIndex.value == 1
+                    ? null
+                    : AppBar(
+                        title: Text(listTitle[_currentIndex.value].tr),
+                        centerTitle: true,
+                      ),
+                body: listWidget[_currentIndex.value],
+                bottomNavigationBar: SalomonBottomBar(
+                  currentIndex: _currentIndex.value,
+                  onTap: (i) => _currentIndex.value = i,
+                  items: [
+                    SalomonBottomBarItem(
+                      icon: Image.asset(
+                        AssetUtil.list,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                      title: Text(KeyLanguage.listUser.tr),
+                      selectedColor: Colors.orange,
                     ),
-              body: listWidget[_currentIndex.value],
-              bottomNavigationBar: SalomonBottomBar(
-                currentIndex: _currentIndex.value,
-                onTap: (i) => _currentIndex.value = i,
-                items: [
-                  SalomonBottomBarItem(
-                    icon: Image.asset(
-                      AssetUtil.list,
-                      color: Theme.of(context).disabledColor,
+                    SalomonBottomBarItem(
+                      icon: Image.asset(
+                        AssetUtil.person,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                      title: Text(KeyLanguage.person.tr),
+                      selectedColor: ColorResources.getPrimaryColor(),
                     ),
-                    title: Text(KeyLanguage.listUser.tr),
-                    selectedColor: Colors.orange,
-                  ),
-                  SalomonBottomBarItem(
-                    icon: Image.asset(
-                      AssetUtil.person,
-                      color: Theme.of(context).disabledColor,
-                    ),
-                    title: Text(KeyLanguage.person.tr),
-                    selectedColor: ColorResources.getPrimaryColor(),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

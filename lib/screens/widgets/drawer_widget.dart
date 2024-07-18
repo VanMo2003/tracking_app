@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:traking_app/data/models/response/user_res.dart';
-import '../../controllers/post_controller.dart';
 import '/controllers/upload_file_controller.dart';
 import '/helper/route_helper.dart';
 import '/utils/language/key_language.dart';
@@ -21,7 +20,6 @@ import '../../utils/color_resources.dart';
 import '../../utils/dimensions.dart';
 import '../../utils/asset_util.dart';
 import '../../utils/styles.dart';
-import '../home_user/notification/notifications.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key, required this.scaffoldKey});
@@ -47,7 +45,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         return Container(
           height: size.height,
           width: size.width * 0.8,
-          color: ColorResources.getWhiteColor(),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Stack(
             children: [
               Positioned(
@@ -71,7 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     children: [
                       CircleAvatar(
                         radius: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
-                        backgroundColor: ColorResources.getWhiteColor(),
+                        backgroundColor: Theme.of(context).cardColor,
                         child: user.image != null
                             ? Image.asset(user.image!)
                             : Icon(
@@ -187,16 +185,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.find<ThemeController>().darkTheme
                               ? Icons.dark_mode
                               : Icons.light_mode,
-                          color: Theme.of(context).dividerColor,
-                        ),
-                      ),
-                      ButtonDrawerWidget(
-                        label: KeyLanguage.notification.tr,
-                        onTap: () {
-                          Get.to(const NotificationScreent());
-                        },
-                        icon: Icon(
-                          Icons.notifications,
                           color: Theme.of(context).dividerColor,
                         ),
                       ),

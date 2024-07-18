@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '/utils/color_resources.dart';
 import '../utils/dimensions.dart';
 import '../utils/styles.dart';
 
@@ -17,13 +16,13 @@ void showCustomSnackBar(String message, {bool isError = true, int? duration}) {
       content: Text(
         message,
         style: robotoMedium.copyWith(
-          color: ColorResources.getWhiteColor(),
+          color: Colors.white,
         ),
       ),
     ));
   }
 }
 
-void hideSnackBar(BuildContext context) {
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+void hideSnackBar() {
+  ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
 }

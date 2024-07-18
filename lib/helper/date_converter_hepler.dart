@@ -10,6 +10,26 @@ class DateConverter {
     return DateFormat(_timeFormatter()).format(dateTime);
   }
 
+  static String convertDateToTimestamp(String dateString,
+      {String? timeString = "00:00:00.000"}) {
+    DateTime date = DateTime.parse(dateString);
+
+    Duration time = Duration(
+      hours: int.parse(timeString!.split(':')[0]),
+      minutes: int.parse(timeString.split(':')[1]),
+      seconds: int.parse(timeString.split(':')[2].split(".")[0]),
+      milliseconds: int.parse(timeString.split('.')[1]),
+    );
+
+    DateTime timestamp = date.add(time);
+
+    return timestamp.toIso8601String();
+  }
+
+  static String dateToStringformat(DateTime dateTime) {
+    return DateFormat("yyyy-MM-dd").format(dateTime);
+  }
+
   static String dateToDateAndTime(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
   }
@@ -29,7 +49,7 @@ class DateConverter {
   }
 
   static DateTime dateTimeStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime);
+    return DateFormat('yyyy-MM-dd').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
