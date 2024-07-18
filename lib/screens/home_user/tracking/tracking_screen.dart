@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../views/custom_snackbar.dart';
 import '/controllers/tracking_controller.dart';
 import '/helper/date_converter_hepler.dart';
 import '/utils/dimensions.dart';
@@ -58,7 +59,6 @@ class _TrackingScreentState extends State<TrackingScreent> {
                   var tracking = list[index];
                   return TrackingItem(
                     tracking: tracking,
-                    contentController: contentController,
                   );
                 },
               ),
@@ -106,8 +106,17 @@ class _TrackingScreentState extends State<TrackingScreent> {
       user: userCurrent,
     );
 
-    Get.find<TrackingController>().addTracking(tracking);
-    Get.find<LoadingController>().noLoading();
+    Get.find<TrackingController>().addTracking(tracking).then(
+      (value) {
+        if (value == 200) {
+          showCustomSnackBar(
+              "${KeyLanguage.addSuccess.tr} : ${tracking.content}",
+              isError: false);
+        }
+
+        animatedNoLoading();
+      },
+    );
     contentController.clear();
   }
 }

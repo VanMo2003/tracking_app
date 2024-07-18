@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../views/custom_snackbar.dart';
+import '../../../widgets/text_field_widget.dart';
 import 'button__tracking_widget.dart';
 
-import '../../../../controllers/loading_controller.dart';
 import '../../../../controllers/tracking_controller.dart';
 import '../../../../helper/date_converter_hepler.dart';
 import '../../../../helper/loading_helper.dart';
@@ -17,11 +18,9 @@ import '../../../../utils/styles.dart';
 import '../../../widgets/dialog_widget.dart';
 
 class TrackingItem extends StatefulWidget {
-  const TrackingItem(
-      {super.key, required this.tracking, required this.contentController});
+  const TrackingItem({super.key, required this.tracking});
 
   final Tracking tracking;
-  final TextEditingController contentController;
 
   @override
   State<TrackingItem> createState() => _TrackingItemState();
@@ -29,6 +28,7 @@ class TrackingItem extends StatefulWidget {
 
 class _TrackingItemState extends State<TrackingItem> {
   ScrollController scrollController = ScrollController();
+  final TextEditingController contentController = TextEditingController();
 
   RxBool isOpenMenu = false.obs;
 
@@ -175,27 +175,34 @@ class _TrackingItemState extends State<TrackingItem> {
     await animatedLoading();
 
     tracking.content = contentController.text;
-    Get.find<TrackingController>().updateTracking(tracking);
-    Get.find<LoadingController>().noLoading();
+    Get.find<TrackingController>().updateTracking(tracking).then(
+      (value) {
+        if (value == 200) {
+          showCustomSnackBar(
+              "${KeyLanguage.updateSuccess.tr}  : ${tracking.content}",
+              isError: false);
+        }
+
+        animatedNoLoading();
+      },
+    );
     contentController.clear();
   }
 
   void clickUpdate() {
-    widget.contentController.text = widget.tracking.content!;
+    contentController.text = widget.tracking.content!;
     showDialog(
       context: context,
       builder: (context) {
-        return dialogAddWidget(
-          context: context,
-          textButton: KeyLanguage.save.tr,
-          controller: widget.contentController,
-          hintText: KeyLanguage.trackingUpdate.tr,
-          hasCancel: true,
-          onAdd: () {
-            updateTracking(
-              widget.tracking,
-              widget.contentController,
-            );
+        return dialogUpdateWidget(
+          context,
+          child: TextFieldWidget(
+            autoFocus: true,
+            controller: contentController,
+            hintText: KeyLanguage.trackingContent.tr,
+          ),
+          opTap: () {
+            updateTracking(widget.tracking, contentController);
           },
         );
       },
@@ -205,8 +212,17 @@ class _TrackingItemState extends State<TrackingItem> {
   void deleteTracking(Tracking tracking) async {
     await animatedLoading();
 
-    Get.find<TrackingController>().deleteTracking(tracking);
-    Get.find<LoadingController>().noLoading();
+    Get.find<TrackingController>().deleteTracking(tracking).then(
+      (value) {
+        if (value == 200) {
+          showCustomSnackBar(
+              "${KeyLanguage.deleteSuccess.tr}  : ${tracking.content}",
+              isError: false);
+        }
+        animatedNoLoading();
+      },
+    );
+
     animateScroll(0.0);
   }
 

@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:traking_app/helper/date_converter_hepler.dart';
 import 'package:traking_app/screens/widgets/dropdown_language_widget.dart';
 import 'package:traking_app/screens/widgets/switch_widget.dart';
+import '../../helper/validation_helper.dart';
 import '/controllers/auth_controller.dart';
 import '/helper/route_helper.dart';
 import '/utils/asset_util.dart';
@@ -75,29 +79,13 @@ class _SignInScreentState extends State<SignInScreent> {
                           controller: _usernameController,
                           labelText: KeyLanguage.username.tr,
                           isPasswordField: false,
-                          validator: (value) {
-                            if (GetUtils.isNull(value != "" ? value : null)) {
-                              return KeyLanguage.validNull.tr;
-                            }
-                            return null;
-                          },
                         ),
                         TextFieldWidget(
                           controller: _passwordController,
                           labelText: KeyLanguage.password.tr,
                           isPasswordField: true,
                           validator: (value) {
-                            if (GetUtils.isNull(value != "" ? value : null)) {
-                              return KeyLanguage.validNull.tr;
-                            }
-                            if (!GetUtils.isLengthBetween(
-                              value!,
-                              Dimensions.MIN_LENGTH_PASSWORD,
-                              Dimensions.MAX_LENGTH_PASSWORD,
-                            )) {
-                              return KeyLanguage.validPassword.tr;
-                            }
-                            return null;
+                            return ValidationHelper.validPassword(value);
                           },
                         ),
                         const SizedBox(

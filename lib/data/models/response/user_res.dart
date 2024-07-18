@@ -14,7 +14,7 @@ class UserRes {
   String? birthPlace;
   String? email;
   bool? hasPhoto;
-  List<Role>? roles;
+  List<Role>? roles = [];
   String? gender;
   String? university;
   int? year;
@@ -42,8 +42,8 @@ class UserRes {
     this.gender,
     this.university,
     this.year = 18,
-    this.countDayCheckin,
-    this.countDayTracking,
+    this.countDayCheckin = 0,
+    this.countDayTracking = 0,
     this.tokenDevice,
     this.image,
     this.setPassword = true,

@@ -80,4 +80,5 @@ const Map<String, String> en = {
   KeyLanguage.completed: "Completed",
   KeyLanguage.usernameExist: "Username Existed",
   KeyLanguage.registorSuccess: "Complete registration",
+  KeyLanguage.isNullBirthPlace: "Please choose your hometown",
 };

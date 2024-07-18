@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '/utils/dimensions.dart';
-import '/utils/asset_util.dart';
 import '/utils/styles.dart';
 
 class ButtonDrawerWidget extends StatelessWidget {
@@ -22,13 +18,15 @@ class ButtonDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4))),
+          borderRadius:
+              BorderRadius.all(Radius.circular(Dimensions.RADIUS_SMALL))),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: InkWell(
         onTap: () {
           onTap();
         },
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(Dimensions.RADIUS_DEFAULT),
         splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
         child: Padding(
           padding: const EdgeInsets.symmetric(

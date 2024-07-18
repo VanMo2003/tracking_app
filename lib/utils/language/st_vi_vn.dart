@@ -80,4 +80,5 @@ const Map<String, String> vi = {
   KeyLanguage.completed: "Hoàn thành",
   KeyLanguage.usernameExist: "Tài khoản đã tồn tại",
   KeyLanguage.registorSuccess: "Hoàn tất đăng ký",
+  KeyLanguage.isNullBirthPlace: "Mời bạn chọn quê quán",
 };

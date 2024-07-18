@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:traking_app/data/models/response/user_res.dart';
 import 'package:traking_app/screens/sign_up/enter_info_screen.dart';
-import '/controllers/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
+import '../../helper/validation_helper.dart';
 import '/helper/route_helper.dart';
 import '../../views/custom_snackbar.dart';
-import '../../data/models/body/user.dart';
 import '/utils/dimensions.dart';
 import '/utils/language/key_language.dart';
 import '../widgets/button_primary_widget.dart';
@@ -19,7 +20,9 @@ import '../widgets/text_field_widget.dart';
 enum Gender { male, female }
 
 class SignUpScreent extends StatefulWidget {
-  const SignUpScreent({super.key});
+  SignUpScreent({super.key, this.user});
+
+  UserRes? user;
 
   @override
   State<SignUpScreent> createState() => _SignUpScreentState();
@@ -32,6 +35,16 @@ class _SignUpScreentState extends State<SignUpScreent> {
       TextEditingController();
 
   final key = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user != null) {
+      _usernameController.text = widget.user!.username!;
+      _passwordController.text = widget.user!.password!;
+      _confirmPasswordController.text = widget.user!.confirmPassword!;
+    }
+  }
 
   @override
   void dispose() {
@@ -86,17 +99,7 @@ class _SignUpScreentState extends State<SignUpScreent> {
                       labelText: KeyLanguage.password.tr,
                       isPasswordField: true,
                       validator: (value) {
-                        if (GetUtils.isNull(value != "" ? value : null)) {
-                          return KeyLanguage.validNull.tr;
-                        }
-                        if (!GetUtils.isLengthBetween(
-                          value!,
-                          Dimensions.MIN_LENGTH_PASSWORD,
-                          Dimensions.MAX_LENGTH_PASSWORD,
-                        )) {
-                          return KeyLanguage.validPassword.tr;
-                        }
-                        return null;
+                        return ValidationHelper.validPassword(value);
                       },
                     ),
                     TextFieldWidget(
@@ -104,17 +107,7 @@ class _SignUpScreentState extends State<SignUpScreent> {
                       labelText: KeyLanguage.comfirmPassword.tr,
                       isPasswordField: true,
                       validator: (value) {
-                        if (GetUtils.isNull(value != "" ? value : null)) {
-                          return KeyLanguage.validNull.tr;
-                        }
-                        if (!GetUtils.isLengthBetween(
-                          value!,
-                          Dimensions.MIN_LENGTH_PASSWORD,
-                          Dimensions.MAX_LENGTH_PASSWORD,
-                        )) {
-                          return KeyLanguage.validPassword.tr;
-                        }
-                        return null;
+                        return ValidationHelper.validPassword(value);
                       },
                     ),
                     const SizedBox(
@@ -169,22 +162,34 @@ class _SignUpScreentState extends State<SignUpScreent> {
       showCustomSnackBar(KeyLanguage.errorPasswordsDuplicate.tr);
     } else {
       await animatedLoading();
-
-      User user = User(
-        username: username,
-        password: password,
-        confirmPassword: confirmPassword,
-      );
-      Get.find<AuthController>().registor(user).then(
-        (value) {
-          if (value == 200) {
-            Get.offAll(
-              EnterInfoScreent(username: username, password: password),
-            );
-          }
-        },
-      );
+      if (widget.user == null) {
+        Get.offAll(EnterInfoScreent(username: username, password: password));
+        animatedNoLoading();
+      } else {
+        widget.user = widget.user!.copyWith(
+          username: username,
+          password: password,
+          confirmPassword: confirmPassword,
+        );
+        Get.find<AuthController>().registor(widget.user!).then(
+          (value) {
+            if (value == 200) {
+              Get.find<AuthController>()
+                  .login(widget.user!.username!, widget.user!.password!)
+                  .then(
+                (value) {
+                  if (value == 200) {
+                    Get.offAllNamed(RouteHelper.getHomeUserRoute());
+                    showCustomSnackBar(KeyLanguage.registorSuccess.tr,
+                        isError: false);
+                  }
+                },
+              );
+            }
+            animatedNoLoading();
+          },
+        );
+      }
     }
-    animatedNoLoading();
   }
 }

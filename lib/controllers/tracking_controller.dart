@@ -36,21 +36,20 @@ class TrackingController extends GetxController implements GetxService {
     update();
   }
 
-  void addTracking(Tracking tracking) async {
+  Future<int> addTracking(Tracking tracking) async {
     Response response = await trackingRepo.addTracking(tracking);
     if (response.statusCode == 200) {
       var tracking = Tracking.fromJson(response.body);
       _list!.add(tracking);
-
-      showCustomSnackBar("${KeyLanguage.addSuccess.tr} : ${tracking.content}",
-          isError: false);
     } else {
       ApiException.checkException(response.statusCode);
     }
     update();
+
+    return response.statusCode!;
   }
 
-  void updateTracking(Tracking tracking) async {
+  Future<int> updateTracking(Tracking tracking) async {
     Response response = await trackingRepo.updateTracking(tracking);
     if (response.statusCode == 200) {
       var tracking = Tracking.fromJson(response.body);
@@ -58,29 +57,26 @@ class TrackingController extends GetxController implements GetxService {
         (element) => element.id == tracking.id,
       );
       _list!.add(tracking);
-      showCustomSnackBar(
-          "${KeyLanguage.updateSuccess.tr}  : ${tracking.content}",
-          isError: false);
     } else {
       ApiException.checkException(response.statusCode);
     }
     update();
+
+    return response.statusCode!;
   }
 
-  void deleteTracking(Tracking tracking) async {
+  Future<int> deleteTracking(Tracking tracking) async {
     Response response = await trackingRepo.deleteTracking(tracking);
     if (response.statusCode == 200) {
       _list!.removeWhere(
         (element) => element.id == tracking.id,
       );
-      showCustomSnackBar(
-          "${KeyLanguage.deleteSuccess.tr}  : ${tracking.content}",
-          isError: false);
     } else {
       ApiException.checkException(response.statusCode);
     }
 
     update();
+    return response.statusCode!;
   }
 
   void sortByDateDesc() {

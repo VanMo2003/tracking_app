@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '/controllers/auth_controller.dart';
 import '/controllers/search_controller.dart';
 import '../../data/models/body/search.dart';
 import '../../data/models/response/user_res.dart';
@@ -11,7 +10,9 @@ import 'widget/list_user_item.dart';
 import '../../utils/language/key_language.dart';
 
 class ListUserScreent extends StatefulWidget {
-  const ListUserScreent({super.key});
+  ListUserScreent({super.key});
+
+  RxBool enabled = true.obs;
 
   @override
   State<ListUserScreent> createState() => _ListUserScreentState();
@@ -22,21 +23,14 @@ class _ListUserScreentState extends State<ListUserScreent> {
   int pageIndex = 1;
 
   Search search = Search();
-
-  bool isAdmin = false;
-
-  RxBool enabled = true.obs;
-
   @override
   void initState() {
     super.initState();
 
-    isAdmin = Get.find<AuthController>().isAdmin;
-
     Future.delayed(
       const Duration(milliseconds: 1000),
       () {
-        enabled.value = false;
+        widget.enabled.value = false;
       },
     );
 
@@ -76,7 +70,7 @@ class _ListUserScreentState extends State<ListUserScreent> {
 
         return Obx(
           () => Skeletonizer(
-            enabled: enabled.value,
+            enabled: widget.enabled.value,
             enableSwitchAnimation: true,
             child: Padding(
               padding: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),

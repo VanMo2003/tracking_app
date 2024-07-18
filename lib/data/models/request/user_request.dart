@@ -1,4 +1,4 @@
-class User {
+class UserRequest {
   bool? active;
   String? birthPlace;
   bool? changePass;
@@ -13,7 +13,7 @@ class User {
   String? username;
   int? year;
 
-  User({
+  UserRequest({
     this.active = true,
     this.birthPlace = "",
     this.changePass = true,
@@ -29,7 +29,7 @@ class User {
     this.year = 18,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserRequest.fromJson(Map<String, dynamic> json) {
     active = json['active'];
     birthPlace = json['birthPlace'];
     changePass = json['changePass'];
@@ -63,7 +63,7 @@ class User {
     return data;
   }
 
-  User copyWith({
+  UserRequest copyWith({
     bool? active,
     String? birthPlace,
     bool? changePass,
@@ -78,7 +78,7 @@ class User {
     String? username,
     int? year,
   }) {
-    return User(
+    return UserRequest(
       username: username ?? this.username,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,

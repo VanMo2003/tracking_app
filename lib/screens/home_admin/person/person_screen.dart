@@ -8,7 +8,6 @@ import '/utils/styles.dart';
 import '../../home_user/info_user/info_user_screen.dart';
 
 import '../../../helper/loading_helper.dart';
-import '../../widgets/dialog_widget.dart';
 import '../../../utils/color_resources.dart';
 import '../../../utils/dimensions.dart';
 import '../../widgets/dropdown_language_widget.dart';
@@ -24,78 +23,76 @@ class _PersonScreentState extends State<PersonScreent> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: LoadingWidget(
-        child: GetBuilder<AuthController>(builder: (controller) {
-          var user = controller.user!;
-          return Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE,
-            ),
-            width: double.infinity,
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: Dimensions.RADIUS_SIZE_OVER_LARGE,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: user.image != null
-                          ? Image.asset(user.image!)
-                          : Icon(
-                              Icons.person,
-                              size: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
-                              color: Theme.of(context).cardColor,
-                            ),
+      child: GetBuilder<AuthController>(builder: (controller) {
+        var user = controller.user!;
+        return Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+          ),
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: Dimensions.RADIUS_SIZE_OVER_LARGE,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: user.image != null
+                        ? Image.asset(user.image!)
+                        : Icon(
+                            Icons.person,
+                            size: Dimensions.RADIUS_SIZE_EXTRA_EXTRA_LARGE,
+                            color: Theme.of(context).cardColor,
+                          ),
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  Text(
+                    user.displayName ?? KeyLanguage.displayName.tr,
+                    style: robotoBold.copyWith(
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
+                        color: Theme.of(context).disabledColor),
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  button(
+                    KeyLanguage.infoPerson.tr,
+                    const Icon(Icons.person),
+                    () {
+                      Get.to(const InfoUserScreent());
+                    },
+                  ),
+                  const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
+                  button(
+                    "${KeyLanguage.light.tr}/${KeyLanguage.dark.tr}",
+                    Icon(
+                      Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                      color: ColorResources.getBlackColor(),
                     ),
-                    const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-                    Text(
-                      user.displayName ?? KeyLanguage.displayName.tr,
-                      style: robotoBold.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
-                          color: ColorResources.getBlackColor()),
-                    ),
-                    const Divider(
-                      height: 2,
-                    ),
-                    const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-                    button(
-                      KeyLanguage.infoPerson.tr,
-                      const Icon(Icons.person),
-                      () {
-                        Get.to(const InfoUserScreent());
-                      },
-                    ),
-                    const SizedBox(height: Dimensions.SIZE_BOX_HEIGHT_DEFAULT),
-                    button(
-                      "${KeyLanguage.light.tr}/${KeyLanguage.dark.tr}",
-                      Icon(
-                        Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
-                        color: ColorResources.getBlackColor(),
-                      ),
-                      () {
-                        changeTheme();
-                      },
-                    ),
-                    const Spacer(),
-                    button(
-                      KeyLanguage.logout.tr,
-                      const Icon(Icons.logout),
-                      () {
-                        Get.find<AuthController>().logout(context);
-                      },
-                    ),
-                  ],
-                ),
-                const Positioned(
-                  right: 0,
-                  child: DropdownLangueWidget(),
-                )
-              ],
-            ),
-          );
-        }),
-      ),
+                    () {
+                      changeTheme();
+                    },
+                  ),
+                  const Spacer(),
+                  button(
+                    KeyLanguage.logout.tr,
+                    const Icon(Icons.logout),
+                    () {
+                      Get.find<AuthController>().logout(context);
+                    },
+                  ),
+                ],
+              ),
+              const Positioned(
+                right: 0,
+                child: DropdownLangueWidget(),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -103,8 +100,9 @@ class _PersonScreentState extends State<PersonScreent> {
     return ElevatedButton(
       onPressed: onTap,
       style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).cardColor),
         foregroundColor: WidgetStateProperty.all(
-          ColorResources.getBlackColor(),
+          Theme.of(context).disabledColor,
         ),
       ),
       child: Padding(
@@ -118,7 +116,7 @@ class _PersonScreentState extends State<PersonScreent> {
               label,
               style: robotoBlack.copyWith(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                  color: ColorResources.getBlackColor()),
+                  color: Theme.of(context).disabledColor),
             ),
             icon,
           ],

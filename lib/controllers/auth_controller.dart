@@ -6,7 +6,7 @@ import '../views/custom_snackbar.dart';
 import '/controllers/loading_controller.dart';
 import '/controllers/post_controller.dart';
 import '/controllers/search_controller.dart';
-import '../data/models/body/user.dart';
+import '../data/models/request/user_request.dart';
 import '../data/models/response/user_res.dart';
 import '../data/api/api_exception.dart';
 import '../data/repository/auth_repo.dart';
@@ -29,8 +29,6 @@ class AuthController extends GetxController implements GetxService {
   bool get isAdmin => _isAdmin;
 
   Future<int> login(String username, String password) async {
-    Get.find<LoadingController>().loading();
-
     Response response = await authRepo.login(username, password);
 
     if (response.statusCode == 200) {
@@ -45,7 +43,7 @@ class AuthController extends GetxController implements GetxService {
     return response.statusCode!;
   }
 
-  Future<int> registor(User user) async {
+  Future<int> registor(UserRes user) async {
     Response response = await authRepo.registor(user);
 
     if (response.statusCode == 200) {
