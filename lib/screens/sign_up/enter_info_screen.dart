@@ -102,7 +102,7 @@ class _EnterInfoScreentState extends State<EnterInfoScreent> {
                     AssetUtil.backgroundLogin,
                   ),
                   fit: BoxFit.cover,
-                  opacity: Get.isDarkMode ? 0.5 : 1,
+                  opacity: Get.isDarkMode ? 0.3 : 1,
                 ),
               ),
               child: Center(

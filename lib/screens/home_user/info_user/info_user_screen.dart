@@ -32,23 +32,26 @@ class _InfoUserScreentState extends State<InfoUserScreent> {
               child: CircularProgressIndicator(),
             );
           }
-          return Column(
-            children: [
-              showInfo(context, KeyLanguage.email.tr,
-                  user.email ?? "example@gmail.com", editingController, user),
-              showInfo(
-                  context,
-                  KeyLanguage.displayName.tr,
-                  user.displayName ?? KeyLanguage.displayName.tr,
-                  editingController,
-                  user),
-              showInfo(
-                  context,
-                  KeyLanguage.university.tr,
-                  user.university ?? KeyLanguage.university.tr,
-                  editingController,
-                  user),
-            ],
+          return Container(
+            color: Theme.of(context).cardColor,
+            child: Column(
+              children: [
+                showInfo(context, KeyLanguage.email.tr,
+                    user.email ?? "example@gmail.com", editingController, user),
+                showInfo(
+                    context,
+                    KeyLanguage.displayName.tr,
+                    user.displayName ?? KeyLanguage.displayName.tr,
+                    editingController,
+                    user),
+                showInfo(
+                    context,
+                    KeyLanguage.university.tr,
+                    user.university ?? KeyLanguage.university.tr,
+                    editingController,
+                    user),
+              ],
+            ),
           );
         },
       ),

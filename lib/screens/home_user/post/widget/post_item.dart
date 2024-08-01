@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '/controllers/upload_file_controller.dart';
@@ -59,7 +61,7 @@ class _PostItemState extends State<PostItem> with TickerProviderStateMixin {
       margin: const EdgeInsets.symmetric(vertical: 4),
       // height: size.height * 0.5,
       decoration: BoxDecoration(
-        color: ColorResources.getWhiteColor(),
+        color: Theme.of(context).cardColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +99,13 @@ class _PostItemState extends State<PostItem> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Theme.of(context).disabledColor,
+                ),
+              )
             ],
           ),
           Padding(
@@ -107,7 +116,7 @@ class _PostItemState extends State<PostItem> with TickerProviderStateMixin {
               widget.content.content!,
               style: robotoBold.copyWith(
                 fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                color: Colors.black,
+                color: Theme.of(context).disabledColor,
               ),
             ),
           ),

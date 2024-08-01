@@ -7,6 +7,9 @@ ThemeData light({Color color = const Color(0xFF008FFF)}) => ThemeData(
       fontFamily: 'Roboto',
       primaryColor: color,
       secondaryHeaderColor: Color(0xFFE054B8),
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.white,
+      ),
       appBarTheme: AppBarTheme(
         centerTitle: true,
         titleTextStyle: robotoBold.copyWith(

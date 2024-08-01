@@ -14,14 +14,14 @@ import '../../../data/models/body/tracking.dart';
 
 import 'widgets/tracking_item.dart';
 
-class TrackingScreent extends StatefulWidget {
-  const TrackingScreent({super.key});
+class TrackingScreen extends StatefulWidget {
+  const TrackingScreen({super.key});
 
   @override
-  State<TrackingScreent> createState() => _TrackingScreentState();
+  State<TrackingScreen> createState() => _TrackingScreenState();
 }
 
-class _TrackingScreentState extends State<TrackingScreent> {
+class _TrackingScreenState extends State<TrackingScreen> {
   TextEditingController contentController = TextEditingController();
 
   var showDelete = false.obs;
@@ -88,7 +88,7 @@ class _TrackingScreentState extends State<TrackingScreent> {
             tooltip: KeyLanguage.add.tr,
             child: Icon(
               Icons.add,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).canvasColor,
             ),
           ),
         )

@@ -19,7 +19,8 @@ class ButtonAnimated extends AnimatedWidget {
   final AnimationController controller;
   final Animation<double> animation;
   final Content content;
-  final colorTween = ColorTween(begin: Colors.black, end: Colors.red);
+  final colorTween =
+      ColorTween(begin: Theme.of(Get.context!).disabledColor, end: Colors.red);
 
   @override
   Widget build(BuildContext context) {

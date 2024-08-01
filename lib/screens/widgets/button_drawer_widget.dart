@@ -20,7 +20,7 @@ class ButtonDrawerWidget extends StatelessWidget {
       shape: const RoundedRectangleBorder(
           borderRadius:
               BorderRadius.all(Radius.circular(Dimensions.RADIUS_SMALL))),
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: Theme.of(context).cardColor,
       child: InkWell(
         onTap: () {
           onTap();
