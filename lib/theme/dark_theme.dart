@@ -7,7 +7,7 @@ ThemeData dark({Color color = const Color(0xFF45ADFF)}) => ThemeData(
       fontFamily: 'Roboto',
       primaryColor: color,
       buttonTheme: ButtonThemeData(
-        buttonColor: Color(0xff4D443D),
+        buttonColor: Colors.black,
       ),
       secondaryHeaderColor: Color(0xFFFF74D9),
       disabledColor: Colors.white,

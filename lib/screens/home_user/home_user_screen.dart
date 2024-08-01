@@ -29,7 +29,7 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
   var _currentIndex = 0.obs;
 
   List<Widget> listWidget = [
-    const TrackingScreent(),
+    const TrackingScreen(),
     ListUserScreent(),
   ];
 
@@ -82,10 +82,7 @@ class _HomeUserScreentState extends State<HomeUserScreent> {
                   onPressed: () {
                     _scaffoldKey.currentState?.openDrawer();
                   },
-                  icon: Icon(
-                    Icons.menu,
-                    color: Theme.of(context).cardColor,
-                  ),
+                  icon: const Icon(Icons.menu),
                 ),
                 title: Text(
                   listTitle[_currentIndex.value].tr,

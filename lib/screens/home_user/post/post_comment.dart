@@ -44,68 +44,77 @@ class _PostCommentWidgetState extends State<PostCommentWidget> {
             return Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: comments.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return PostItem(
-                          content: widget.content,
-                          isClick: false,
-                        );
-                      }
-                      var comment = comments[index - 1];
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: CircleAvatar(
-                                radius: 20,
-                                child: widget.content.user!.image != null
-                                    ? Image.asset(widget.content.user!.image!)
-                                    : const Icon(Icons.image),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 8),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).hintColor,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(12))),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: robotoBold.copyWith(
-                                      fontSize: 18,
-                                      color: Theme.of(context).cardColor,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: comment.user!.displayName,
-                                      ),
-                                      const TextSpan(text: "\n"),
-                                      TextSpan(
-                                        text: comment.content,
-                                        style:
-                                            robotoBlack.copyWith(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                    child: ListView.builder(
+                      itemCount: comments.length + 2,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return PostItem(
+                            content: widget.content,
+                            isClick: false,
+                          );
+                        }
+                        if (index == 1) {
+                          return Divider(
+                            color: Theme.of(context).disabledColor,
+                          );
+                        }
+                        var comment = comments[index - 2];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  child: widget.content.user!.image != null
+                                      ? Image.asset(widget.content.user!.image!)
+                                      : const Icon(Icons.image),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 8),
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).hintColor,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: robotoBold.copyWith(
+                                        fontSize: 18,
+                                        color: Theme.of(context).cardColor,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: comment.user!.displayName,
+                                        ),
+                                        const TextSpan(text: "\n"),
+                                        TextSpan(
+                                          text: comment.content,
+                                          style: robotoBlack.copyWith(
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.only(left: 8, bottom: 8),
+                  color: Theme.of(context).cardColor,
                   child: Row(
                     children: [
                       Expanded(

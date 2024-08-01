@@ -45,7 +45,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         return Container(
           height: size.height,
           width: size.width * 0.8,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Theme.of(context).cardColor,
           child: Stack(
             children: [
               Positioned(

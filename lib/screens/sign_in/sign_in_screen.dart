@@ -52,7 +52,7 @@ class _SignInScreentState extends State<SignInScreent> {
                 image: const AssetImage(
                   AssetUtil.backgroundLogin,
                 ),
-                opacity: Get.isDarkMode ? 0.5 : 1,
+                opacity: Get.isDarkMode ? 0.3 : 1,
                 fit: BoxFit.cover,
               ),
             ),

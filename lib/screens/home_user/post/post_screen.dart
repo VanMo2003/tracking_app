@@ -49,7 +49,6 @@ class _PostScreentState extends State<PostScreent> {
               : "Bài viết của $displayName",
           style: robotoBold.copyWith(
             fontSize: Dimensions.FONT_SIZE_EXTRA_OVER_LARGE,
-            color: Theme.of(context).cardColor,
           ),
         ),
         centerTitle: true,
@@ -64,17 +63,17 @@ class _PostScreentState extends State<PostScreent> {
             child: Icon(
               Icons.house_outlined,
               size: 32,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).canvasColor,
             ),
           ),
         ),
       ),
-      backgroundColor: ColorResources.getGreyColor(),
+      backgroundColor: Theme.of(context).cardColor.withOpacity(0.8),
       body: GetBuilder<PostController>(
         builder: (controller) {
           if (contents == null) {
             Future.delayed(
-              const Duration(milliseconds: 1000),
+              const Duration(milliseconds: 500),
               () {
                 contents =
                     id == "" ? controller.contents : controller.contentsByUser;
@@ -138,7 +137,10 @@ class _PostScreentState extends State<PostScreent> {
               onPressed: () {
                 Get.toNamed(RouteHelper.addPost);
               },
-              child: const Icon(Icons.post_add),
+              child: Icon(
+                Icons.post_add,
+                color: Theme.of(context).canvasColor,
+              ),
             ),
     );
   }
